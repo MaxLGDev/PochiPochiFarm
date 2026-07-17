@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b66d1792bceb14fae3e9acf2c1c883, type: 3}
+  m_Name: Strawberry
+  m_EditorClassIdentifier: Assembly-CSharp::CropData
+  cropName: Strawberry
+  cropType: 11
+  cropSprite: {fileID: 21300000, guid: 8813a759d505f3e48b4e4c92a042ea47, type: 3}
+  seedSprite: {fileID: 21300000, guid: 1e8dc0d0c2bc50d4ca7286ac9e447fff, type: 3}
+  growthTime: 0
+  requiredWater: 0
+  coinYield: 0
+  unlockCost: 0

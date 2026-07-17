@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pochi-Pochi Farm - Roadmap</title>
+<style>
+  body {
+    background: #ffffff;
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.5;
+  }
+  h1 {
+    font-size: 22px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 8px;
+  }
+  h2 {
+    font-size: 17px;
+    margin-top: 40px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 4px;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  li {
+    margin: 8px 0;
+    padding-left: 4px;
+  }
+  input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  .done {
+    text-decoration: line-through;
+    color: #777;
+  }
+  .note {
+    font-size: 13px;
+    color: #444;
+    margin: 4px 0 20px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>Pochi-Pochi Farm — Build Roadmap</h1>
+<p class="note">Check items off as you go. This is a step list only, no design decisions included. Work top to bottom, phase by phase — don't skip ahead.</p>
+
+<h2>Phase 0 — Project Setup</h2>
+<ul>
+  <li><label><input type="checkbox"> Create new Unity 2D project</label></li>
+  <li><label><input type="checkbox"> Set up folder structure (Scripts, ScriptableObjects, Prefabs, Sprites, UI)</label></li>
+  <li><label><input type="checkbox"> Create empty main scene</label></li>
+  <li><label><input type="checkbox"> Add a basic Canvas (Screen Space - Overlay)</label></li>
+  <li><label><input type="checkbox"> Set up version control / save a first commit or backup</label></li>
+</ul>
+
+<h2>Phase 1 — Crop Data (ScriptableObjects)</h2>
+<ul>
+  <li><label><input type="checkbox"> Create CropData ScriptableObject script</label></li>
+  <li><label><input type="checkbox"> Add fields: crop name, sprite, growth duration, coin yield, unlock cost</label></li>
+  <li><label><input type="checkbox"> Create the "Dirt" CropData asset (base tile, free, +1 coin)</label></li>
+  <li><label><input type="checkbox"> Create 2-3 additional test CropData assets</label></li>
+  <li><label><input type="checkbox"> Confirm assets show correctly in the Inspector</label></li>
+</ul>
+
+<h2>Phase 2 — Grid Foundation</h2>
+<ul>
+  <li><label><input type="checkbox"> Create Tile script (holds reference to its CropData, unlocked state, position)</label></li>
+  <li><label><input type="checkbox"> Create GridManager script</label></li>
+  <li><label><input type="checkbox"> Build the 10x10 array/grid structure in GridManager</label></li>
+  <li><label><input type="checkbox"> Hardcode which CropData belongs to which grid cell</label></li>
+  <li><label><input type="checkbox"> Instantiate all 100 tiles in the scene from the grid data</label></li>
+  <li><label><input type="checkbox"> Mark starting center tile as unlocked, everything else locked</label></li>
+  <li><label><input type="checkbox"> Add basic gray visual for locked tiles</label></li>
+  <li><label><input type="checkbox"> Confirm grid displays correctly on play</label></li>
+</ul>
+
+<h2>Phase 3 — Tile Unlocking</h2>
+<ul>
+  <li><label><input type="checkbox"> Add click detection on locked tiles</label></li>
+  <li><label><input type="checkbox"> Write function to check adjacent tiles (up/down/left/right only)</label></li>
+  <li><label><input type="checkbox"> Only allow unlocking a tile if it's adjacent to an unlocked tile</label></li>
+  <li><label><input type="checkbox"> Deduct coins on unlock, block unlock if not enough coins</label></li>
+  <li><label><input type="checkbox"> Reveal the tile's hidden crop sprite after unlocking</label></li>
+  <li><label><input type="checkbox"> Test unlocking expands correctly in all 4 directions</label></li>
+</ul>
+
+<h2>Phase 4 — Coins &amp; Water Resources</h2>
+<ul>
+  <li><label><input type="checkbox"> Create a GameManager (or ResourceManager) script</label></li>
+  <li><label><input type="checkbox"> Add Coin variable + UI text display</label></li>
+  <li><label><input type="checkbox"> Add Water variable (current/max) + UI display (text or slider)</label></li>
+  <li><label><input type="checkbox"> Implement dirt tile click: +1 coin, 0 water cost</label></li>
+  <li><label><input type="checkbox"> Implement water consumption on crop tile interaction (-1 water)</label></li>
+  <li><label><input type="checkbox"> Block crop interaction when water is at 0</label></li>
+  <li><label><input type="checkbox"> Add Watering Can button</label></li>
+  <li><label><input type="checkbox"> Implement watering can refill logic</label></li>
+  <li><label><input type="checkbox"> Test full loop: click dirt for coins, water crops until empty, refill</label></li>
+</ul>
+
+<h2>Phase 5 — Crop Growth Cycle (Manual)</h2>
+<ul>
+  <li><label><input type="checkbox"> Add growth timer variable to Tile script</label></li>
+  <li><label><input type="checkbox"> Add "growing" and "mature" states to Tile</label></li>
+  <li><label><input type="checkbox"> Tick the timer forward each frame/update while growing</label></li>
+  <li><label><input type="checkbox"> Switch tile to "mature" state when timer hits growth duration</label></li>
+  <li><label><input type="checkbox"> On click while mature: award coins, reset timer, go back to growing</label></li>
+  <li><label><input type="checkbox"> Block harvest click if water is 0</label></li>
+  <li><label><input type="checkbox"> Test one crop type's full manual cycle start to finish</label></li>
+</ul>
+
+<h2>Phase 6 — Crop Growth Visuals</h2>
+<ul>
+  <li><label><input type="checkbox"> Add a progress bar/slider above each active tile</label></li>
+  <li><label><input type="checkbox"> Update slider value as timer advances</label></li>
+  <li><label><input type="checkbox"> Scale crop sprite up gradually as it grows (small to full size)</label></li>
+  <li><label><input type="checkbox"> Add a simple visual change when tile reaches "mature" (e.g. glow, bounce, color)</label></li>
+  <li><label><input type="checkbox"> Test visuals against timer on at least 2 different crops</label></li>
+</ul>
+
+<h2>Phase 7 — Shop UI</h2>
+<ul>
+  <li><label><input type="checkbox"> Create Shop panel (basic UI, can toggle open/closed)</label></li>
+  <li><label><input type="checkbox"> Create upgrade data structure (name, cost, effect type, purchased state)</label></li>
+  <li><label><input type="checkbox"> List upgrades in the shop UI (basic buttons/rows)</label></li>
+  <li><label><input type="checkbox"> Implement "buy" logic: deduct coins, mark upgrade as purchased</label></li>
+  <li><label><input type="checkbox"> Disable/gray out upgrades player can't afford yet</label></li>
+  <li><label><input type="checkbox"> Prevent buying the same upgrade twice</label></li>
+</ul>
+
+<h2>Phase 8 — Shop Upgrades: Crop Permissions</h2>
+<ul>
+  <li><label><input type="checkbox"> Add "isResearched" flag per crop type</label></li>
+  <li><label><input type="checkbox"> Block tile interaction until crop is researched, even if unlocked</label></li>
+  <li><label><input type="checkbox"> Add 2-3 crop unlock upgrades to shop</label></li>
+  <li><label><input type="checkbox"> Test that revealed-but-unresearched crops are visible but inactive</label></li>
+</ul>
+
+<h2>Phase 9 — Shop Upgrades: Income &amp; Click Power</h2>
+<ul>
+  <li><label><input type="checkbox"> Add global coin multiplier variable</label></li>
+  <li><label><input type="checkbox"> Add +20% and +30% multiplier upgrades to shop</label></li>
+  <li><label><input type="checkbox"> Apply multiplier to all coin rewards</label></li>
+  <li><label><input type="checkbox"> Add click power variable (+1 upgrade)</label></li>
+  <li><label><input type="checkbox"> Apply click power to dirt tile clicks</label></li>
+</ul>
+
+<h2>Phase 10 — Shop Upgrades: Automation</h2>
+<ul>
+  <li><label><input type="checkbox"> Add "isAutomated" flag per crop type</label></li>
+  <li><label><input type="checkbox"> Add automation upgrade per crop to shop</label></li>
+  <li><label><input type="checkbox"> On mature + automated: auto-collect coins, auto-reset timer, no click needed</label></li>
+  <li><label><input type="checkbox"> Make sure automated tiles still respect water limits</label></li>
+  <li><label><input type="checkbox"> Test one fully automated crop running on its own</label></li>
+</ul>
+
+<h2>Phase 11 — Shop Upgrades: Water Tank</h2>
+<ul>
+  <li><label><input type="checkbox"> Add max water capacity upgrade</label></li>
+  <li><label><input type="checkbox"> Add water efficiency upgrade (chance to skip water cost)</label></li>
+  <li><label><input type="checkbox"> Add refill speed/amount upgrade for the watering can</label></li>
+  <li><label><input type="checkbox"> Test all three water upgrades independently</label></li>
+</ul>
+
+<h2>Phase 12 — Objectives / Farm God Journal</h2>
+<ul>
+  <li><label><input type="checkbox"> Design objective data structure (description, target value, current progress)</label></li>
+  <li><label><input type="checkbox"> Create Journal UI panel to list objectives</label></li>
+  <li><label><input type="checkbox"> Implement tracking for: total coins earned</label></li>
+  <li><label><input type="checkbox"> Implement tracking for: tiles unlocked</label></li>
+  <li><label><input type="checkbox"> Implement tracking for: crops harvested (per type or total)</label></li>
+  <li><label><input type="checkbox"> Implement tracking for: upgrades purchased</label></li>
+  <li><label><input type="checkbox"> Mark objectives as complete when target is reached</label></li>
+  <li><label><input type="checkbox"> Reveal next objective when current one is completed</label></li>
+</ul>
+
+<h2>Phase 13 — Win Condition</h2>
+<ul>
+  <li><label><input type="checkbox"> Define final win condition (all objectives complete)</label></li>
+  <li><label><input type="checkbox"> Add check that triggers when every objective is marked done</label></li>
+  <li><label><input type="checkbox"> Build simple "You are the Farm God" end screen</label></li>
+  <li><label><input type="checkbox"> Test full playthrough from empty save to win screen</label></li>
+</ul>
+
+<h2>Phase 14 — Polish &amp; Cleanup</h2>
+<ul>
+  <li><label><input type="checkbox"> Add basic sound effects (click, harvest, unlock, purchase)</label></li>
+  <li><label><input type="checkbox"> Clean up unused test assets and scripts</label></li>
+  <li><label><input type="checkbox"> Check all UI text is readable and correctly updating</label></li>
+  <li><label><input type="checkbox"> Playtest full loop again from scratch</label></li>
+  <li><label><input type="checkbox"> Fix any bugs found during full playtest</label></li>
+  <li><label><input type="checkbox"> Final build/export</label></li>
+</ul>
+
+<script>
+  document.querySelectorAll('input[type="checkbox"]').forEach(function(box) {
+    box.addEventListener('change', function() {
+      if (box.checked) {
+        box.parentElement.classList.add('done');
+      } else {
+        box.parentElement.classList.remove('done');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
