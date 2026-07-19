@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -41,3 +41,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Soil
+    uniqueID: 3689942957
+    locked: 0
+  - name: Crops
+    uniqueID: 1092037327
+    locked: 0
+  - name: Fog
+    uniqueID: 574243807
+    locked: 0
+  m_RenderingLayers:
+  - Default

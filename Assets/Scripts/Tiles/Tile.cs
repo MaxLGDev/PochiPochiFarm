@@ -1,9 +1,15 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Tile : MonoBehaviour
+public class Tile : MonoBehaviour, IPointerClickHandler
 {
 
     public event System.Action<Tile> OnHarvestRequested;
+
+    [Header("Sprites")]
+    [SerializeField] private SpriteRenderer soilRenderer;
+    [SerializeField] private SpriteRenderer cropRenderer;
+    [SerializeField] private SpriteRenderer fogRenderer;
 
     public CropData CropData {  get; private set; }
 
@@ -17,7 +23,13 @@ public class Tile : MonoBehaviour
     
     public bool IsMature { get; private set; }
 
-    public void InitializeCrop(CropData cropData, Vector2Int gridPosition, bool startUnlocked)
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+            Interact();
+    }
+
+    public void InitializeCrop(CropData cropData, Vector2Int gridPosition, bool startUnlocked, Sprite groundSprite)
     {
         if(cropData == null)
         {
@@ -32,6 +44,22 @@ public class Tile : MonoBehaviour
         IsUnlocked = startUnlocked;
         IsAutomated = false;
         IsMature = false;
+
+        soilRenderer.sprite = groundSprite;
+        cropRenderer.sprite = cropData.cropSprite;
+
+        UpdateFogVisibility();
+    }
+
+    private void UpdateFogVisibility()
+    {
+        fogRenderer.enabled = !IsUnlocked;
+    }
+
+    public void UnlockTile()
+    {
+        IsUnlocked = true;
+        UpdateFogVisibility();
     }
 
     public void Interact()
@@ -48,6 +76,9 @@ public class Tile : MonoBehaviour
             return;
         }
 
+        Debug.Log("+1 coin");
         OnHarvestRequested?.Invoke(this);
     }
+
+    
 }

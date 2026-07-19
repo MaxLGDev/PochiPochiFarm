@@ -40,21 +40,22 @@ public class GridManager : MonoBehaviour
 
                 Vector2Int gridPosition = new(x, y);
 
-                CropData crop = GetCropDataAt(gridPosition);
+                FarmInfo info = GetFarmInfoAt(gridPosition);
 
-                bool startUnlocked = x == width / 2 && y == height / 2; // Unlock the center tile
+                bool startUnlocked = (x == 0 && y == 0);
 
-                newTile.InitializeCrop(crop, gridPosition, startUnlocked);
+                // TODO: Subscribe to newTile.OnHarvestRequested once ResourceManager exists
+                newTile.InitializeCrop(info.cropData, gridPosition, startUnlocked, info.tileSprite);
             }
         }
     }
 
-    private CropData GetCropDataAt(Vector2Int position)
+    private FarmInfo GetFarmInfoAt(Vector2Int position)
     {
-        foreach(FarmInfo tile in farmLayout.tiles)
+        foreach(FarmInfo info in farmLayout.tiles)
         {
-            if (tile.position == position)
-                return tile.cropData;
+            if (info.position == position)
+                return info;
         }
 
         Debug.LogError($"No CropData found at {position}");
