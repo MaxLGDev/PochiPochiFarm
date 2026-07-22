@@ -1,22 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b66d1792bceb14fae3e9acf2c1c883, type: 3}
-  m_Name: Cabbage
-  m_EditorClassIdentifier: Assembly-CSharp::CropData
-  cropName: Cabbage
-  cropType: 2
-  cropSprite: {fileID: 21300000, guid: ba77f835e6cf1154d933e3cbd19c02e9, type: 3}
-  seedSprite: {fileID: 21300000, guid: be4002ba485fefe41b3ad4e6f4d05745, type: 3}
-  growthTime: 0
-  requiredWater: 0
-  coinYield: 0
-  unlockCost: 0
+version https://git-lfs.github.com/spec/v1
+oid sha256:10a7eb68f2f0f9423030a03f6c1516de909fb12e8b212a55b108001ced26689c
+size 707

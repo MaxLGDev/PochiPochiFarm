@@ -38,18 +38,30 @@ public class GridManager : MonoBehaviour
         zones = zonesData.Select(z => new ZoneRuntime(z)).ToList();
         zones[0].Unlock(); // Unlock the first zone by default
         GenerateGrid();
+
+        //ONLY UNCOMMENT FOR TESTING PURPOSES
+        resourceManager.AddCoins(9999);
     }
 
     private bool TryUnlockTile(Vector2Int position)
     {
         if (!IsUnlockedAt(position))
+        {
+            Debug.Log("Zone not unlocked");
             return false;
+        }
 
         if (!IsAdjacentToUnlocked(position))
+        {
+            Debug.Log("Not adjacent to an unlocked tile");
             return false;
+        }
 
         if (!HasEnoughCoins(position))
+        {
+            Debug.Log("Not enough coins");
             return false;
+        }
 
         resourceManager.TrySpendCoins(unlockCost);
 
@@ -94,11 +106,14 @@ public class GridManager : MonoBehaviour
 
     private void GenerateGrid()
     {
+        float xOffset = -(width * cellSize) / 2f + cellSize / 2f;
+        float yOffset = -(height * cellSize) / 2f + cellSize / 2f - 0.03f;
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                Vector3 position = new Vector3(x * cellSize, y * cellSize, 0f);
+                Vector3 position = new Vector3(x * cellSize + xOffset, y * cellSize + yOffset, 0f);
                 Tile newTile = Instantiate(tilePrefab, position, Quaternion.identity, gridParent);
 
                 // Store the tile in the grid

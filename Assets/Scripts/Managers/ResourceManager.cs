@@ -40,7 +40,7 @@ public class ResourceManager : MonoBehaviour
     {
         if (amount > Coins)
         {
-            Debug.LogError($"Not enough coins to perform this action");
+            Debug.Log($"Not enough coins to perform this action");
             return false;
         }
 

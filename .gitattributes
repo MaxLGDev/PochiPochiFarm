@@ -1,0 +1,2 @@
+*.asset filter=lfs diff=lfs merge=lfs -text
+Assets/Fonts/VaultUI[[:space:]]SDF.asset filter=lfs diff=lfs merge=lfs -text
