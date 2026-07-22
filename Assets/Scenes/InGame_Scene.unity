@@ -1027,7 +1027,7 @@ Transform:
   m_GameObject: {fileID: 1637174507}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.35, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1137,12 +1137,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3837a3fe6b20e4b80b965cf9ba1e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
+  resourceManager: {fileID: 0}
   farmLayout: {fileID: 11400000, guid: 53b4c79d3d9856b4586838a1bf20e790, type: 2}
   tilePrefab: {fileID: 8596151252958869734, guid: 4ae246081114bf94da8eb167308233e0, type: 3}
   gridParent: {fileID: 1637174508}
+  zonesData:
+  - {fileID: 11400000, guid: 1fc5c6f6bb7cadc4488a6345c3076771, type: 2}
+  - {fileID: 11400000, guid: aa79b6888f560b442a2e27879ca2dade, type: 2}
+  - {fileID: 11400000, guid: 1e21736622acb914e8ece03bca816d88, type: 2}
   width: 10
   height: 10
   cellSize: 1
+  unlockCost: 10
 --- !u!4 &1968964539
 Transform:
   m_ObjectHideFlags: 0

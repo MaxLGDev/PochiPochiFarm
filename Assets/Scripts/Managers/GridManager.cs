@@ -1,21 +1,33 @@
+using System.Collections.Generic;
+using System.Linq;
+
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
+
+    [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private FarmLayout farmLayout;
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private Transform gridParent;
+    [SerializeField] private List<ZoneData> zonesData;
 
     [SerializeField] private int width = 10;
     [SerializeField] private int height = 10;
 
     [SerializeField] private float cellSize = 1f;
 
+    //TEMPORARY PLACEHOLDER FOR TEST
+    [SerializeField] private int unlockCost = 10;
+
     private Tile[,] grid;
+
+    private List<ZoneRuntime> zones;
+
 
     private void Awake()
     {
-        if(farmLayout == null)
+        if (farmLayout == null)
         {
             Debug.LogError("FarmLayout is not assigned");
             return;
@@ -23,14 +35,68 @@ public class GridManager : MonoBehaviour
 
         grid = new Tile[width, height];
 
+        zones = zonesData.Select(z => new ZoneRuntime(z)).ToList();
+        zones[0].Unlock(); // Unlock the first zone by default
         GenerateGrid();
     }
 
+    private bool TryUnlockTile(Vector2Int position)
+    {
+        if (!IsUnlockedAt(position))
+            return false;
+
+        if (!IsAdjacentToUnlocked(position))
+            return false;
+
+        if (!HasEnoughCoins(position))
+            return false;
+
+        resourceManager.TrySpendCoins(unlockCost);
+
+        return true;
+    }
+    private bool IsUnlockedAt(Vector2Int position)
+    {
+        foreach (ZoneRuntime zone in zones)
+        {
+            if (zone.IsPositionInZone(position))
+                return zone.IsUnlocked;
+        }
+
+        Debug.Log("Zone has not been unlocked yet");
+        return false;
+    }
+
+    private bool IsAdjacentToUnlocked(Vector2Int position)
+    {
+        Vector2Int[] adjacentPositions = new Vector2Int[]
+        {
+            new Vector2Int(position.x + 1, position.y),
+            new Vector2Int(position.x - 1, position.y),
+            new Vector2Int(position.x, position.y + 1),
+            new Vector2Int(position.x, position.y - 1)
+        };
+        foreach (Vector2Int adjacent in adjacentPositions)
+        {
+            Tile adjacentTile = GetTileAt(adjacent);
+            if (adjacentTile != null && adjacentTile.IsUnlocked)
+                return true;
+        }
+        Debug.Log("No adjacent unlocked tiles found.");
+        return false;
+    }
+
+    private bool HasEnoughCoins(Vector2Int position)
+    {
+        return resourceManager.Coins >= unlockCost;
+    }
+
+
     private void GenerateGrid()
     {
-        for(int x = 0; x < width; x++)
+        for (int x = 0; x < width; x++)
         {
-            for(int y = 0; y < height; y++)
+            for (int y = 0; y < height; y++)
             {
                 Vector3 position = new Vector3(x * cellSize, y * cellSize, 0f);
                 Tile newTile = Instantiate(tilePrefab, position, Quaternion.identity, gridParent);
@@ -44,15 +110,50 @@ public class GridManager : MonoBehaviour
 
                 bool startUnlocked = (x == 0 && y == 0);
 
-                // TODO: Subscribe to newTile.OnHarvestRequested once ResourceManager exists
                 newTile.InitializeCrop(info.cropData, gridPosition, startUnlocked, info.tileSprite);
+                newTile.OnUnlockRequested += HandleUnlockRequested;
             }
         }
     }
 
+    private bool IsInsideBounds(Vector2Int position)
+    {
+        if (position.x >= 0 && position.x < width && position.y >= 0 && position.y < height)
+            return true;
+
+        return false;
+    }
+
+    private Tile GetTileAt(Vector2Int position)
+    {
+        if (!IsInsideBounds(position))
+        {
+            Debug.Log($"Position {position} is out of bounds.");
+            return null;
+        }
+
+        return grid[position.x, position.y];
+    }
+
+    private void HandleUnlockRequested(Tile tile)
+    {
+        bool success = TryUnlockTile(tile.GridPosition);
+
+        if(success)
+            tile.UnlockTile();
+        if (!success)
+            Debug.Log("Cannot unlock tile.");
+    }
+
     private FarmInfo GetFarmInfoAt(Vector2Int position)
     {
-        foreach(FarmInfo info in farmLayout.tiles)
+        if (!IsInsideBounds(position))
+        {
+            Debug.Log("Position is out of bounds.");
+            return null;
+        }
+
+        foreach (FarmInfo info in farmLayout.tiles)
         {
             if (info.position == position)
                 return info;

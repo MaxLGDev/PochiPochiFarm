@@ -29,4 +29,23 @@ public class ResourceManager : MonoBehaviour
 
         return 0;
     }
+
+    public void AddCoins(int amount)
+    {
+        Coins += amount;
+        Debug.Log($"Added {amount} coins. Total coins: {Coins}");
+    }
+
+    public bool TrySpendCoins(int amount)
+    {
+        if (amount > Coins)
+        {
+            Debug.LogError($"Not enough coins to perform this action");
+            return false;
+        }
+
+        Coins -= amount;
+        Debug.Log($"Removed {amount} coins. Total coins: {Coins}");
+        return true;
+    }
 }

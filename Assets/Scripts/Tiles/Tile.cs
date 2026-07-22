@@ -5,6 +5,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 {
 
     public event System.Action<Tile> OnHarvestRequested;
+    public event System.Action<Tile> OnUnlockRequested;
 
     [Header("Sprites")]
     [SerializeField] private SpriteRenderer soilRenderer;
@@ -58,6 +59,12 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public void UnlockTile()
     {
+        if(IsUnlocked)
+        {
+            Debug.LogWarning("Tile is already unlocked.");
+            return;
+        }
+
         IsUnlocked = true;
         UpdateFogVisibility();
     }
@@ -66,7 +73,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         if(!IsUnlocked)
         {
-            Debug.Log("Tile is locked. Cannot interact.");
+            OnUnlockRequested?.Invoke(this);
             return;
         }
 
@@ -76,9 +83,6 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        Debug.Log("+1 coin");
         OnHarvestRequested?.Invoke(this);
     }
-
-    
 }

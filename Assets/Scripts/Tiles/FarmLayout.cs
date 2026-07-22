@@ -13,4 +13,5 @@ public class FarmInfo
 public class FarmLayout : ScriptableObject
 {
     public List<FarmInfo> tiles;
+    //public int UnlockCost { get; private set;  }
 }
