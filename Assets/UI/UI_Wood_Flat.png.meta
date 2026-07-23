@@ -1,0 +1,952 @@
+fileFormatVersion: 2
+guid: a41487ee73f219a4ca70414e991351e8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5873201159375414366
+    second: UI_Wood_Flat_0
+  - first:
+      213: 3291397516157199354
+    second: UI_Wood_Flat_1
+  - first:
+      213: 5028691757736502005
+    second: UI_Wood_Flat_2
+  - first:
+      213: 7896532015447207788
+    second: UI_Wood_Flat_3
+  - first:
+      213: -8735736400714684711
+    second: UI_Wood_Flat_4
+  - first:
+      213: 6090597072225850594
+    second: UI_Wood_Flat_5
+  - first:
+      213: -7223450941641068568
+    second: UI_Wood_Flat_6
+  - first:
+      213: -7524215401649461680
+    second: UI_Wood_Flat_7
+  - first:
+      213: -6137507615350579326
+    second: UI_Wood_Flat_8
+  - first:
+      213: -3205408211247850181
+    second: UI_Wood_Flat_9
+  - first:
+      213: 760868551741172214
+    second: UI_Wood_Flat_10
+  - first:
+      213: 2081501348102835809
+    second: UI_Wood_Flat_11
+  - first:
+      213: -4536367955821801186
+    second: UI_Wood_Flat_12
+  - first:
+      213: -397888466498903752
+    second: UI_Wood_Flat_13
+  - first:
+      213: -5098074985544754245
+    second: UI_Wood_Flat_14
+  - first:
+      213: -7679440974370754527
+    second: UI_Wood_Flat_15
+  - first:
+      213: -5729524927075030760
+    second: UI_Wood_Flat_16
+  - first:
+      213: -3287953595244404173
+    second: UI_Wood_Flat_17
+  - first:
+      213: -6755690755199870150
+    second: UI_Wood_Flat_18
+  - first:
+      213: -7935824180723250468
+    second: UI_Wood_Flat_19
+  - first:
+      213: 9120462068391197056
+    second: UI_Wood_Flat_20
+  - first:
+      213: 5764591981865916066
+    second: UI_Wood_Flat_21
+  - first:
+      213: -8443338935213209468
+    second: UI_Wood_Flat_22
+  - first:
+      213: -7026934913728592725
+    second: UI_Wood_Flat_23
+  - first:
+      213: 5117580539447892410
+    second: UI_Wood_Flat_24
+  - first:
+      213: 1060488605466605875
+    second: UI_Wood_Flat_25
+  - first:
+      213: -1036421240493666006
+    second: UI_Wood_Flat_26
+  - first:
+      213: -8454603951373441078
+    second: UI_Wood_Flat_27
+  - first:
+      213: -1905669807068459810
+    second: UI_Wood_Flat_28
+  - first:
+      213: 6575142050524634998
+    second: UI_Wood_Flat_29
+  - first:
+      213: -4975357078764635508
+    second: UI_Wood_Flat_30
+  - first:
+      213: -691588941428076749
+    second: UI_Wood_Flat_31
+  - first:
+      213: 8080084047324969939
+    second: UI_Wood_Flat_32
+  - first:
+      213: 2700322238389807816
+    second: UI_Wood_Flat_33
+  - first:
+      213: 6511071224015957861
+    second: UI_Wood_Flat_34
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UI_Wood_Flat_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 369
+        width: 78
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ab1401c9a23e7ea0800000000000000
+      internalID: -5873201159375414366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_1
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 369
+        width: 78
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af327253a946dad20800000000000000
+      internalID: 3291397516157199354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_2
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 368
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f2a1d0b28089c540800000000000000
+      internalID: 5028691757736502005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_3
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 368
+        width: 27
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6fea3ac70e169d60800000000000000
+      internalID: 7896532015447207788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_4
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 368
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d6a3f7070e64c680800000000000000
+      internalID: -8735736400714684711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_5
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 353
+        width: 78
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e45e0094c5268450800000000000000
+      internalID: 6090597072225850594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_6
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 353
+        width: 78
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8efe50bd3a521cb90800000000000000
+      internalID: -7223450941641068568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_7
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 352
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 056292b05fd949790800000000000000
+      internalID: -7524215401649461680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_8
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 352
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28f16cc775133daa0800000000000000
+      internalID: -6137507615350579326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_9
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 352
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3d9370073a1483d0800000000000000
+      internalID: -3205408211247850181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_10
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 352
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f96c43aae52f8a00800000000000000
+      internalID: 760868551741172214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_11
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 339
+        width: 78
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16e8a25a27af2ec10800000000000000
+      internalID: 2081501348102835809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_12
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 339
+        width: 78
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e11d6cef0659b01c0800000000000000
+      internalID: -4536367955821801186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_13
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 336
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 831ab1e3c8a6a7af0800000000000000
+      internalID: -397888466498903752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_14
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 336
+        width: 27
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbbdc48bfcfff39b0800000000000000
+      internalID: -5098074985544754245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_15
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 336
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1203d090f152d6590800000000000000
+      internalID: -7679440974370754527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_16
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 323
+        width: 78
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81962f56f63ac70b0800000000000000
+      internalID: -5729524927075030760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_17
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 323
+        width: 78
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3322d7d10a7de52d0800000000000000
+      internalID: -3287953595244404173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_18
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 320
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3bdbe32d07fe32a0800000000000000
+      internalID: -6755690755199870150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_19
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 320
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cda090414f94ed190800000000000000
+      internalID: -7935824180723250468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_20
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 320
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 089b1edcde3629e70800000000000000
+      internalID: 9120462068391197056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_21
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 320
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a6de2a8dd1ffff40800000000000000
+      internalID: 5764591981865916066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_22
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 149
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 488446029fb33da80800000000000000
+      internalID: -8443338935213209468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_23
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 287
+        width: 32
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba4ca6f1def4b7e90800000000000000
+      internalID: -7026934913728592725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_24
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 255
+        width: 32
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab95e33f26c450740800000000000000
+      internalID: 5117580539447892410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_25
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 223
+        width: 32
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 339bf2994cc97be00800000000000000
+      internalID: 1060488605466605875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_26
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 191
+        width: 32
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2194ba7f54ed91f0800000000000000
+      internalID: -1036421240493666006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_28
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 162
+        width: 14
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edc4f7a3863bd85e0800000000000000
+      internalID: -1905669807068459810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_30
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 130
+        width: 14
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8a3281f81bf3fab0800000000000000
+      internalID: -4975357078764635508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_32
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 65
+        width: 12
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dbfa1481a9322070800000000000000
+      internalID: 8080084047324969939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Wood_Flat_34
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 1
+        width: 12
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56f2db6f7c8fb5a50800000000000000
+      internalID: 6511071224015957861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 4c0d46fe8e3635245a9899bfa08a78bb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      UI_Wood_Flat_0: -5873201159375414366
+      UI_Wood_Flat_1: 3291397516157199354
+      UI_Wood_Flat_10: 760868551741172214
+      UI_Wood_Flat_11: 2081501348102835809
+      UI_Wood_Flat_12: -4536367955821801186
+      UI_Wood_Flat_13: -397888466498903752
+      UI_Wood_Flat_14: -5098074985544754245
+      UI_Wood_Flat_15: -7679440974370754527
+      UI_Wood_Flat_16: -5729524927075030760
+      UI_Wood_Flat_17: -3287953595244404173
+      UI_Wood_Flat_18: -6755690755199870150
+      UI_Wood_Flat_19: -7935824180723250468
+      UI_Wood_Flat_2: 5028691757736502005
+      UI_Wood_Flat_20: 9120462068391197056
+      UI_Wood_Flat_21: 5764591981865916066
+      UI_Wood_Flat_22: -8443338935213209468
+      UI_Wood_Flat_23: -7026934913728592725
+      UI_Wood_Flat_24: 5117580539447892410
+      UI_Wood_Flat_25: 1060488605466605875
+      UI_Wood_Flat_26: -1036421240493666006
+      UI_Wood_Flat_27: -8454603951373441078
+      UI_Wood_Flat_28: -1905669807068459810
+      UI_Wood_Flat_29: 6575142050524634998
+      UI_Wood_Flat_3: 7896532015447207788
+      UI_Wood_Flat_30: -4975357078764635508
+      UI_Wood_Flat_31: -691588941428076749
+      UI_Wood_Flat_32: 8080084047324969939
+      UI_Wood_Flat_33: 2700322238389807816
+      UI_Wood_Flat_34: 6511071224015957861
+      UI_Wood_Flat_4: -8735736400714684711
+      UI_Wood_Flat_5: 6090597072225850594
+      UI_Wood_Flat_6: -7223450941641068568
+      UI_Wood_Flat_7: -7524215401649461680
+      UI_Wood_Flat_8: -6137507615350579326
+      UI_Wood_Flat_9: -3205408211247850181
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
