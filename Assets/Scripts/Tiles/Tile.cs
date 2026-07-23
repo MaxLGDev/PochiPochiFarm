@@ -24,6 +24,25 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     
     public bool IsMature { get; private set; }
 
+    private void Update()
+    {
+        GrowCrop();
+    }
+
+    private void GrowCrop()
+    {
+        if (IsMature)
+            return;
+
+        GrowthTimer += Time.deltaTime;
+
+        if (GrowthTimer >= CropData.growthTime)
+        {
+            IsMature = true;
+            GrowthTimer = 0f; // Reset the timer to avoid overflow
+        }
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
@@ -44,7 +63,16 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         GrowthTimer = 0f;
         IsUnlocked = startUnlocked;
         IsAutomated = false;
-        IsMature = false;
+        
+        if(cropData.growthTime <= 0f)
+        {
+            Debug.LogWarning($"Crop {cropData.name} has a growth time of {cropData.growthTime}. It will be considered mature immediately.");
+            IsMature = true;
+        }
+        else
+        {
+            IsMature = false;
+        }
 
         soilRenderer.sprite = groundSprite;
         cropRenderer.sprite = cropData.cropSprite;
@@ -84,5 +112,11 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         }
 
         OnHarvestRequested?.Invoke(this);
+    }
+
+    public void ResetGrowth()
+    {
+        GrowthTimer = 0f;
+        IsMature = false;
     }
 }

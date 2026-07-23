@@ -7,6 +7,7 @@ public class GridManager : MonoBehaviour
 {
 
     [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private WaterManager waterManager;
     [SerializeField] private FarmLayout farmLayout;
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private Transform gridParent;
@@ -38,9 +39,6 @@ public class GridManager : MonoBehaviour
         zones = zonesData.Select(z => new ZoneRuntime(z)).ToList();
         zones[0].Unlock(); // Unlock the first zone by default
         GenerateGrid();
-
-        //ONLY UNCOMMENT FOR TESTING PURPOSES
-        resourceManager.AddCoins(9999);
     }
 
     private bool TryUnlockTile(Vector2Int position)
@@ -125,6 +123,7 @@ public class GridManager : MonoBehaviour
 
                 bool startUnlocked = (x == 0 && y == 0);
 
+                newTile.OnHarvestRequested += HandleHarvestRequested;
                 newTile.InitializeCrop(info.cropData, gridPosition, startUnlocked, info.tileSprite);
                 newTile.OnUnlockRequested += HandleUnlockRequested;
             }
@@ -158,6 +157,19 @@ public class GridManager : MonoBehaviour
             tile.UnlockTile();
         if (!success)
             Debug.Log("Cannot unlock tile.");
+    }
+
+    private void HandleHarvestRequested(Tile tile)
+    { 
+        if(waterManager.Water <= 0)
+        {
+            Debug.Log("Not enough water to harvest.");
+            return;
+        }
+
+        waterManager.SpendWater(1);
+        resourceManager.HandleHarvest(tile);
+        tile.ResetGrowth();
     }
 
     private FarmInfo GetFarmInfoAt(Vector2Int position)
