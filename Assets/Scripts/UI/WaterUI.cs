@@ -51,7 +51,7 @@ public class WaterUI : MonoBehaviour
     {
         if(waterManager.Water == waterManager.MaxWater)
         {
-            waterSlider.value = waterManager.PassiveWaterInterval;
+            waterSlider.value = 0f;
             return;
         }
 
