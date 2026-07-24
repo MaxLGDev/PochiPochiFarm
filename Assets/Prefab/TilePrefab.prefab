@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607f5d0b30c84bb42851ebc718c1ec1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
+  punchAnim: {fileID: 4681016580881300231}
   soilRenderer: {fileID: 74138344643098413}
   cropRenderer: {fileID: 2921914963320175895}
   fogRenderer: {fileID: 5395524588232099566}
@@ -258,6 +259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2585030139890756093}
   - component: {fileID: 2921914963320175895}
+  - component: {fileID: 4681016580881300231}
   m_Layer: 0
   m_Name: CropRend
   m_TagString: Untagged
@@ -339,6 +341,21 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &4681016580881300231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6414398133210884809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cac4fb63e0372d4b88c922b3010fbba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PunchAnim
+  maxScale: 4
+  punchUpDuration: 0.1
+  punchDownDuration: 0.1
 --- !u!1 &8690070933542232649
 GameObject:
   m_ObjectHideFlags: 0

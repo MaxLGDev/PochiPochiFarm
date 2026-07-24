@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Types of crops available in the game.
+/// </summary>
 public enum CropType
 {
     Dirt,
@@ -17,17 +20,35 @@ public enum CropType
     Tomato
 }
 
+/// <summary>
+/// Stores all data related to a crop.
+/// Used by tiles to determine appearance, growth, and rewards.
+/// </summary>
 [CreateAssetMenu(fileName = "New Crop Data", menuName = "Crops/Crop")]
 public class CropData : ScriptableObject
 {
-    public string cropName;
-    public CropType cropType;
+    public string CropName;
+    public CropType CropType;
 
-    public Sprite cropSprite; // On the farm
-    public Sprite seedSprite; // In the shop
+    [Header("Sprites")]
 
-    public float growthTime; // Time in seconds for the crop to grow
-    public float requiredWater; // Amount of water required for the crop to grow
-    public float coinYield;
-    public float unlockCost; // Cost to unlock the crop
+    // Sprite displayed in the shop.
+    public Sprite SeedSprite;
+
+    // Sprites used throughout the crop's growth stages.
+    public Sprite[] GrowthSprites;
+
+    [Header("Gameplay")]
+
+    // Time in seconds for the crop to fully mature.
+    public float GrowthTime;
+
+    // Water required before the crop can grow.
+    public int RequiredWater;
+
+    // Coins earned when harvesting.
+    public int CoinYield;
+
+    // Cost to unlock this crop.
+    public int UnlockCost;
 }

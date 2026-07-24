@@ -3,8 +3,15 @@ using System.Linq;
 
 using UnityEngine;
 
+/// <summary>
+/// Manages the farm grid, including tile creation,
+/// harvesting, and unlocking.
+/// </summary>
 public class GridManager : MonoBehaviour
 {
+    //==========================================================================
+    // References
+    //==========================================================================
 
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private WaterManager waterManager;
@@ -13,18 +20,17 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform gridParent;
     [SerializeField] private List<ZoneData> zonesData;
 
+    //==========================================================================
+    // Grid Settings
+    //==========================================================================
+
     [SerializeField] private int width = 10;
     [SerializeField] private int height = 10;
 
     [SerializeField] private float cellSize = 1f;
 
-    //TEMPORARY PLACEHOLDER FOR TEST
-    [SerializeField] private int unlockCost = 10;
-
     private Tile[,] grid;
-
     private List<ZoneRuntime> zones;
-
 
     private void Awake()
     {
@@ -36,35 +42,50 @@ public class GridManager : MonoBehaviour
 
         grid = new Tile[width, height];
 
+        // Create runtime copies of the zones.
         zones = zonesData.Select(z => new ZoneRuntime(z)).ToList();
-        zones[0].Unlock(); // Unlock the first zone by default
+
+        // Unlock the starting zone.
+        zones[0].Unlock();
+
         GenerateGrid();
     }
 
-    private bool TryUnlockTile(Vector2Int position)
+    //==========================================================================
+    // Tile Unlocking
+    //==========================================================================
+
+    /// <summary>
+    /// Attempts to unlock the selected tile.
+    /// </summary>
+    private bool TryUnlockTile(Tile tile)
     {
-        if (!IsUnlockedAt(position))
+        if (!IsUnlockedAt(tile.GridPosition))
         {
             Debug.Log("Zone not unlocked");
             return false;
         }
 
-        if (!IsAdjacentToUnlocked(position))
+        if (!IsAdjacentToUnlocked(tile.GridPosition))
         {
             Debug.Log("Not adjacent to an unlocked tile");
             return false;
         }
 
-        if (!HasEnoughCoins(position))
+        if (!HasEnoughCoins(tile))
         {
             Debug.Log("Not enough coins");
             return false;
         }
 
-        resourceManager.TrySpendCoins(unlockCost);
+        resourceManager.TrySpendCoins(tile.CropData.UnlockCost);
 
         return true;
     }
+
+    /// <summary>
+    /// Returns whether the zone containing the position is unlocked.
+    /// </summary>
     private bool IsUnlockedAt(Vector2Int position)
     {
         foreach (ZoneRuntime zone in zones)
@@ -77,31 +98,46 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Checks if the tile is adjacent to an unlocked tile.
+    /// </summary>
     private bool IsAdjacentToUnlocked(Vector2Int position)
     {
-        Vector2Int[] adjacentPositions = new Vector2Int[]
+        Vector2Int[] adjacentPositions =
         {
             new Vector2Int(position.x + 1, position.y),
             new Vector2Int(position.x - 1, position.y),
             new Vector2Int(position.x, position.y + 1),
             new Vector2Int(position.x, position.y - 1)
         };
+
         foreach (Vector2Int adjacent in adjacentPositions)
         {
             Tile adjacentTile = GetTileAt(adjacent);
+
             if (adjacentTile != null && adjacentTile.IsUnlocked)
                 return true;
         }
+
         Debug.Log("No adjacent unlocked tiles found.");
         return false;
     }
 
-    private bool HasEnoughCoins(Vector2Int position)
+    /// <summary>
+    /// Returns whether the player has enough coins to unlock the tile.
+    /// </summary>
+    private bool HasEnoughCoins(Tile tile)
     {
-        return resourceManager.Coins >= unlockCost;
+        return resourceManager.Coins >= tile.CropData.UnlockCost;
     }
 
+    //==========================================================================
+    // Grid Generation
+    //==========================================================================
 
+    /// <summary>
+    /// Creates every tile in the farm grid.
+    /// </summary>
     private void GenerateGrid()
     {
         float xOffset = -(width * cellSize) / 2f + cellSize / 2f;
@@ -112,32 +148,43 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 Vector3 position = new Vector3(x * cellSize + xOffset, y * cellSize + yOffset, 0f);
+
                 Tile newTile = Instantiate(tilePrefab, position, Quaternion.identity, gridParent);
 
-                // Store the tile in the grid
+                // Store the tile for quick lookup.
                 grid[x, y] = newTile;
 
                 Vector2Int gridPosition = new(x, y);
-
                 FarmInfo info = GetFarmInfoAt(gridPosition);
 
                 bool startUnlocked = (x == 0 && y == 0);
 
                 newTile.OnHarvestRequested += HandleHarvestRequested;
-                newTile.InitializeCrop(info.cropData, gridPosition, startUnlocked, info.tileSprite);
                 newTile.OnUnlockRequested += HandleUnlockRequested;
+
+                newTile.InitializeCrop(info.cropData, gridPosition, startUnlocked, info.tileSprite);
             }
         }
     }
 
+    //==========================================================================
+    // Grid Helpers
+    //==========================================================================
+
+    /// <summary>
+    /// Returns whether the position is inside the grid.
+    /// </summary>
     private bool IsInsideBounds(Vector2Int position)
     {
-        if (position.x >= 0 && position.x < width && position.y >= 0 && position.y < height)
-            return true;
-
-        return false;
+        return position.x >= 0 &&
+               position.x < width &&
+               position.y >= 0 &&
+               position.y < height;
     }
 
+    /// <summary>
+    /// Returns the tile at the given position.
+    /// </summary>
     private Tile GetTileAt(Vector2Int position)
     {
         if (!IsInsideBounds(position))
@@ -149,29 +196,9 @@ public class GridManager : MonoBehaviour
         return grid[position.x, position.y];
     }
 
-    private void HandleUnlockRequested(Tile tile)
-    {
-        bool success = TryUnlockTile(tile.GridPosition);
-
-        if(success)
-            tile.UnlockTile();
-        if (!success)
-            Debug.Log("Cannot unlock tile.");
-    }
-
-    private void HandleHarvestRequested(Tile tile)
-    { 
-        if(waterManager.Water <= 0)
-        {
-            Debug.Log("Not enough water to harvest.");
-            return;
-        }
-
-        waterManager.SpendWater(1);
-        resourceManager.HandleHarvest(tile);
-        tile.ResetGrowth();
-    }
-
+    /// <summary>
+    /// Returns the farm data assigned to a grid position.
+    /// </summary>
     private FarmInfo GetFarmInfoAt(Vector2Int position)
     {
         if (!IsInsideBounds(position))
@@ -188,5 +215,42 @@ public class GridManager : MonoBehaviour
 
         Debug.LogError($"No CropData found at {position}");
         return null;
+    }
+
+    //==========================================================================
+    // Event Handlers
+    //==========================================================================
+
+    /// <summary>
+    /// Handles tile unlock requests.
+    /// </summary>
+    private void HandleUnlockRequested(Tile tile)
+    {
+        bool success = TryUnlockTile(tile);
+
+        if (success)
+            tile.UnlockTile();
+        else
+            Debug.Log("Cannot unlock tile.");
+    }
+
+    /// <summary>
+    /// Handles crop harvesting.
+    /// </summary>
+    private void HandleHarvestRequested(Tile tile)
+    {
+        if (tile.CropData.RequiredWater > 0)
+        {
+            if (waterManager.Water <= 0)
+            {
+                Debug.Log("Not enough water to harvest.");
+                return;
+            }
+
+            waterManager.SpendWater(tile.CropData.RequiredWater);
+        }
+
+        resourceManager.HandleHarvest(tile);
+        tile.ResetGrowth();
     }
 }

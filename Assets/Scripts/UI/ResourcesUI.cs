@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Updates the coin counter displayed in the UI.
+/// </summary>
 public class ResourcesUI : MonoBehaviour
 {
     [SerializeField] private ResourceManager resourceManager;
@@ -20,11 +23,15 @@ public class ResourcesUI : MonoBehaviour
         resourceManager.OnCoinsChanged -= UpdateCoinsUI;
     }
 
+    //==========================================================================
+    // UI
+    //==========================================================================
+
+    /// <summary>
+    /// Refreshes the displayed coin count.
+    /// </summary>
     private void UpdateCoinsUI(int newCoinCount)
     {
-        coinsText.text = newCoinCount.ToString();
-
-        // Update the UI to reflect the new water amount
         if (newCoinCount == 0)
         {
             coinsText.text = $"<color=red>{newCoinCount}/{resourceManager.MaxCoins}</color>";
