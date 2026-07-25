@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 130460576}
   - component: {fileID: 130460575}
   m_Layer: 5
-  m_Name: StatsHeader
+  m_Name: CropsHeader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3003,7 +3003,7 @@ GameObject:
   - component: {fileID: 1021320556}
   - component: {fileID: 1021320555}
   m_Layer: 5
-  m_Name: StatsText
+  m_Name: CropsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5662,7 +5662,6 @@ MonoBehaviour:
   width: 10
   height: 10
   cellSize: 4.75
-  unlockCost: 10
 --- !u!4 &1968964539
 Transform:
   m_ObjectHideFlags: 0
