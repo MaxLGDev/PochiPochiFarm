@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Linq;
 using System;
 using System.Collections.Generic;
 
@@ -163,7 +163,7 @@ public class ResourceManager : MonoBehaviour
             return 0;
         }
 
-        int maxCropsToSell = Mathf.FloorToInt(coinRoom / crop.CoinYield);
+        int maxCropsToSell = Mathf.CeilToInt((float)coinRoom / crop.CoinYield);
         int maxCropsSold = Mathf.Min(maxCropsToSell, GetCropCount(crop), amountRequested);
 
         if (maxCropsSold <= 0)
@@ -176,5 +176,16 @@ public class ResourceManager : MonoBehaviour
         AddCoins(crop.CoinYield * maxCropsSold);
 
         return maxCropsSold;
+    }
+
+    public void SellAllCrops()
+    {
+        // Get all crops we have data for, sorted by yield ascending
+        var sortedCrops = cropInventory.Keys.OrderBy(crop => crop.CoinYield);
+
+        foreach (CropData crop in sortedCrops)
+        {
+            TrySellCrops(crop, GetCropCount(crop));
+        }
     }
 }

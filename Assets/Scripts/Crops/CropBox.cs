@@ -7,6 +7,7 @@ public class CropBox : MonoBehaviour
     [SerializeField] private SellCrops sellCropsPanel;
     [SerializeField] private TextMeshProUGUI cropsCount;
     [SerializeField] private TextMeshProUGUI cropsName;
+    [SerializeField] private Sprite cropIcon;
     [SerializeField] private ResourceManager resourceManager;
 
     private void Awake()
@@ -27,6 +28,8 @@ public class CropBox : MonoBehaviour
 
     public void OpenSellPanel()
     {
+        sellCropsPanel.gameObject.SetActive(true);
+
         if (sellCropsPanel != null)
         {
             sellCropsPanel.Open(cropData);
