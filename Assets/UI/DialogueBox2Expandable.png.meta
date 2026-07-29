@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f72bc45921784c24a804f487cd2434eb
+guid: 659d45817a5bc3b46aef61037ef1ea8d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6058388287502534815
-    second: IconBorder_0
+      213: -5899801857765911707
+    second: DialogueBox2Expandable_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,13 +46,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
-  spriteBorder: {x: 30, y: 24, z: 31, w: 27}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -101,7 +101,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IconBorder_0
+      name: DialogueBox2Expandable_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 63
-        height: 53
+        width: 89
+        height: 54
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 18, y: 13, z: 18, w: 15}
+      border: {x: 63, y: 13, z: 19, w: 21}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 167360483f74ceba0800000000000000
-      internalID: -6058388287502534815
+      spriteID: 5635ca60871bf1ea0800000000000000
+      internalID: -5899801857765911707
       vertices: []
       indices: 
       edges: []
@@ -138,8 +138,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c306c6717dd5397438f5203272ddfb7b
-    internalID: 1619950155
+    spriteID: b8975e031cee4454da7f39b39c5639e7
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IconBorder_0: -6058388287502534815
+      DialogueBox2Expandable_0: -5899801857765911707
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
