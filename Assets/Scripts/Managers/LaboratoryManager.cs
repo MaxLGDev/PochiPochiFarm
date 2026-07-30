@@ -1,53 +1,91 @@
 using System.Collections.Generic;
-
 using UnityEngine;
 
+/// <summary>
+/// Stores the research and automation state of a crop.
+/// </summary>
 public class LabState
 {
     public bool IsResearched { get; private set; }
     public bool IsAutomated { get; private set; }
-    public float ResearchTimer { get; private set; }
 
+    public float ResearchTimer { get; private set; }
+    public float AutomationTimer { get; private set; }
+
+    /// <summary>
+    /// Resets the research timer.
+    /// </summary>
     public void StartResearch() => ResearchTimer = 0f;
+
+    /// <summary>
+    /// Advances the research timer.
+    /// </summary>
     public void ProgressResearch() => ResearchTimer += Time.deltaTime;
 
+    /// <summary>
+    /// Resets the automation timer.
+    /// </summary>
+    public void StartAutomation() => AutomationTimer = 0f;
+
+    /// <summary>
+    /// Advances the automation timer.
+    /// </summary>
+    public void ProgressAutomation() => AutomationTimer += Time.deltaTime;
+
+    /// <summary>
+    /// Marks the crop as researched.
+    /// </summary>
     public void FlagCropAsResearched() => IsResearched = true;
+
+    /// <summary>
+    /// Marks the crop as automated.
+    /// </summary>
     public void FlagCropAsAutomated() => IsAutomated = true;
 }
 
+/// <summary>
+/// Manages crop research and automation.
+/// </summary>
 public class LaboratoryManager : MonoBehaviour
 {
-    private CropData currentCrop;
+    //==========================================================================
+    // References
+    //==========================================================================
+
     [SerializeField] private ResourceManager resourceManager;
 
-    [SerializeField] List<CropData> researchableCrops;
-    Dictionary<CropData, LabState> cropsResearch = new Dictionary<CropData, LabState>();
+    //==========================================================================
+    // Research Data
+    //==========================================================================
+
+    [SerializeField] private List<CropData> researchableCrops;
+
+    private readonly Dictionary<CropData, LabState> cropsResearch = new();
+
+    private CropData currentResearchingCrop;
+    private CropData currentAutomatingCrop;
 
     private void Start()
     {
-        currentCrop = null;
+        currentResearchingCrop = null;
 
         foreach (CropData crop in researchableCrops)
             cropsResearch[crop] = new LabState();
     }
 
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (currentCrop == null)
-            return;
-
-        LabState state = cropsResearch[currentCrop];
-        state.ProgressResearch();
-
-        if (state.ResearchTimer >= currentCrop.ResearchDuration)
-        {
-            state.FlagCropAsResearched();
-            currentCrop = null;
-        }
+        UpdateResearchProgress();
+        UpdateAutomationProgress();
     }
 
+    //==========================================================================
+    // Research
+    //==========================================================================
+
+    /// <summary>
+    /// Starts researching the selected crop.
+    /// </summary>
     public void StartResearching(CropData crop)
     {
         LabState state = cropsResearch[crop];
@@ -55,15 +93,116 @@ public class LaboratoryManager : MonoBehaviour
         if (state.IsResearched)
             return;
 
-        if (currentCrop != null)
+        if (currentResearchingCrop != null)
             return;
 
         if (!resourceManager.TrySpendCoins(crop.ResearchCost))
             return;
 
-        currentCrop = crop;
+        currentResearchingCrop = crop;
         state.StartResearch();
     }
 
+    /// <summary>
+    /// Updates the active research progress.
+    /// </summary>
+    private void UpdateResearchProgress()
+    {
+        if (currentResearchingCrop == null)
+            return;
 
+        LabState state = cropsResearch[currentResearchingCrop];
+        state.ProgressResearch();
+
+        if (state.ResearchTimer >= currentResearchingCrop.ResearchDuration)
+        {
+            state.FlagCropAsResearched();
+            currentResearchingCrop = null;
+        }
+    }
+
+    /// <summary>
+    /// Returns whether a research is currently in progress.
+    /// </summary>
+    public bool IsResearching()
+    {
+        return currentResearchingCrop != null;
+    }
+
+    /// <summary>
+    /// Returns the current research progress as a value between 0 and 1.
+    /// </summary>
+    public float GetResearchProgress()
+    {
+        if (currentResearchingCrop == null)
+            return 0f;
+
+        LabState state = cropsResearch[currentResearchingCrop];
+        return state.ResearchTimer / currentResearchingCrop.ResearchDuration;
+    }
+
+    //==========================================================================
+    // Automation
+    //==========================================================================
+
+    /// <summary>
+    /// Starts automating the selected crop.
+    /// </summary>
+    public void StartAutomating(CropData crop)
+    {
+        LabState state = cropsResearch[crop];
+
+        if (!state.IsResearched)
+            return;
+
+        if (state.IsAutomated)
+            return;
+
+        if (currentAutomatingCrop != null)
+            return;
+
+        if (!resourceManager.TrySpendCoins(crop.AutomationCost))
+            return;
+
+        currentAutomatingCrop = crop;
+        state.StartAutomation();
+    }
+
+    /// <summary>
+    /// Updates the active automation progress.
+    /// </summary>
+    private void UpdateAutomationProgress()
+    {
+        if (currentAutomatingCrop == null)
+            return;
+
+        LabState state = cropsResearch[currentAutomatingCrop];
+        state.ProgressAutomation();
+
+        if (state.AutomationTimer >= currentAutomatingCrop.AutomationDuration)
+        {
+            state.FlagCropAsAutomated();
+            currentAutomatingCrop = null;
+        }
+    }
+
+    /// <summary>
+    /// Returns whether an automation is currently in progress.
+    /// </summary>
+    public bool IsAutomating()
+    {
+        return currentAutomatingCrop != null;
+    }
+
+    /// <summary>
+    /// Returns the current automation progress as a value between 0 and 1.
+    /// </summary>
+    public float GetAutomationProgress()
+    {
+        if (currentAutomatingCrop == null)
+            return 0f;
+
+        LabState state = cropsResearch[currentAutomatingCrop];
+        return state.AutomationTimer / currentAutomatingCrop.AutomationDuration;
+    }
 }

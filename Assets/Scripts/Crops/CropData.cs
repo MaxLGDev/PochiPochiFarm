@@ -53,6 +53,10 @@ public class CropData : ScriptableObject
     public int UnlockCost;
 
     // Duration for the research
-    public int ResearchDuration;
+    public float ResearchDuration;
     public int ResearchCost;
+
+    // Duration for the automation
+    public float AutomationDuration;
+    public int AutomationCost;
 }
