@@ -51,4 +51,8 @@ public class CropData : ScriptableObject
 
     // Cost to unlock this crop.
     public int UnlockCost;
+
+    // Duration for the research
+    public int ResearchDuration;
+    public int ResearchCost;
 }
