@@ -72,7 +72,7 @@ public class GridManager : MonoBehaviour
             return false;
         }
 
-        if (!HasEnoughCoins(tile))
+        if (!resourceManager.HasEnoughCoinsForTile(tile))
         {
             Debug.Log("Not enough coins");
             return false;
@@ -121,14 +121,6 @@ public class GridManager : MonoBehaviour
 
         Debug.Log("No adjacent unlocked tiles found.");
         return false;
-    }
-
-    /// <summary>
-    /// Returns whether the player has enough coins to unlock the tile.
-    /// </summary>
-    private bool HasEnoughCoins(Tile tile)
-    {
-        return resourceManager.Coins >= tile.CropData.UnlockCost;
     }
 
     //==========================================================================

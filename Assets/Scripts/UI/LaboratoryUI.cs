@@ -7,7 +7,15 @@ using UnityEngine.UI;
 /// </summary>
 public class LaboratoryUI : MonoBehaviour
 {
+    private CropData selectedCrop;
+
     [SerializeField] private LaboratoryManager labManager;
+    [SerializeField] private ResourceManager resourceManager;
+
+    [SerializeField] private Sprite coinIcon;
+    [SerializeField] private Image neededCropIcon;
+    [SerializeField] private TMP_Text neededCropAmount;
+    [SerializeField] private Button researchButton;
 
     [SerializeField] private Slider researchSlider;
     [SerializeField] private TMP_Text researchSliderText;
@@ -15,10 +23,32 @@ public class LaboratoryUI : MonoBehaviour
     [SerializeField] private Slider automationSlider;
     [SerializeField] private TMP_Text automationSliderText;
 
+
     private void Update()
     {
         UpdateResearchSliderUI();
         UpdateAutomationSliderUI();
+    }
+
+    public void OnCropSelected(int index)
+    {
+        Debug.Log($"Dropdown fired with index {index}");
+        CropData crop = labManager.GetCropAt(index);
+        selectedCrop = crop;
+        RefreshInfobox();
+    }
+
+    private void RefreshInfobox()
+    {
+        neededCropIcon.sprite = coinIcon;
+
+        bool canAfford = resourceManager.HasEnoughCoinsForResearch(selectedCrop.ResearchCost);
+
+        string color = canAfford ? "green" : "red";
+        neededCropAmount.text = $"<color={color}>{resourceManager.Coins}</color>/{selectedCrop.ResearchCost}";
+
+        researchButton.interactable = canAfford;
+        Debug.Log(selectedCrop.name + " " + selectedCrop.ResearchCost + " " + canAfford);
     }
 
     //==========================================================================

@@ -79,6 +79,8 @@ public class LaboratoryManager : MonoBehaviour
         UpdateAutomationProgress();
     }
 
+    public CropData GetCropAt(int index) => researchableCrops[index];
+
     //==========================================================================
     // Research
     //==========================================================================

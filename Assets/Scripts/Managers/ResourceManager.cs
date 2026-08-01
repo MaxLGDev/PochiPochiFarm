@@ -1,7 +1,9 @@
-using UnityEngine;
-using System.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Resources;
+
+using UnityEngine;
 
 /// <summary>
 /// Manages the player's resources, including coins and harvested crops.
@@ -34,6 +36,16 @@ public class ResourceManager : MonoBehaviour
         // Start with some coins for testing.
         AddCoins(20);
     }
+
+    /// <summary>
+    /// Returns whether the player has enough coins to unlock the tile.
+    /// </summary>
+    public bool HasEnoughCoinsForTile(Tile tile) => HasEnoughCoinsForResearch(tile.CropData.UnlockCost);
+
+    /// <summary>
+    /// Returns whether the player has enough coins to afford the research cost.
+    /// </summary>
+    public bool HasEnoughCoinsForResearch(int amount) => Coins >= amount;
 
     //==========================================================================
     // Crop Inventory
