@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// Types of crops available in the game.
@@ -20,6 +21,20 @@ public enum CropType
     Tomato
 }
 
+public enum ResourceType
+{
+    Coin,
+    Crop
+}
+
+[System.Serializable]
+public class CostEntry
+{
+    public ResourceType type;
+    public CropData crop;
+    public int amount;
+}
+
 /// <summary>
 /// Stores all data related to a crop.
 /// Used by tiles to determine appearance, growth, and rewards.
@@ -29,6 +44,9 @@ public class CropData : ScriptableObject
 {
     public string CropName;
     public CropType CropType;
+
+    public List<CostEntry> ResearchCost;
+    public List<CostEntry> AutomationCost;
 
     [Header("Sprites")]
 
@@ -54,9 +72,7 @@ public class CropData : ScriptableObject
 
     // Duration for the research
     public float ResearchDuration;
-    public int ResearchCost;
 
     // Duration for the automation
     public float AutomationDuration;
-    public int AutomationCost;
 }

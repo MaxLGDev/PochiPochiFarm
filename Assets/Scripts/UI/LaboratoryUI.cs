@@ -1,91 +1,258 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Updates the laboratory UI, including research and automation progress.
+/// Controls the Laboratory user interface.
+///
+/// Handles:
+/// - Research UI
+/// - Automation UI
+/// - Crop selection
+/// - Progress display
+/// - Button availability
+/// - UI animations when starting actions
 /// </summary>
 public class LaboratoryUI : MonoBehaviour
 {
-    private CropData selectedCrop;
+    /// <summary>
+    /// Stores every UI reference required for a laboratory action
+    /// (Research or Automation).
+    ///
+    /// Using a shared class prevents duplicated UI code.
+    /// </summary>
+    [Serializable]
+    private class ActionUI
+    {
+        /// <summary>
+        /// Crop currently selected in the dropdown.
+        /// </summary>
+        [NonSerialized] public CropData selectedCrop;
+
+        // Starts the action.
+        public Button button;
+
+        // Fade animation for the button.
+        public FadeAnim buttonFade;
+
+        // Fade animation for the progress bar.
+        public FadeAnim sliderFade;
+
+        // Progress bar.
+        public Slider slider;
+
+        // Progress percentage/status.
+        public TMP_Text sliderText;
+
+        // Crop selection dropdown.
+        public TMP_Dropdown dropdown;
+
+        /// <summary>
+        /// Reference to the currently running UI animation coroutine.
+        /// Allows restarting without duplicates.
+        /// </summary>
+        [NonSerialized] public Coroutine activeCoroutine;
+    }
+
+    [Serializable]
+    public class CostSlotUI
+    {
+        public GameObject slotRoot;
+        public Image slotIcon;
+        public TMP_Text slotText;
+    }
+
+    //==========================================================================
+    // References
+    //==========================================================================
 
     [SerializeField] private LaboratoryManager labManager;
     [SerializeField] private ResourceManager resourceManager;
 
+    [SerializeField] private List<CostSlotUI> researchCostSlots;
+    [SerializeField] private List<CostSlotUI> automationCostSlots;
+
+    // Coin icon used for both research and automation costs.
     [SerializeField] private Sprite coinIcon;
-    [SerializeField] private Image neededCropIcon;
-    [SerializeField] private TMP_Text neededCropAmount;
-    [SerializeField] private Button researchButton;
 
-    [SerializeField] private Slider researchSlider;
-    [SerializeField] private TMP_Text researchSliderText;
+    // UI for the research panel.
+    [SerializeField] private ActionUI researchUI;
 
-    [SerializeField] private Slider automationSlider;
-    [SerializeField] private TMP_Text automationSliderText;
-
+    // UI for the automation panel.
+    [SerializeField] private ActionUI automationUI;
 
     private void Update()
     {
-        UpdateResearchSliderUI();
-        UpdateAutomationSliderUI();
+        // Refresh both interfaces every frame.
+        UpdateResearchUI();
+        UpdateAutomationUI();
     }
 
-    public void OnCropSelected(int index)
+    /// <summary>
+    /// Called when the research dropdown selection changes.
+    /// </summary>
+    public void OnResearchCropSelected(int index)
     {
-        Debug.Log($"Dropdown fired with index {index}");
-        CropData crop = labManager.GetCropAt(index);
-        selectedCrop = crop;
-        RefreshInfobox();
+        researchUI.selectedCrop = labManager.GetCropAt(index);
     }
 
-    private void RefreshInfobox()
+    /// <summary>
+    /// Called when the automation dropdown selection changes.
+    /// </summary>
+    public void OnAutomationCropSelected(int index)
     {
-        neededCropIcon.sprite = coinIcon;
+        automationUI.selectedCrop = labManager.GetCropAt(index);
+    }
 
-        bool canAfford = resourceManager.HasEnoughCoinsForResearch(selectedCrop.ResearchCost);
+    /// <summary>
+    /// Starts the selected crop research.
+    /// </summary>
+    public void StartResearchUI()
+    {
+        StartActionUI(researchUI, labManager.StartResearching);
+    }
 
-        string color = canAfford ? "green" : "red";
-        neededCropAmount.text = $"<color={color}>{resourceManager.Coins}</color>/{selectedCrop.ResearchCost}";
+    /// <summary>
+    /// Starts automation for the selected crop.
+    /// </summary>
+    public void StartAutomationUI()
+    {
+        StartActionUI(automationUI, labManager.StartAutomating);
+    }
 
-        researchButton.interactable = canAfford;
-        Debug.Log(selectedCrop.name + " " + selectedCrop.ResearchCost + " " + canAfford);
+    /// <summary>
+    /// Plays the UI transition before beginning an action.
+    /// Prevents multiple start animations from running simultaneously.
+    /// </summary>
+    private void StartActionUI(ActionUI ui, Action<CropData> startAction)
+    {
+        if (ui.activeCoroutine != null)
+            StopCoroutine(ui.activeCoroutine);
+
+        ui.activeCoroutine = StartCoroutine(PlayStartActionRoutine(ui, startAction));
+
+        // Prevent repeated clicks while animation is playing.
+        ui.button.interactable = false;
+    }
+
+    /// <summary>
+    /// Plays the button/slider transition before notifying the laboratory manager.
+    /// </summary>
+    private IEnumerator PlayStartActionRoutine(ActionUI ui, Action<CropData> startAction)
+    {
+        ui.buttonFade.Fade(false);
+
+        yield return new WaitForSeconds(0.1f);
+
+        ui.sliderFade.Fade(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        // Begin the actual laboratory action.
+        startAction(ui.selectedCrop);
     }
 
     //==========================================================================
-    // UI
+    // UI Updates
     //==========================================================================
 
     /// <summary>
-    /// Refreshes the research progress bar.
+    /// Updates all research-related UI elements.
     /// </summary>
-    private void UpdateResearchSliderUI()
+    private void UpdateResearchUI()
     {
+        ActionUI ui = researchUI;
+
+        // No crop selected yet.
+        if (ui.selectedCrop == null)
+            return;
+
+        List<CostEntry> costs = ui.selectedCrop.ResearchCost;
+        bool canAfford = resourceManager.CanAfford(costs);
+
+        for (int i = 0; i < costs.Count; i++)
+        {
+            CostEntry entry = costs[i];
+            CostSlotUI slot = researchCostSlots[i];
+
+            slot.slotRoot.SetActive(true);
+            slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[entry.crop.GrowthSprites.Length - 1];
+
+            bool entryAffordable = resourceManager.HasEnough(entry);
+            string color = entryAffordable ? "green" : "red";
+            int currentAmount = entry.type == ResourceType.Coin ? resourceManager.Coins : resourceManager.GetCropCount(entry.crop);
+            slot.slotText.text = $"<color={color}>{currentAmount}</color>/{entry.amount}";
+        }
+
+        for (int i = costs.Count; i < researchCostSlots.Count; i++)
+            researchCostSlots[i].slotRoot.SetActive(false);
+
+        ui.button.interactable = canAfford && !labManager.IsResearching() && !labManager.IsCropResearched(ui.selectedCrop);
+
         if (!labManager.IsResearching())
         {
-            researchSlider.value = 0f;
-            researchSliderText.text = "NO RESEARCH";
+            // Idle state.
+            ui.slider.value = 0f;
+            ui.sliderText.text = "NO RESEARCH";
+            ui.dropdown.interactable = true;
         }
         else
         {
-            researchSlider.value = labManager.GetResearchProgress() * 100f;
-            researchSliderText.text = $"{researchSlider.value:F1}%";
+            // Active research state.
+            ui.dropdown.interactable = false;
+            ui.slider.value = labManager.GetResearchProgress() * 100f;
+            ui.sliderText.text = $"{ui.slider.value:F1}%";
         }
     }
 
     /// <summary>
-    /// Refreshes the automation progress bar.
+    /// Updates all automation-related UI elements.
     /// </summary>
-    private void UpdateAutomationSliderUI()
+    private void UpdateAutomationUI()
     {
+        ActionUI ui = automationUI;
+
+        if (ui.selectedCrop == null)
+            return;
+
+        List<CostEntry> costs = ui.selectedCrop.AutomationCost;
+        bool canAfford = resourceManager.CanAfford(costs);
+
+        for(int i = 0; i < costs.Count; i++)
+        {
+            CostEntry entry = costs[i];
+            CostSlotUI slot = automationCostSlots[i];
+
+            slot.slotRoot.SetActive(true);
+            slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[entry.crop.GrowthSprites.Length - 1];
+
+            bool entryAffordable = resourceManager.HasEnough(entry);
+            string color = entryAffordable ? "green" : "red";
+            int currentAmount = entry.type == ResourceType.Coin ? resourceManager.Coins : resourceManager.GetCropCount(entry.crop);
+            slot.slotText.text = $"<color={color}>{currentAmount}</color>/{entry.amount}";
+        }
+
+        for (int i = costs.Count; i < automationCostSlots.Count; i++)
+            automationCostSlots[i].slotRoot.SetActive(false);
+
+        ui.button.interactable = canAfford && !labManager.IsAutomating() && labManager.IsCropResearched(ui.selectedCrop);
+
         if (!labManager.IsAutomating())
         {
-            automationSlider.value = 0f;
-            automationSliderText.text = "NO AUTOMATION";
+            // Idle state.
+            ui.slider.value = 0f;
+            ui.sliderText.text = "NO AUTOMATION";
+            ui.dropdown.interactable = true;
         }
         else
         {
-            automationSlider.value = labManager.GetAutomationProgress() * 100f;
-            automationSliderText.text = $"{automationSlider.value:F1}%";
+            // Active automation state.
+            ui.dropdown.interactable = false;
+            ui.slider.value = labManager.GetAutomationProgress() * 100f;
+            ui.sliderText.text = $"{ui.slider.value:F1}%";
         }
     }
 }

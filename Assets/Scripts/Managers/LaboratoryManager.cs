@@ -98,7 +98,7 @@ public class LaboratoryManager : MonoBehaviour
         if (currentResearchingCrop != null)
             return;
 
-        if (!resourceManager.TrySpendCoins(crop.ResearchCost))
+        if (!resourceManager.SpendResources(crop.ResearchCost))
             return;
 
         currentResearchingCrop = crop;
@@ -143,6 +143,17 @@ public class LaboratoryManager : MonoBehaviour
         return state.ResearchTimer / currentResearchingCrop.ResearchDuration;
     }
 
+    public bool IsCropResearched(CropData crop)
+    {
+        if (crop == null)
+            return false;
+
+        if (!cropsResearch.ContainsKey(crop))
+            return false;
+
+        return cropsResearch[crop].IsResearched;
+    }
+
     //==========================================================================
     // Automation
     //==========================================================================
@@ -163,7 +174,7 @@ public class LaboratoryManager : MonoBehaviour
         if (currentAutomatingCrop != null)
             return;
 
-        if (!resourceManager.TrySpendCoins(crop.AutomationCost))
+        if (!resourceManager.SpendResources(crop.AutomationCost))
             return;
 
         currentAutomatingCrop = crop;
@@ -206,5 +217,16 @@ public class LaboratoryManager : MonoBehaviour
 
         LabState state = cropsResearch[currentAutomatingCrop];
         return state.AutomationTimer / currentAutomatingCrop.AutomationDuration;
+    }
+
+    public bool IsCropAutomated(CropData crop)
+    {
+        if (crop == null)
+            return false;
+
+        if (!cropsResearch.ContainsKey(crop))
+            return false;
+
+        return cropsResearch[crop].IsAutomated;
     }
 }

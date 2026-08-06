@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Resources;
 
 using UnityEngine;
 
@@ -40,12 +39,59 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// Returns whether the player has enough coins to unlock the tile.
     /// </summary>
-    public bool HasEnoughCoinsForTile(Tile tile) => HasEnoughCoinsForResearch(tile.CropData.UnlockCost);
+    public bool HasEnoughCoinsForTile(Tile tile) => HasEnoughCoinsLaboratory(tile.CropData.UnlockCost);
 
     /// <summary>
     /// Returns whether the player has enough coins to afford the research cost.
     /// </summary>
-    public bool HasEnoughCoinsForResearch(int amount) => Coins >= amount;
+    public bool HasEnoughCoinsLaboratory(int amount) => Coins >= amount;
+
+    public bool HasEnough(CostEntry entry)
+    {
+        switch (entry.type)
+        {
+            case ResourceType.Coin:
+                return Coins >= entry.amount;
+            case ResourceType.Crop:
+                return GetCropCount(entry.crop) >= entry.amount;
+            default:
+                return false;
+        }
+    }
+
+    public bool CanAfford(List<CostEntry> costs)
+    {
+        foreach (var entry in costs)
+        {
+            if (!HasEnough(entry))
+                return false;
+        }
+
+        return true;
+    }
+
+    public bool SpendResources(List<CostEntry> costs)
+    {
+        if (!CanAfford(costs))
+            return false;
+
+        foreach (var entry in costs)
+        {
+            switch (entry.type)
+            {
+                case ResourceType.Coin:
+                    Coins -= entry.amount;
+                    break;
+                case ResourceType.Crop:
+                    RemoveCrop(entry.crop, entry.amount);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return true;
+    }
 
     //==========================================================================
     // Crop Inventory
