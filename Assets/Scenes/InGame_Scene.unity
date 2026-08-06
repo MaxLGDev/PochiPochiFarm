@@ -1212,9 +1212,6 @@ MonoBehaviour:
   m_MultiSelect: 0
   m_Options:
     m_Options:
-    - m_Text: 
-      m_Image: {fileID: -5129541754429850415, guid: 0dd16fc25093aed4cbe7cf4ee9b0f1f8, type: 3}
-      m_Color: {r: 1, g: 1, b: 1, a: 1}
     - m_Text: Radish
       m_Image: {fileID: 21300000, guid: 51fda3e31c9f6a8408fe7661ccd6a2a7, type: 3}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10375,7 +10372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &883866737
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14066,7 +14063,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Radish
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b57b3343cafbe784097b1c6e4ce676bf, type: 2}
   m_sharedMaterial: {fileID: -8746955447195962384, guid: b57b3343cafbe784097b1c6e4ce676bf, type: 2}
@@ -14093,7 +14090,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 38.2
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18498,7 +18495,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5129541754429850415, guid: 0dd16fc25093aed4cbe7cf4ee9b0f1f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 51fda3e31c9f6a8408fe7661ccd6a2a7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
