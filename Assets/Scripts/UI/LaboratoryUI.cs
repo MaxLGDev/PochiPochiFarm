@@ -96,7 +96,15 @@ public class LaboratoryUI : MonoBehaviour
     /// </summary>
     public void OnResearchCropSelected(int index)
     {
-        researchUI.selectedCrop = labManager.GetCropAt(index);
+        if (researchUI.selectedCrop == null)
+            return;
+
+        if (index == 0)
+            researchUI.selectedCrop = null;
+        else
+            researchUI.selectedCrop = labManager.GetCropAt(index - 1);
+
+        Debug.Log(index);
     }
 
     /// <summary>
@@ -104,7 +112,13 @@ public class LaboratoryUI : MonoBehaviour
     /// </summary>
     public void OnAutomationCropSelected(int index)
     {
-        automationUI.selectedCrop = labManager.GetCropAt(index);
+        if (automationUI.selectedCrop == null)
+            return;
+
+        if (index == 0)
+            automationUI.selectedCrop = null;
+        else
+            automationUI.selectedCrop = labManager.GetCropAt(index - 1);
     }
 
     /// <summary>
