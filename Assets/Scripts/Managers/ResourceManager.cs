@@ -39,12 +39,12 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// Returns whether the player has enough coins to unlock the tile.
     /// </summary>
-    public bool HasEnoughCoinsForTile(Tile tile) => HasEnoughCoinsLaboratory(tile.CropData.UnlockCost);
+    public bool HasEnoughCoinsForTile(Tile tile) => HasEnoughCoins(tile.CropData.UnlockCost);
 
     /// <summary>
     /// Returns whether the player has enough coins to afford the research cost.
     /// </summary>
-    public bool HasEnoughCoinsLaboratory(int amount) => Coins >= amount;
+    public bool HasEnoughCoins(int amount) => Coins >= amount;
 
     public bool HasEnough(CostEntry entry)
     {

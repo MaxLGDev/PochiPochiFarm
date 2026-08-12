@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +36,8 @@ public class LaboratoryUI : MonoBehaviour
         // Starts the action.
         public Button button;
 
+        public TMP_Text buttonText;
+
         // Fade animation for the button.
         public FadeAnim buttonFade;
 
@@ -55,6 +58,10 @@ public class LaboratoryUI : MonoBehaviour
         /// Allows restarting without duplicates.
         /// </summary>
         [NonSerialized] public Coroutine activeCoroutine;
+
+        [NonSerialized] public bool completeFadePlayed;
+
+        public RainbowCyclingColor rainbowText;
     }
 
     [Serializable]
@@ -75,6 +82,8 @@ public class LaboratoryUI : MonoBehaviour
     [SerializeField] private List<CostSlotUI> researchCostSlots;
     [SerializeField] private List<CostSlotUI> automationCostSlots;
 
+    [SerializeField] private GameObject labPanel;
+
     // Coin icon used for both research and automation costs.
     [SerializeField] private Sprite coinIcon;
 
@@ -86,6 +95,8 @@ public class LaboratoryUI : MonoBehaviour
 
     private void Start()
     {
+        labPanel.SetActive(false);
+
         OnResearchCropSelected(0);
         OnAutomationCropSelected(0);
     }
@@ -153,17 +164,21 @@ public class LaboratoryUI : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
+        ui.slider.gameObject.SetActive(true);
         ui.sliderFade.Fade(true);
 
         yield return new WaitForSeconds(0.1f);
 
         // Begin the actual laboratory action.
         startAction(ui.selectedCrop);
+        ui.activeCoroutine = null;
     }
 
     //==========================================================================
     // UI Updates
     //==========================================================================
+
+    public void ToggleLabPanel() => labPanel.SetActive(!labPanel.activeSelf);
 
     /// <summary>
     /// Updates all research-related UI elements.
@@ -202,15 +217,42 @@ public class LaboratoryUI : MonoBehaviour
         {
             // Idle state.
             ui.slider.value = 0f;
-            ui.sliderText.text = "NO RESEARCH";
+
+            if (ui.activeCoroutine == null)
+            {
+                ui.slider.gameObject.SetActive(false);
+                ui.button.gameObject.SetActive(true);
+            }
+
             ui.dropdown.interactable = true;
+
+            if (labManager.IsCropResearched(ui.selectedCrop))
+            {
+                ui.rainbowText.enabled = true;
+                if(!ui.completeFadePlayed)
+                {
+                    ui.buttonFade.Fade(true);
+                    ui.completeFadePlayed = true;
+                }
+                ui.buttonText.text = "RESEARCHED";
+            }
+            else
+            {
+                ui.rainbowText.enabled = false;
+                ui.buttonText.color = Color.white;
+                ui.buttonText.text = "RESEARCH";
+            }
         }
         else
         {
             // Active research state.
+            ui.rainbowText.enabled = false;
+            ui.completeFadePlayed = false;
             ui.dropdown.interactable = false;
+            ui.button.gameObject.SetActive(false);
+            ui.slider.gameObject.SetActive(true);
             ui.slider.value = labManager.GetResearchProgress() * 100f;
-            ui.sliderText.text = $"{ui.slider.value:F1}%";
+            ui.sliderText.text = $"{ui.slider.value:F3}%";
         }
     }
 
@@ -250,15 +292,41 @@ public class LaboratoryUI : MonoBehaviour
         {
             // Idle state.
             ui.slider.value = 0f;
-            ui.sliderText.text = "NO AUTOMATION";
+
+            if (ui.activeCoroutine == null)
+            {
+                ui.slider.gameObject.SetActive(false);
+                ui.button.gameObject.SetActive(true);
+            }
+
             ui.dropdown.interactable = true;
+
+            if (labManager.IsCropAutomated(ui.selectedCrop))
+            {
+                ui.rainbowText.enabled = true;
+                if (!ui.completeFadePlayed)
+                {
+                    ui.buttonFade.Fade(true);
+                    ui.completeFadePlayed = true;
+                }
+                ui.buttonText.text = "AUTOMATED";
+            }
+            else
+            {
+                ui.rainbowText.enabled = false; 
+                ui.buttonText.color = Color.white;
+                ui.buttonText.text = "AUTOMATE";
+            }
         }
         else
         {
             // Active automation state.
+            ui.rainbowText.enabled = false;
             ui.dropdown.interactable = false;
+            ui.button.gameObject.SetActive(false);
+            ui.slider.gameObject.SetActive(true);
             ui.slider.value = labManager.GetAutomationProgress() * 100f;
-            ui.sliderText.text = $"{ui.slider.value:F1}%";
+            ui.sliderText.text = $"{ui.slider.value:F3}%";
         }
     }
 }

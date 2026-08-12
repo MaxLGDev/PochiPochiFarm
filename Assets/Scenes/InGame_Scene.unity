@@ -8637,7 +8637,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 757001857}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1177054179}
+        m_TargetAssemblyTypeName: LaboratoryUI, Assembly-CSharp
+        m_MethodName: ToggleLabPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &757001857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12740,6 +12752,7 @@ GameObject:
   - component: {fileID: 1116376550}
   - component: {fileID: 1116376552}
   - component: {fileID: 1116376551}
+  - component: {fileID: 1116376553}
   m_Layer: 5
   m_Name: LaboratoryButton
   m_TagString: Untagged
@@ -12805,6 +12818,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116376549}
   m_CullTransparentMesh: 1
+--- !u!114 &1116376553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116376549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1116376551}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1177054179}
+        m_TargetAssemblyTypeName: LaboratoryUI, Assembly-CSharp
+        m_MethodName: ToggleLabPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1140938971
 GameObject:
   m_ObjectHideFlags: 0
@@ -12917,8 +12986,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 6.1618}
-  m_SizeDelta: {x: 0, y: 0.7235}
+  m_AnchoredPosition: {x: 0, y: 2.2331}
+  m_SizeDelta: {x: 0, y: 4.4661}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1152546528
 MonoBehaviour:
@@ -12940,7 +13009,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: START RESEARCH
+  m_text: RESEARCH
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b57b3343cafbe784097b1c6e4ce676bf, type: 2}
   m_sharedMaterial: {fileID: -8746955447195962384, guid: b57b3343cafbe784097b1c6e4ce676bf, type: 2}
@@ -12967,12 +13036,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 88.4
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 90
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
@@ -13238,9 +13307,11 @@ MonoBehaviour:
   - slotRoot: {fileID: 910354287}
     slotIcon: {fileID: 1654915045}
     slotText: {fileID: 1528073146}
+  labPanel: {fileID: 1177054175}
   coinIcon: {fileID: 3570696057915082496, guid: 11cf0f11c25a7ea459cd78575ace12ed, type: 3}
   researchUI:
     button: {fileID: 2037311701}
+    buttonText: {fileID: 1152546528}
     buttonFade: {fileID: 2037311704}
     sliderFade: {fileID: 592862091}
     slider: {fileID: 592862089}
@@ -13248,6 +13319,7 @@ MonoBehaviour:
     dropdown: {fileID: 102191728}
   automationUI:
     button: {fileID: 1883893570}
+    buttonText: {fileID: 1305423395}
     buttonFade: {fileID: 1883893569}
     sliderFade: {fileID: 1883893569}
     slider: {fileID: 1266168918}
