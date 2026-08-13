@@ -52,6 +52,16 @@ public class GridManager : MonoBehaviour
         GenerateGrid();
     }
 
+    private void OnEnable()
+    {
+        labManager.OnCropAutomated += HandleCropAutomated;
+    }
+
+    private void OnDisable()
+    {
+        labManager.OnCropAutomated -= HandleCropAutomated;
+    }
+
     //==========================================================================
     // Tile Unlocking
     //==========================================================================
@@ -157,6 +167,7 @@ public class GridManager : MonoBehaviour
 
                 newTile.OnHarvestRequested += HandleHarvestRequested;
                 newTile.OnUnlockRequested += HandleUnlockRequested;
+                newTile.OnCropMatured += HandleCropMatured;
 
                 newTile.InitializeCrop(info.cropData, gridPosition, startUnlocked, info.tileSprite);
             }
@@ -254,5 +265,27 @@ public class GridManager : MonoBehaviour
 
         resourceManager.HandleHarvest(tile);
         tile.ResetGrowth();
+    }
+
+    private void HandleCropMatured(Tile tile)
+    {
+        if(!labManager.IsCropAutomated(tile.CropData))
+            return;
+
+        HandleHarvestRequested(tile);
+    }
+
+    private void HandleCropAutomated(CropData crop)
+    {
+        foreach(Tile tile in grid)
+        {
+            if (tile.CropData != crop)
+                continue;
+
+            if(!tile.IsMature)
+                continue;
+
+            HandleHarvestRequested(tile);
+        }
     }
 }

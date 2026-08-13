@@ -198,27 +198,37 @@ public class LaboratoryUI : MonoBehaviour
 
         List<CostEntry> costs = ui.selectedCrop.ResearchCost;
         bool canAfford = resourceManager.CanAfford(costs);
+        bool isDone = labManager.IsCropResearched(ui.selectedCrop);
+        bool isDoing = labManager.IsResearching();
 
-        for (int i = 0; i < costs.Count; i++)
+        if(isDone || isDoing)
         {
-            CostEntry entry = costs[i];
-            CostSlotUI slot = researchCostSlots[i];
+            for (int i = 0; i < researchCostSlots.Count; i++)
+                researchCostSlots[i].slotRoot.SetActive(false);
+        }
+        else
+        {
+            for (int i = 0; i < costs.Count; i++)
+            {
+                CostEntry entry = costs[i];
+                CostSlotUI slot = researchCostSlots[i];
 
-            slot.slotRoot.SetActive(true);
-            slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[entry.crop.GrowthSprites.Length - 1];
+                slot.slotRoot.SetActive(true);
+                slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[entry.crop.GrowthSprites.Length - 1];
 
-            bool entryAffordable = resourceManager.HasEnough(entry);
-            string color = entryAffordable ? "green" : "red";
-            int currentAmount = entry.type == ResourceType.Coin ? resourceManager.Coins : resourceManager.GetCropCount(entry.crop);
-            slot.slotText.text = $"<color={color}>{currentAmount}</color>/{entry.amount}";
+                bool entryAffordable = resourceManager.HasEnough(entry);
+                string color = entryAffordable ? "green" : "red";
+                int currentAmount = entry.type == ResourceType.Coin ? resourceManager.Coins : resourceManager.GetCropCount(entry.crop);
+                slot.slotText.text = $"<color={color}>{currentAmount}</color>/{entry.amount}";
+            }
         }
 
         for (int i = costs.Count; i < researchCostSlots.Count; i++)
             researchCostSlots[i].slotRoot.SetActive(false);
 
-        ui.button.interactable = canAfford && !labManager.IsResearching() && !labManager.IsCropResearched(ui.selectedCrop);
+        ui.button.interactable = canAfford && !isDoing && !isDone;
 
-        if (!labManager.IsResearching())
+        if (!isDoing)
         {
             // Idle state.
             ui.slider.value = 0f;
@@ -231,7 +241,7 @@ public class LaboratoryUI : MonoBehaviour
 
             ui.dropdown.interactable = true;
 
-            if (labManager.IsCropResearched(ui.selectedCrop))
+            if (isDone)
             {
                 ui.rainbowText.enabled = true;
                 if(!ui.completeFadePlayed)
@@ -273,27 +283,37 @@ public class LaboratoryUI : MonoBehaviour
 
         List<CostEntry> costs = ui.selectedCrop.AutomationCost;
         bool canAfford = resourceManager.CanAfford(costs);
+        bool isDoing = labManager.IsAutomating();
+        bool isDone = labManager.IsCropAutomated(ui.selectedCrop);
 
-        for(int i = 0; i < costs.Count; i++)
+        if(isDoing || isDone)
         {
-            CostEntry entry = costs[i];
-            CostSlotUI slot = automationCostSlots[i];
+            for (int i = 0; i < costs.Count; i++)
+                automationCostSlots[i].slotRoot.SetActive(false);
+        }
+        else
+        {
+            for (int i = 0; i < costs.Count; i++)
+            {
+                CostEntry entry = costs[i];
+                CostSlotUI slot = automationCostSlots[i];
 
-            slot.slotRoot.SetActive(true);
-            slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[entry.crop.GrowthSprites.Length - 1];
+                slot.slotRoot.SetActive(true);
+                slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[entry.crop.GrowthSprites.Length - 1];
 
-            bool entryAffordable = resourceManager.HasEnough(entry);
-            string color = entryAffordable ? "green" : "red";
-            int currentAmount = entry.type == ResourceType.Coin ? resourceManager.Coins : resourceManager.GetCropCount(entry.crop);
-            slot.slotText.text = $"<color={color}>{currentAmount}</color>/{entry.amount}";
+                bool entryAffordable = resourceManager.HasEnough(entry);
+                string color = entryAffordable ? "green" : "red";
+                int currentAmount = entry.type == ResourceType.Coin ? resourceManager.Coins : resourceManager.GetCropCount(entry.crop);
+                slot.slotText.text = $"<color={color}>{currentAmount}</color>/{entry.amount}";
+            }
         }
 
         for (int i = costs.Count; i < automationCostSlots.Count; i++)
             automationCostSlots[i].slotRoot.SetActive(false);
 
-        ui.button.interactable = canAfford && !labManager.IsAutomating() && labManager.IsCropResearched(ui.selectedCrop);
+        ui.button.interactable = canAfford && !isDoing && !isDone;
 
-        if (!labManager.IsAutomating())
+        if (!isDoing)
         {
             // Idle state.
             ui.slider.value = 0f;
@@ -306,7 +326,7 @@ public class LaboratoryUI : MonoBehaviour
 
             ui.dropdown.interactable = true;
 
-            if (labManager.IsCropAutomated(ui.selectedCrop))
+            if (isDone)
             {
                 ui.rainbowText.enabled = true;
                 if (!ui.completeFadePlayed)

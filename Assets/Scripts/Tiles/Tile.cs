@@ -1,5 +1,5 @@
 using System.Collections;
-
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public event System.Action<Tile> OnHarvestRequested;
     public event System.Action<Tile> OnUnlockRequested;
+    public event System.Action<Tile> OnCropMatured;
 
     //==========================================================================
     // References
@@ -84,7 +85,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         if (GrowthTimer >= CropData.GrowthTime)
         {
             IsMature = true;
-
+            OnCropMatured?.Invoke(this);
             punchAnim.PunchScale();
             StartCoroutine(BlinkCropColor(0.3f));
         }

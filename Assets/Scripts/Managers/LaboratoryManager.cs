@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -49,6 +50,8 @@ public class LabState
 /// </summary>
 public class LaboratoryManager : MonoBehaviour
 {
+    public event Action<CropData> OnCropAutomated;
+
     //==========================================================================
     // References
     //==========================================================================
@@ -206,6 +209,7 @@ public class LaboratoryManager : MonoBehaviour
         if (state.AutomationTimer >= currentAutomatingCrop.AutomationDuration)
         {
             state.FlagCropAsAutomated();
+            OnCropAutomated?.Invoke(currentAutomatingCrop);
             currentAutomatingCrop = null;
         }
     }

@@ -30,12 +30,6 @@ public class ResourceManager : MonoBehaviour
     // Stores the amount of each harvested crop.
     private Dictionary<CropData, int> cropInventory = new();
 
-    private void Awake()
-    {
-        // Start with some coins for testing.
-        AddCoins(20);
-    }
-
     /// <summary>
     /// Returns whether the player has enough coins to unlock the tile.
     /// </summary>
