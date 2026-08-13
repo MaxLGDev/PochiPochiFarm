@@ -21,6 +21,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     //==========================================================================
 
     [SerializeField] private PunchAnim punchAnim;
+    [SerializeField] private WiggleAnim cropWiggle;
+    [SerializeField] private WiggleAnim fogWiggle;
 
     [Header("Sprites")]
     [SerializeField] private SpriteRenderer soilRenderer;
@@ -139,6 +141,16 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         }
 
         OnHarvestRequested?.Invoke(this);
+    }
+
+    public void CropBlockAnimation()
+    {
+        cropWiggle.Wiggle();
+    }
+
+    public void FogBlockedAnimation()
+    {
+        fogWiggle.Wiggle();
     }
 
     //==========================================================================

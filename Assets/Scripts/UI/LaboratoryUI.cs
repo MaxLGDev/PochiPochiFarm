@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,6 +51,8 @@ public class LaboratoryUI : MonoBehaviour
         // Progress percentage/status.
         public TMP_Text sliderText;
 
+        public GameObject warningText;
+
         // Crop selection dropdown.
         public TMP_Dropdown dropdown;
 
@@ -92,6 +95,8 @@ public class LaboratoryUI : MonoBehaviour
 
     // UI for the automation panel.
     [SerializeField] private ActionUI automationUI;
+
+    [SerializeField] private float fadeWait = 0.2f;
 
     private void Start()
     {
@@ -162,12 +167,12 @@ public class LaboratoryUI : MonoBehaviour
     {
         ui.buttonFade.Fade(false);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(fadeWait);
 
         ui.slider.gameObject.SetActive(true);
         ui.sliderFade.Fade(true);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(fadeWait);
 
         // Begin the actual laboratory action.
         startAction(ui.selectedCrop);
@@ -309,10 +314,12 @@ public class LaboratoryUI : MonoBehaviour
                     ui.buttonFade.Fade(true);
                     ui.completeFadePlayed = true;
                 }
+                ui.warningText.SetActive(false);
                 ui.buttonText.text = "AUTOMATED";
             }
             else
             {
+                ui.warningText.SetActive(true);
                 ui.rainbowText.enabled = false; 
                 ui.buttonText.color = Color.white;
                 ui.buttonText.text = "AUTOMATE";

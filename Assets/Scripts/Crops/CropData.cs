@@ -44,6 +44,7 @@ public class CropData : ScriptableObject
 {
     public string CropName;
     public CropType CropType;
+    public bool startsResearched;
 
     public List<CostEntry> ResearchCost;
     public List<CostEntry> AutomationCost;

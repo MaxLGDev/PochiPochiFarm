@@ -70,4 +70,21 @@ public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerE
         transform.localPosition = targetPosition;
         text.color = targetColor;
     }
+
+    private void OnDisable()
+    {
+        if(animationCoroutine != null)
+        {
+            StopCoroutine(animationCoroutine);
+            animationCoroutine = null;
+        }
+
+        ResetVisual();
+    }
+
+    private void ResetVisual()
+    {
+        transform.localPosition = startPosition;
+        text.color = normalColor;
+    }
 }

@@ -14,6 +14,7 @@ public class GridManager : MonoBehaviour
     //==========================================================================
 
     [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private LaboratoryManager labManager;
     [SerializeField] private WaterManager waterManager;
     [SerializeField] private FarmLayout farmLayout;
     [SerializeField] private Tile tilePrefab;
@@ -63,18 +64,21 @@ public class GridManager : MonoBehaviour
         if (!IsUnlockedAt(tile.GridPosition))
         {
             Debug.Log("Zone not unlocked");
+            tile.FogBlockedAnimation();
             return false;
         }
 
         if (!IsAdjacentToUnlocked(tile.GridPosition))
         {
             Debug.Log("Not adjacent to an unlocked tile");
+            tile.FogBlockedAnimation();
             return false;
         }
 
         if (!resourceManager.HasEnoughCoinsForTile(tile))
         {
             Debug.Log("Not enough coins");
+            tile.FogBlockedAnimation();
             return false;
         }
 
@@ -231,6 +235,12 @@ public class GridManager : MonoBehaviour
     /// </summary>
     private void HandleHarvestRequested(Tile tile)
     {
+        if(!labManager.IsCropResearched(tile.CropData))
+        {
+            tile.CropBlockAnimation();
+            return;
+        }
+
         if (tile.CropData.RequiredWater > 0)
         {
             if (waterManager.Water <= 0)

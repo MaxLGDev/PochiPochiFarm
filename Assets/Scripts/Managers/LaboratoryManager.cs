@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -53,6 +54,7 @@ public class LaboratoryManager : MonoBehaviour
     //==========================================================================
 
     [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private FarmLayout farmLayout;
 
     //==========================================================================
     // Research Data
@@ -69,8 +71,17 @@ public class LaboratoryManager : MonoBehaviour
     {
         currentResearchingCrop = null;
 
-        foreach (CropData crop in researchableCrops)
-            cropsResearch[crop] = new LabState();
+        var allCrops = farmLayout.tiles.Select(t => t.cropData).Distinct();
+
+        foreach (CropData crop in allCrops)
+        {
+            LabState state = new LabState();
+
+            if (crop.startsResearched)
+                state.FlagCropAsResearched();
+
+            cropsResearch[crop] = state;
+        }
     }
 
     private void Update()

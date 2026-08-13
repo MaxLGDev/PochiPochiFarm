@@ -80,7 +80,7 @@ public class ResourceManager : MonoBehaviour
             switch (entry.type)
             {
                 case ResourceType.Coin:
-                    Coins -= entry.amount;
+                    TrySpendCoins(entry.amount);
                     break;
                 case ResourceType.Crop:
                     RemoveCrop(entry.crop, entry.amount);
