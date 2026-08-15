@@ -14,6 +14,7 @@ public class ResourceManager : MonoBehaviour
     //==========================================================================
 
     public event Action<int> OnCoinsChanged;
+    public event Action<int> OnCoinsEarned;
     public event Action<CropData, int> OnCropChanged;
 
     //==========================================================================
@@ -156,6 +157,7 @@ public class ResourceManager : MonoBehaviour
 
         Debug.Log($"Added {amount} coins. Total coins: {Coins}");
         OnCoinsChanged?.Invoke(Coins);
+        OnCoinsEarned?.Invoke(Coins);
     }
 
     /// <summary>

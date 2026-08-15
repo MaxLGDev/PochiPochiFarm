@@ -317,7 +317,7 @@ public class LaboratoryUI : MonoBehaviour
         {
             // Idle state.
             ui.slider.value = 0f;
-
+             
             if (ui.activeCoroutine == null)
             {
                 ui.slider.gameObject.SetActive(false);
