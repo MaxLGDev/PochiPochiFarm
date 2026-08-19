@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public enum ObjectiveType
@@ -17,9 +18,24 @@ class ObjState
 {
     public int Progress { get; private set; }
     public bool IsComplete { get; private set; }
+    public bool IsClaimed { get; private set; }
 
-    public void IncreaseProgress(int amount) => Progress += amount;
+    public void IncreaseProgress(int amount, int target)
+    {
+        Progress += amount;
+
+        if(Progress >= target)
+            SetObjectiveComplete();
+    }
+
     public void SetObjectiveComplete() => IsComplete = true;
+    public void SetObjectiveClaimed()
+    {
+        if (!IsComplete)
+            return;
+
+        IsClaimed = true;
+    }
 }
 
 [Serializable]
@@ -31,6 +47,8 @@ public class Chapter
 
 public class JournalManager : MonoBehaviour
 {
+    public event Action<ObjData> OnObjectiveCompleted;
+
     [SerializeField] private GridManager gridManager;
     [SerializeField] private LaboratoryManager labManager;
     [SerializeField] private ResourceManager resourceManager;
@@ -39,6 +57,7 @@ public class JournalManager : MonoBehaviour
     [SerializeField] List<Chapter> chaptersList;
 
     Dictionary<ObjData, ObjState> objectivesStates = new();
+    Dictionary<ObjData, Chapter> objectiveToChapter = new();
 
     private void Awake()
     {
@@ -49,14 +68,10 @@ public class JournalManager : MonoBehaviour
                 ObjState state = new ObjState();
 
                 objectivesStates[obj] = state;
-
-                
+                objectiveToChapter[obj] = chap;
             }
         }
-
-        Debug.Log(objectivesStates.Count);
     }
-
 
     private void OnEnable()
     {
@@ -68,18 +83,25 @@ public class JournalManager : MonoBehaviour
         resourceManager.OnCoinsEarned -= HandleCoinsEarned;
     }
 
+    public bool IsObjectiveComplete(ObjData obj) => objectivesStates[obj].IsComplete;
+    public int GetProgress(ObjData obj) => objectivesStates[obj].Progress;
+
     private void HandleCoinsEarned(int amount)
     {
         foreach(ObjData obj in objectivesStates.Keys)
         {
-            if(obj.Type == ObjectiveType.CoinsEarned)
+            if(obj.Type == ObjectiveType.CoinsEarned )
             {
-                objectivesStates[obj].IncreaseProgress(amount);
+                ObjState state = objectivesStates[obj];
 
-                if (objectivesStates[obj].Progress >= obj.Target)
-                    objectivesStates[obj].SetObjectiveComplete();
+                if (state.IsComplete)
+                    continue;
+
+                state.IncreaseProgress(amount, obj.Target);
+
+                if(state.IsComplete)
+                    OnObjectiveCompleted?.Invoke(obj);
             }
         }
     }
-
 }
