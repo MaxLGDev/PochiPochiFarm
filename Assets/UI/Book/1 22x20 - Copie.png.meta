@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cd2d64afca53c1248af20e21e4469946
+guid: ef0763a48594c69478587f661d8f8c1b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4916514817523440012
-    second: TopBar_0
+      213: 3665965793678933705
+    second: 1 22x20 - Copie_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -101,7 +101,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,23 +113,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TopBar_0
+      name: 1 22x20 - Copie_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 7
-        width: 170
-        height: 26
+        x: 0
+        y: 0
+        width: 22
+        height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 84, y: 11, z: 84, w: 15}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c89dd6f7d28fa3440800000000000000
-      internalID: 4916514817523440012
+      spriteID: 9ce37fa577020e230800000000000000
+      internalID: 3665965793678933705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1 22x20 - Copie_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 19
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfc22795321fb9944aa6a8df3800415d
+      internalID: -1590554280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1 22x20 - Copie_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 39
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fffb73bbc174d648b519003671ccf6b
+      internalID: 1483909353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1 22x20 - Copie_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 59
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec266ceb99703784ab3a827ed52afccf
+      internalID: -1656027240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1 22x20 - Copie_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 79
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc98e8353ac7ca24882c985ecabc6619
+      internalID: -1855236316
       vertices: []
       indices: 
       edges: []
@@ -138,7 +226,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 622bbb5013c0cff4f855f4695ef66773
+    spriteID: aaa0b6b021058da40a93a6291483d9bc
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +236,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TopBar_0: 4916514817523440012
+      1 22x20 - Copie_0: 3665965793678933705
+      1 22x20 - Copie_1: -1590554280
+      1 22x20 - Copie_2: 1483909353
+      1 22x20 - Copie_3: -1656027240
+      1 22x20 - Copie_4: -1855236316
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

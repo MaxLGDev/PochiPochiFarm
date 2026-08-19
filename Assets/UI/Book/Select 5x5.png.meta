@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cd2d64afca53c1248af20e21e4469946
+guid: b78d7275812b59643b60db84480d8404
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4916514817523440012
-    second: TopBar_0
+      213: 2162399346591092748
+    second: Select 5x5_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -101,7 +101,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TopBar_0
+      name: Select 5x5_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 7
-        width: 170
-        height: 26
+        x: 0
+        y: 0
+        width: 30
+        height: 5
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 84, y: 11, z: 84, w: 15}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c89dd6f7d28fa3440800000000000000
-      internalID: 4916514817523440012
+      spriteID: c005914bfb2620e10800000000000000
+      internalID: 2162399346591092748
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 622bbb5013c0cff4f855f4695ef66773
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TopBar_0: 4916514817523440012
+      Select 5x5_0: 2162399346591092748
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
