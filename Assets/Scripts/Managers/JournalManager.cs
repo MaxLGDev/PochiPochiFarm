@@ -133,4 +133,6 @@ public class JournalManager : MonoBehaviour
             }
         }
     }
+
+    public Chapter GetChapter(int index) => chaptersList[index];
 }

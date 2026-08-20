@@ -56,9 +56,9 @@ public class QuestRowUI : MonoBehaviour
         questObjNameText.text = objectiveData.Description;
 
         if (!journalManager.IsObjectiveComplete(objectiveData))
-            questObjGoalText.text = $"<color=red>{journalManager.GetProgress(objectiveData)}/{objectiveData.Target}</color>";
+            questObjGoalText.text = $"<color=red>{FormatNumber(journalManager.GetProgress(objectiveData))}/{FormatNumber(objectiveData.Target)}</color>";
         else
-            questObjGoalText.text = $"<color=green>{journalManager.GetProgress(objectiveData)}/{objectiveData.Target}</color>";
+            questObjGoalText.text = $"<color=green>{FormatNumber(journalManager.GetProgress(objectiveData))}/{FormatNumber(objectiveData.Target)}</color>";
 
         ToggleClaimedObjectivePanel();
         ToggleCompletedObjectivePanel();
@@ -113,9 +113,9 @@ public class QuestRowUI : MonoBehaviour
         questObjNameText.text = obj.Description;
 
         if (!journalManager.IsObjectiveComplete(obj))
-            questObjGoalText.text = $"<color=red>{journalManager.GetProgress(obj)}/{obj.Target}</color>";
+            questObjGoalText.text = $"<color=red>{FormatNumber(journalManager.GetProgress(obj))}/{FormatNumber(obj.Target)}</color>";
         else
-            questObjGoalText.text = $"<color=green>{journalManager.GetProgress(obj)}/{obj.Target}</color>";
+            questObjGoalText.text = $"<color=green>{FormatNumber(journalManager.GetProgress(obj))}/{FormatNumber(obj.Target)}</color>";
 
         RefreshDisplay();
     }
@@ -137,5 +137,16 @@ public class QuestRowUI : MonoBehaviour
             OnQuestClaimed?.Invoke();
         }
 
+    }
+
+    private string FormatNumber(int value)
+    {
+        if (value >= 1_000_000)
+            return $"{value / 1_000_000f:0.#}M";
+
+        if (value >= 1_000)
+            return $"{value / 1_000f:0.#}K";
+
+        return value.ToString();
     }
 }

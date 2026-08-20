@@ -239,7 +239,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.000030517578, y: 0.000015258789}
-  m_SizeDelta: {x: 0.000030518, y: 0}
+  m_SizeDelta: {x: 0.000030518, y: 823.8119}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &19343848
 MonoBehaviour:
@@ -1424,8 +1424,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 87988906}
+  - component: {fileID: 87988910}
   - component: {fileID: 87988908}
   - component: {fileID: 87988907}
+  - component: {fileID: 87988909}
   m_Layer: 5
   m_Name: Chapter1
   m_TagString: Untagged
@@ -1490,6 +1492,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87988905}
   m_CullTransparentMesh: 1
+--- !u!114 &87988909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87988905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 87988907}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 87988910}
+        m_TargetAssemblyTypeName: ChapterTabUI, Assembly-CSharp
+        m_MethodName: OnTabClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &87988910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87988905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8825d7ccb21fe354abd6a659eae2e20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterTabUI
+  journalManager: {fileID: 2014554203}
+  journalUI: {fileID: 867532019}
+  chapterIndex: 0
 --- !u!1 &94167477
 GameObject:
   m_ObjectHideFlags: 0
@@ -7433,8 +7506,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1663940105}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.44849062}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.000009536743, y: -22.9675}
   m_SizeDelta: {x: 0, y: 45.9352}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8677,9 +8750,9 @@ RectTransform:
   - {fileID: 1066815746}
   m_Father: {fileID: 19343847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 247.501, y: -688.50995}
   m_SizeDelta: {x: 486.99, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &494173131
@@ -9645,6 +9718,8 @@ GameObject:
   - component: {fileID: 538598175}
   - component: {fileID: 538598177}
   - component: {fileID: 538598176}
+  - component: {fileID: 538598179}
+  - component: {fileID: 538598178}
   m_Layer: 5
   m_Name: Chapter4
   m_TagString: Untagged
@@ -9709,6 +9784,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538598174}
   m_CullTransparentMesh: 1
+--- !u!114 &538598178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538598174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 538598176}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 538598179}
+        m_TargetAssemblyTypeName: ChapterTabUI, Assembly-CSharp
+        m_MethodName: OnTabClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &538598179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538598174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8825d7ccb21fe354abd6a659eae2e20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterTabUI
+  journalManager: {fileID: 2014554203}
+  journalUI: {fileID: 867532019}
+  chapterIndex: 3
 --- !u!1 &547347758
 GameObject:
   m_ObjectHideFlags: 0
@@ -10170,9 +10316,9 @@ RectTransform:
   - {fileID: 367799028}
   m_Father: {fileID: 19343847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 247.501, y: -504.77396}
   m_SizeDelta: {x: 486.99, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &590070696
@@ -10717,9 +10863,9 @@ RectTransform:
   - {fileID: 840138697}
   m_Father: {fileID: 19343847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 247.501, y: -321.038}
   m_SizeDelta: {x: 486.99, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &633238594
@@ -12813,9 +12959,9 @@ RectTransform:
   - {fileID: 581081699}
   m_Father: {fileID: 19343847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 247.501, y: -596.64197}
   m_SizeDelta: {x: 486.99, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &791791984
@@ -13039,9 +13185,9 @@ RectTransform:
   - {fileID: 112310076}
   m_Father: {fileID: 19343847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 247.501, y: -229.16998}
   m_SizeDelta: {x: 486.99, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &804615452
@@ -13952,7 +14098,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &867532016
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14025,14 +14171,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JournalUI
   journalManager: {fileID: 2014554203}
   journalPanel: {fileID: 867532015}
-  objectiveData: {fileID: 11400000, guid: a85ee77d2a0688545a41208052e077e8, type: 2}
-  objectiveCompletePanel: {fileID: 168080775}
-  objectiveClaimedPanel: {fileID: 1036969146}
-  objectiveCompleteButton: {fileID: 168080779}
+  introChapter: {fileID: 2005857211}
+  contentsChapters: {fileID: 371370141}
   clearedObjectivesCounterText: {fileID: 854324672}
   claimRewardsButton: {fileID: 299165577}
-  questObjNameText: {fileID: 522249315}
-  questObjGoalText: {fileID: 1583064072}
+  rowPrefab: {fileID: 1573677606603693100, guid: 311bd27a002be6741a738330f2c3edb2, type: 3}
+  rowParent: {fileID: 19343847}
 --- !u!1 &868192922
 GameObject:
   m_ObjectHideFlags: 0
@@ -15115,9 +15259,9 @@ RectTransform:
   - {fileID: 1961547096}
   m_Father: {fileID: 19343847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 247.501, y: -780.3779}
   m_SizeDelta: {x: 486.99, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &896011424
@@ -21088,9 +21232,9 @@ RectTransform:
   - {fileID: 969269246}
   m_Father: {fileID: 19343847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 247.501, y: -412.90598}
   m_SizeDelta: {x: 486.99, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1300939142
@@ -22353,6 +22497,8 @@ GameObject:
   - component: {fileID: 1336912234}
   - component: {fileID: 1336912236}
   - component: {fileID: 1336912235}
+  - component: {fileID: 1336912238}
+  - component: {fileID: 1336912237}
   m_Layer: 5
   m_Name: Chapter2
   m_TagString: Untagged
@@ -22417,6 +22563,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1336912233}
   m_CullTransparentMesh: 1
+--- !u!114 &1336912237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336912233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1336912235}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 538598179}
+        m_TargetAssemblyTypeName: ChapterTabUI, Assembly-CSharp
+        m_MethodName: OnTabClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1336912238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336912233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8825d7ccb21fe354abd6a659eae2e20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterTabUI
+  journalManager: {fileID: 2014554203}
+  journalUI: {fileID: 867532019}
+  chapterIndex: 1
 --- !u!1 &1338305395
 GameObject:
   m_ObjectHideFlags: 0
@@ -23374,9 +23591,9 @@ RectTransform:
   - {fileID: 1594269667}
   m_Father: {fileID: 19343847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 247.501, y: -137.302}
   m_SizeDelta: {x: 486.99, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1409672024
@@ -24337,7 +24554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1449013729
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24547,6 +24764,8 @@ GameObject:
   - component: {fileID: 1490052251}
   - component: {fileID: 1490052253}
   - component: {fileID: 1490052252}
+  - component: {fileID: 1490052255}
+  - component: {fileID: 1490052254}
   m_Layer: 5
   m_Name: Chapter3
   m_TagString: Untagged
@@ -24611,6 +24830,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490052250}
   m_CullTransparentMesh: 1
+--- !u!114 &1490052254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490052250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1490052252}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 538598179}
+        m_TargetAssemblyTypeName: ChapterTabUI, Assembly-CSharp
+        m_MethodName: OnTabClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1490052255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490052250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8825d7ccb21fe354abd6a659eae2e20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterTabUI
+  journalManager: {fileID: 2014554203}
+  journalUI: {fileID: 867532019}
+  chapterIndex: 2
 --- !u!1 &1493655605
 GameObject:
   m_ObjectHideFlags: 0
@@ -28162,9 +28452,9 @@ RectTransform:
   - {fileID: 522249314}
   m_Father: {fileID: 19343847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 247.501, y: -45.434}
   m_SizeDelta: {x: 486.99, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1774159965
@@ -31831,7 +32121,19 @@ MonoBehaviour:
   - chapterName: Chapter 1
     objectives:
     - {fileID: 11400000, guid: a85ee77d2a0688545a41208052e077e8, type: 2}
+    - {fileID: 11400000, guid: ce57e6ba6990b2c45b048d83799e42ff, type: 2}
+  - chapterName: Chapter 2
+    objectives:
     - {fileID: 11400000, guid: a85ee77d2a0688545a41208052e077e8, type: 2}
+    - {fileID: 11400000, guid: ce57e6ba6990b2c45b048d83799e42ff, type: 2}
+  - chapterName: Chapter 3
+    objectives:
+    - {fileID: 11400000, guid: a85ee77d2a0688545a41208052e077e8, type: 2}
+    - {fileID: 11400000, guid: ce57e6ba6990b2c45b048d83799e42ff, type: 2}
+  - chapterName: Chapter 4
+    objectives:
+    - {fileID: 11400000, guid: a85ee77d2a0688545a41208052e077e8, type: 2}
+    - {fileID: 11400000, guid: ce57e6ba6990b2c45b048d83799e42ff, type: 2}
 --- !u!4 &2014554204
 Transform:
   m_ObjectHideFlags: 0
@@ -32550,9 +32852,9 @@ RectTransform:
   m_Father: {fileID: 733478802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -25.928, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2043856520
 MonoBehaviour:
@@ -34462,8 +34764,8 @@ SceneRoots:
   - {fileID: 1968964539}
   - {fileID: 27744355}
   - {fileID: 1980694397}
+  - {fileID: 2014554204}
   - {fileID: 1637174508}
   - {fileID: 984328202}
   - {fileID: 1073760207}
   - {fileID: 1777272077}
-  - {fileID: 2014554204}
