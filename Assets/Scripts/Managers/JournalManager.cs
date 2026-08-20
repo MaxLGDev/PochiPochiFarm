@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+
 using UnityEngine;
 
 public enum ObjectiveType
@@ -24,8 +24,11 @@ class ObjState
     {
         Progress += amount;
 
-        if(Progress >= target)
+        if (Progress >= target)
+        {
+            Progress = target;
             SetObjectiveComplete();
+        }
     }
 
     public void SetObjectiveComplete() => IsComplete = true;
@@ -47,7 +50,11 @@ public class Chapter
 
 public class JournalManager : MonoBehaviour
 {
+    private Action<int> onCoinsEarnedHandler;
+    private Action onTileHarvestedHandler;
+
     public event Action<ObjData> OnObjectiveCompleted;
+    public event Action<ObjData> OnObjectiveProgressed;
 
     [SerializeField] private GridManager gridManager;
     [SerializeField] private LaboratoryManager labManager;
@@ -61,9 +68,12 @@ public class JournalManager : MonoBehaviour
 
     private void Awake()
     {
-        foreach(Chapter chap in chaptersList)
+        onCoinsEarnedHandler = (amount) => HandleObjectiveProgress(ObjectiveType.CoinsEarned, amount);
+        onTileHarvestedHandler = () => HandleObjectiveProgress(ObjectiveType.ClickCount, 1);
+
+        foreach (Chapter chap in chaptersList)
         {
-            foreach(ObjData obj in chap.objectives)
+            foreach (ObjData obj in chap.objectives)
             {
                 ObjState state = new ObjState();
 
@@ -75,22 +85,39 @@ public class JournalManager : MonoBehaviour
 
     private void OnEnable()
     {
-        resourceManager.OnCoinsEarned += HandleCoinsEarned;
+        resourceManager.OnCoinsEarned += onCoinsEarnedHandler;
+        gridManager.OnTileHarvested += onTileHarvestedHandler;
     }
 
     private void OnDisable()
     {
-        resourceManager.OnCoinsEarned -= HandleCoinsEarned;
+        resourceManager.OnCoinsEarned -= onCoinsEarnedHandler;
+        gridManager.OnTileHarvested -= onTileHarvestedHandler;
     }
 
-    public bool IsObjectiveComplete(ObjData obj) => objectivesStates[obj].IsComplete;
     public int GetProgress(ObjData obj) => objectivesStates[obj].Progress;
+    public bool IsObjectiveComplete(ObjData obj) => objectivesStates[obj].IsComplete;
+    public bool IsObjectiveClaimed(ObjData obj) => objectivesStates[obj].IsClaimed;
+    public void ClaimObjective(ObjData obj) => objectivesStates[obj].SetObjectiveClaimed();
 
-    private void HandleCoinsEarned(int amount)
+    public (int completed, int total) GetChapterProgress(ObjData obj)
     {
-        foreach(ObjData obj in objectivesStates.Keys)
+        Chapter chapter = objectiveToChapter[obj];
+        int completed = 0;
+        int total = chapter.objectives.Count;
+        foreach (ObjData chapterObj in chapter.objectives)
         {
-            if(obj.Type == ObjectiveType.CoinsEarned )
+            if (IsObjectiveClaimed(chapterObj))
+                completed++;
+        }
+        return (completed, total);
+    }
+
+    private void HandleObjectiveProgress(ObjectiveType type, int amount)
+    {
+        foreach (ObjData obj in objectivesStates.Keys)
+        {
+            if (obj.Type == type)
             {
                 ObjState state = objectivesStates[obj];
 
@@ -99,7 +126,9 @@ public class JournalManager : MonoBehaviour
 
                 state.IncreaseProgress(amount, obj.Target);
 
-                if(state.IsComplete)
+                OnObjectiveProgressed?.Invoke(obj);
+
+                if (state.IsComplete)
                     OnObjectiveCompleted?.Invoke(obj);
             }
         }

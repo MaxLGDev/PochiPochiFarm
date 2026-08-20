@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +13,7 @@ public class GridManager : MonoBehaviour
     //==========================================================================
     // References
     //==========================================================================
+    public event Action OnTileHarvested;
 
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private LaboratoryManager labManager;
@@ -165,7 +167,7 @@ public class GridManager : MonoBehaviour
 
                 bool startUnlocked = (x == 0 && y == 0);
 
-                newTile.OnHarvestRequested += HandleHarvestRequested;
+                newTile.OnHarvestRequested += (tile) => HandleHarvestRequested(tile, true);
                 newTile.OnUnlockRequested += HandleUnlockRequested;
                 newTile.OnCropMatured += HandleCropMatured;
 
@@ -244,12 +246,12 @@ public class GridManager : MonoBehaviour
     /// <summary>
     /// Handles crop harvesting.
     /// </summary>
-    private void HandleHarvestRequested(Tile tile)
+    private bool HandleHarvestRequested(Tile tile, bool isManual)
     {
-        if(!labManager.IsCropResearched(tile.CropData))
+        if (!labManager.IsCropResearched(tile.CropData))
         {
             tile.CropBlockAnimation();
-            return;
+            return false;
         }
 
         if (tile.CropData.RequiredWater > 0)
@@ -257,7 +259,7 @@ public class GridManager : MonoBehaviour
             if (waterManager.Water <= 0)
             {
                 Debug.Log("Not enough water to harvest.");
-                return;
+                return false;
             }
 
             waterManager.SpendWater(tile.CropData.RequiredWater);
@@ -265,27 +267,33 @@ public class GridManager : MonoBehaviour
 
         resourceManager.HandleHarvest(tile);
         tile.ResetGrowth();
+
+        if (isManual)
+        {
+            OnTileHarvested?.Invoke();
+        }
+        return true;
     }
 
     private void HandleCropMatured(Tile tile)
     {
-        if(!labManager.IsCropAutomated(tile.CropData))
+        if (!labManager.IsCropAutomated(tile.CropData))
             return;
 
-        HandleHarvestRequested(tile);
+        HandleHarvestRequested(tile, false);
     }
 
     private void HandleCropAutomated(CropData crop)
     {
-        foreach(Tile tile in grid)
+        foreach (Tile tile in grid)
         {
             if (tile.CropData != crop)
                 continue;
 
-            if(!tile.IsMature)
+            if (!tile.IsMature)
                 continue;
 
-            HandleHarvestRequested(tile);
+            HandleHarvestRequested(tile, false);
         }
     }
 }
