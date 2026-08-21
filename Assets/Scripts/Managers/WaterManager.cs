@@ -62,7 +62,6 @@ public class WaterManager : MonoBehaviour
         Water = Mathf.Clamp(Water + amount, 0, MaxWater);
 
         OnWaterChanged?.Invoke(Water);
-        Debug.Log($"Added water. Total water: {Water}");
     }
 
     /// <summary>
@@ -71,15 +70,11 @@ public class WaterManager : MonoBehaviour
     public void SpendWater(int amount)
     {
         if (amount > Water)
-        {
-            Debug.Log($"Not enough water to spend. You have {Water} water.");
             return;
-        }
 
         Water -= amount;
 
         OnWaterChanged?.Invoke(Water);
-        Debug.Log($"Spent water. Total water: {Water}");
     }
 
     /// <summary>
@@ -88,16 +83,10 @@ public class WaterManager : MonoBehaviour
     public void BuyWater()
     {
         if (resourceManager.Coins < WaterPrice)
-        {
-            Debug.Log($"Not enough coins to buy water. You need at least {WaterPrice} coins.");
             return;
-        }
 
         if (Water >= MaxWater)
-        {
-            Debug.Log("Cannot buy water. The water tank is already full.");
             return;
-        }
 
         resourceManager.TrySpendCoins(WaterPrice);
         AddWater(waterPerClick);

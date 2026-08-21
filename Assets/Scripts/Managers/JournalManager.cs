@@ -65,14 +65,18 @@ public class JournalManager : MonoBehaviour
 
     Dictionary<ObjData, ObjState> objectivesStates = new();
     Dictionary<ObjData, Chapter> objectiveToChapter = new();
+    Dictionary<Chapter, bool> chapterUnlocked = new();
 
     private void Awake()
     {
         onCoinsEarnedHandler = (amount) => HandleObjectiveProgress(ObjectiveType.CoinsEarned, amount);
         onTileHarvestedHandler = () => HandleObjectiveProgress(ObjectiveType.ClickCount, 1);
 
-        foreach (Chapter chap in chaptersList)
+        for (int i = 0; i < chaptersList.Count; i++)
         {
+            Chapter chap = chaptersList[i];
+            chapterUnlocked[chap] = (i == 0);
+
             foreach (ObjData obj in chap.objectives)
             {
                 ObjState state = new ObjState();
@@ -93,6 +97,22 @@ public class JournalManager : MonoBehaviour
     {
         resourceManager.OnCoinsEarned -= onCoinsEarnedHandler;
         gridManager.OnTileHarvested -= onTileHarvestedHandler;
+    }
+
+    public bool IsChapterUnlocked(Chapter chapter) => chapterUnlocked[chapter];
+    public bool IsChapterFullyClaimed(Chapter chapter) => GetChapterProgress(chapter.objectives[0]).completed == chapter.objectives.Count;
+    public void UnlockNextChapter(Chapter chapter)
+    {
+        int currentIndex = chaptersList.IndexOf(chapter);
+        int nextIndex = currentIndex + 1;
+
+        if (currentIndex < 0)
+            return;
+
+        if (nextIndex >= chaptersList.Count)
+            return;
+
+        chapterUnlocked[chaptersList[nextIndex]] = true;
     }
 
     public int GetProgress(ObjData obj) => objectivesStates[obj].Progress;

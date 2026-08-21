@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,7 +18,16 @@ public class JournalUI : MonoBehaviour
     [SerializeField] private Transform rowParent;
 
     [SerializeField] private RectTransform[] tabs;
+    [SerializeField] private Button[] tabButtons;
     [SerializeField] private float activeOffset = 15f;
+
+    [SerializeField] private GameObject pageFlipObject;
+    [SerializeField] private Animator pageFlipAnimator;
+    [SerializeField] private AnimationClip pageFlip;
+    [SerializeField] private AnimationClip pageFlipReverse;
+    [SerializeField] private float pageFlipMultiplier = 1.3f;
+    private int currentChapterIndex = -1;
+    private float pageFlipDuration;
 
     private Vector2[] originalTabPositions;
 
@@ -30,6 +40,8 @@ public class JournalUI : MonoBehaviour
 
         for (int i = 0; i < tabs.Length; i++)
             originalTabPositions[i] = tabs[i].anchoredPosition;
+
+        pageFlipDuration = pageFlip.length;
     }
 
     private void Start()
@@ -37,6 +49,7 @@ public class JournalUI : MonoBehaviour
         introChapter.SetActive(true);
         SetActiveTab(0);
         contentsChapters.SetActive(false);
+        RefreshTabLocks();
     }
 
     private void OnEnable()
@@ -67,6 +80,9 @@ public class JournalUI : MonoBehaviour
 
         if (introChapter.activeSelf)
             return;
+
+        if (currentChapterIndex != -1)
+            PlayPageFlip(0, currentChapterIndex + 1);
 
         SetActiveTab(0);
         contentsChapters.SetActive(false);
@@ -106,9 +122,29 @@ public class JournalUI : MonoBehaviour
     public void SelectChapter(Chapter chapter, int chapterIndex)
     {
         currentChapter = chapter;
+
+        if(currentChapterIndex != -1)
+            PlayPageFlip(chapterIndex + 1, currentChapterIndex + 1);
+
+        currentChapterIndex = chapterIndex;
         SetActiveTab(chapterIndex + 1);
         ShowChapter(chapter);
-        UpdateClearedObjectivesText();
+        HandleObjectiveCompleted(chapter.objectives[0]);
+    }
+
+    public void ClaimChapterRewards()
+    {
+        journalManager.UnlockNextChapter(currentChapter);
+        RefreshTabLocks();
+    }
+
+    public void RefreshTabLocks()
+    {
+        for (int i = 0; i < tabButtons.Length; i++)
+        {
+            Chapter chapter = journalManager.GetChapter(i);
+            tabButtons[i].interactable = journalManager.IsChapterUnlocked(chapter);
+        }
     }
 
     public void ToggleJournalPanel()
@@ -118,19 +154,6 @@ public class JournalUI : MonoBehaviour
 
         if (currentChapter != null)
             ShowChapter(currentChapter);
-    }
-
-    private void UpdateClearedObjectivesText()
-    {
-        if (currentChapter == null)
-            return;
-
-        int completed = 0;
-        int total = currentChapter.objectives.Count;
-
-        clearedObjectivesCounterText.text = $"<color=red>{completed}/{total}</color>";
-
-        claimRewardsButton.interactable = false;
     }
 
     public void HandleObjectiveCompleted(ObjData obj)
@@ -144,16 +167,28 @@ public class JournalUI : MonoBehaviour
         }
 
         if (completed >= total)
-        {
             clearedObjectivesCounterText.text = $"<color=green>{completed}/{total}</color>";
-            claimRewardsButton.interactable = true;
-        }
         else
-        {
             clearedObjectivesCounterText.text = $"<color=red>{completed}/{total}</color>";
-            claimRewardsButton.interactable = false;
-        }
+
+        claimRewardsButton.interactable = completed >= total;
     }
 
+    private void PlayPageFlip(int newChapterIndex, int oldChapterIndex)
+    {
+        bool forward = newChapterIndex >= oldChapterIndex;
+        string clipName = forward ? "PageFlip" : "PageFlipReverse";
 
+        pageFlipObject.SetActive(true);
+        pageFlipAnimator.Play(clipName, 0, 0f);
+
+        StopAllCoroutines();
+        StartCoroutine(HidePageFlipAfter(pageFlipDuration / pageFlipMultiplier));
+    }
+
+    private IEnumerator HidePageFlipAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        pageFlipObject.SetActive(false);
+    }
 }

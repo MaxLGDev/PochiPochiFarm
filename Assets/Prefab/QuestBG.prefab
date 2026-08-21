@@ -121,8 +121,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: JournalUI, Assembly-CSharp
+      - m_Target: {fileID: -4783340303571526652}
+        m_TargetAssemblyTypeName: QuestRowUI, Assembly-CSharp
         m_MethodName: MarkQuestAsClaimed
         m_Mode: 1
         m_Arguments:
