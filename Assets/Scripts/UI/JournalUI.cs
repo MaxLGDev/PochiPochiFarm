@@ -24,7 +24,6 @@ public class JournalUI : MonoBehaviour
     [SerializeField] private GameObject pageFlipObject;
     [SerializeField] private Animator pageFlipAnimator;
     [SerializeField] private AnimationClip pageFlip;
-    [SerializeField] private AnimationClip pageFlipReverse;
     [SerializeField] private float pageFlipMultiplier = 1.3f;
     private int currentChapterIndex = -1;
     private float pageFlipDuration;
@@ -84,6 +83,7 @@ public class JournalUI : MonoBehaviour
         if (currentChapterIndex != -1)
             PlayPageFlip(0, currentChapterIndex + 1);
 
+        currentChapterIndex = 0;
         SetActiveTab(0);
         contentsChapters.SetActive(false);
         introChapter.SetActive(true);
@@ -150,7 +150,22 @@ public class JournalUI : MonoBehaviour
     public void ToggleJournalPanel()
     {
         if (journalPanel != null)
-            journalPanel.SetActive(!journalPanel.activeSelf);
+        {
+            bool opening = !journalPanel.activeSelf;
+            journalPanel.SetActive(opening);
+
+            if(opening)
+            {
+                currentChapterIndex = -1;
+                PlayPageFlip(0, 0);
+                currentChapterIndex = 0;
+
+                SetActiveTab(0);
+                contentsChapters.SetActive(false);
+                introChapter.SetActive(false);
+                ShowIntro();
+            }
+        }
 
         if (currentChapter != null)
             ShowChapter(currentChapter);

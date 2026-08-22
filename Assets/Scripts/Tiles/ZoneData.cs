@@ -8,6 +8,7 @@ public class ZoneData : ScriptableObject
 {
     public string zoneName;
     public float zoneTier;
+    public string unlockChapterName;
 
     [Header("Bounds")]
 

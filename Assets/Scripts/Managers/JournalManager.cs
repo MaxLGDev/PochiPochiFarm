@@ -53,6 +53,7 @@ public class JournalManager : MonoBehaviour
     private Action<int> onCoinsEarnedHandler;
     private Action onTileHarvestedHandler;
 
+
     public event Action<ObjData> OnObjectiveCompleted;
     public event Action<ObjData> OnObjectiveProgressed;
 
@@ -113,6 +114,7 @@ public class JournalManager : MonoBehaviour
             return;
 
         chapterUnlocked[chaptersList[nextIndex]] = true;
+        gridManager.UnlockZone(chapter);
     }
 
     public int GetProgress(ObjData obj) => objectivesStates[obj].Progress;

@@ -139,6 +139,21 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
+    public void UnlockZone(Chapter chapter)
+    {
+        Debug.Log("Zone called");
+        foreach (ZoneRuntime zone in zones)
+        {
+            if (zone.Data.unlockChapterName == chapter.chapterName)
+            {
+                zone.Unlock();
+                Debug.Log($"Zone {zone.Data.zoneName} unlocked.");
+                return;
+            }
+        }
+        Debug.Log($"No zone found for chapter {chapter.chapterName}");
+    }
+
     //==========================================================================
     // Grid Generation
     //==========================================================================
