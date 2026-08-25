@@ -50,6 +50,8 @@ public class Chapter
 
 public class JournalManager : MonoBehaviour
 {
+    public event Action OnChapter1Claimed;
+
     private Action<int> onCoinsEarnedHandler;
     private Action onTileHarvestedHandler;
 
@@ -115,6 +117,9 @@ public class JournalManager : MonoBehaviour
 
         chapterUnlocked[chaptersList[nextIndex]] = true;
         gridManager.UnlockZone(chapter);
+
+        if (nextIndex == 1) // Assuming chapter 1 is at index 0
+            OnChapter1Claimed?.Invoke();
     }
 
     public int GetProgress(ObjData obj) => objectivesStates[obj].Progress;

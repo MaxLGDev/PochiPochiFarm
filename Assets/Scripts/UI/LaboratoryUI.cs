@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Net;
+
 using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -81,9 +81,12 @@ public class LaboratoryUI : MonoBehaviour
 
     [SerializeField] private LaboratoryManager labManager;
     [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private JournalManager journalManager;
 
     [SerializeField] private List<CostSlotUI> researchCostSlots;
     [SerializeField] private List<CostSlotUI> automationCostSlots;
+
+    [SerializeField] private Button laboratoryButton;
 
     [SerializeField] private GameObject labPanel;
 
@@ -98,9 +101,12 @@ public class LaboratoryUI : MonoBehaviour
 
     [SerializeField] private float fadeWait = 0.2f;
 
+    private bool laboratoryUnlocked = false;
+
     private void Start()
     {
         labPanel.SetActive(false);
+        laboratoryButton.interactable = false;
 
         OnResearchCropSelected(0);
         OnAutomationCropSelected(0);
@@ -111,6 +117,28 @@ public class LaboratoryUI : MonoBehaviour
         // Refresh both interfaces every frame.
         UpdateResearchUI();
         UpdateAutomationUI();
+    }
+
+    private void OnEnable()
+    {
+        journalManager.OnChapter1Claimed += HandleJournalChapter1Claimed;
+    }
+
+    private void OnDisable()
+    {
+        journalManager.OnChapter1Claimed -= HandleJournalChapter1Claimed;
+    }
+
+    private void HandleJournalChapter1Claimed()
+    {
+        if (laboratoryUnlocked)
+            return;
+
+        if (!laboratoryUnlocked)
+        {
+            laboratoryUnlocked = true;
+            laboratoryButton.interactable = true;
+        }
     }
 
     /// <summary>
@@ -201,7 +229,7 @@ public class LaboratoryUI : MonoBehaviour
         bool isDone = labManager.IsCropResearched(ui.selectedCrop);
         bool isDoing = labManager.IsResearching();
 
-        if(isDone || isDoing)
+        if (isDone || isDoing)
         {
             for (int i = 0; i < researchCostSlots.Count; i++)
                 researchCostSlots[i].slotRoot.SetActive(false);
@@ -244,7 +272,7 @@ public class LaboratoryUI : MonoBehaviour
             if (isDone)
             {
                 ui.rainbowText.enabled = true;
-                if(!ui.completeFadePlayed)
+                if (!ui.completeFadePlayed)
                 {
                     ui.buttonFade.Fade(true);
                     ui.completeFadePlayed = true;
@@ -286,7 +314,7 @@ public class LaboratoryUI : MonoBehaviour
         bool isDoing = labManager.IsAutomating();
         bool isDone = labManager.IsCropAutomated(ui.selectedCrop);
 
-        if(isDoing || isDone)
+        if (isDoing || isDone)
         {
             for (int i = 0; i < costs.Count; i++)
                 automationCostSlots[i].slotRoot.SetActive(false);
@@ -317,7 +345,7 @@ public class LaboratoryUI : MonoBehaviour
         {
             // Idle state.
             ui.slider.value = 0f;
-             
+
             if (ui.activeCoroutine == null)
             {
                 ui.slider.gameObject.SetActive(false);
@@ -340,7 +368,7 @@ public class LaboratoryUI : MonoBehaviour
             else
             {
                 ui.warningText.SetActive(true);
-                ui.rainbowText.enabled = false; 
+                ui.rainbowText.enabled = false;
                 ui.buttonText.color = Color.white;
                 ui.buttonText.text = "AUTOMATE";
             }
