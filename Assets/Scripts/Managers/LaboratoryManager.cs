@@ -51,6 +51,8 @@ public class LabState
 public class LaboratoryManager : MonoBehaviour
 {
     public event Action<CropData> OnCropAutomated;
+    public event Action<CropData> OnRequestedCropResearched;
+    public event Action<CropData> OnRequestedCropAutomated;
 
     //==========================================================================
     // References
@@ -133,6 +135,7 @@ public class LaboratoryManager : MonoBehaviour
         if (state.ResearchTimer >= currentResearchingCrop.ResearchDuration)
         {
             state.FlagCropAsResearched();
+            OnRequestedCropResearched?.Invoke(currentResearchingCrop);
             currentResearchingCrop = null;
         }
     }
@@ -210,6 +213,7 @@ public class LaboratoryManager : MonoBehaviour
         {
             state.FlagCropAsAutomated();
             OnCropAutomated?.Invoke(currentAutomatingCrop);
+            OnRequestedCropAutomated?.Invoke(currentAutomatingCrop);
             currentAutomatingCrop = null;
         }
     }

@@ -497,7 +497,8 @@ Transform:
   m_LocalPosition: {x: -5.33665, y: -4.64193, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1754008094}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &28488613
@@ -1699,7 +1700,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1177054179}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LaboratoryUI, Assembly-CSharp
         m_MethodName: OnResearchCropSelected
         m_Mode: 0
@@ -4059,7 +4060,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1177054179}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LaboratoryUI, Assembly-CSharp
         m_MethodName: OnAutomationCropSelected
         m_Mode: 0
@@ -9284,15 +9285,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.47450984, g: 0.28235295, b: 0.25490198, a: 1}
+  m_Color: {r: 0.53333336, g: 0.5568628, b: 0.5803922, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2720535173406242035, guid: cf00e8384c1af0e4487015780f9777aa, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 1724218191242498544, guid: 6edd184fa16a20a4ea022b9560d055c1, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -10207,6 +10208,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677349002}
   m_CullTransparentMesh: 1
+--- !u!1 &678332761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 678332763}
+  - component: {fileID: 678332762}
+  m_Layer: 0
+  m_Name: StatsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &678332762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678332761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08faa5236f0176c4fa11c85778ff552f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatsUI
+  journalManager: {fileID: 2014554203}
+  journalProgressionText: {fileID: 883225892}
+  upgradesProgressionText: {fileID: 1328740332}
+  gameTotalPlaytimeText: {fileID: 925814768}
+--- !u!4 &678332763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678332761}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.67325, y: 1.33573, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &690146482
 GameObject:
   m_ObjectHideFlags: 0
@@ -11008,15 +11057,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.47450984, g: 0.28235295, b: 0.25490198, a: 1}
+  m_Color: {r: 0.7490196, g: 0.43921572, b: 0.5803922, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2720535173406242035, guid: cf00e8384c1af0e4487015780f9777aa, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 1724218191242498544, guid: 6edd184fa16a20a4ea022b9560d055c1, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -11369,7 +11418,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1177054179}
+      - m_Target: {fileID: 1754008095}
         m_TargetAssemblyTypeName: LaboratoryUI, Assembly-CSharp
         m_MethodName: ToggleLabPanel
         m_Mode: 1
@@ -14014,8 +14063,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39.19, y: -18.063}
-  m_SizeDelta: {x: 116.804, y: 36.125}
+  m_AnchoredPosition: {x: 33.531, y: -18.063}
+  m_SizeDelta: {x: 248.63, y: 36.125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &925814768
 MonoBehaviour:
@@ -16534,15 +16583,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4745098, g: 0.28235295, b: 0.25490198, a: 1}
+  m_Color: {r: 0.3537463, g: 0.4056604, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2720535173406242035, guid: cf00e8384c1af0e4487015780f9777aa, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 1724218191242498544, guid: 6edd184fa16a20a4ea022b9560d055c1, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -16603,7 +16652,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1177054179}
+      - m_Target: {fileID: 1754008095}
         m_TargetAssemblyTypeName: LaboratoryUI, Assembly-CSharp
         m_MethodName: ToggleLabPanel
         m_Mode: 1
@@ -17297,9 +17346,8 @@ GameObject:
   - component: {fileID: 1177054176}
   - component: {fileID: 1177054178}
   - component: {fileID: 1177054177}
-  - component: {fileID: 1177054179}
   m_Layer: 5
-  m_Name: LaboratoryPanel
+  m_Name: LaboratoryCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17363,81 +17411,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177054175}
   m_CullTransparentMesh: 1
---- !u!114 &1177054179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1177054175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87d5839f28e50ee458c9d89987d9c7e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  labManager: {fileID: 27744354}
-  resourceManager: {fileID: 1980694396}
-  researchCostSlots:
-  - slotRoot: {fileID: 1792989863}
-    slotIcon: {fileID: 690146484}
-    slotText: {fileID: 755285646}
-  - slotRoot: {fileID: 1635189073}
-    slotIcon: {fileID: 429606047}
-    slotText: {fileID: 1682705869}
-  - slotRoot: {fileID: 261645551}
-    slotIcon: {fileID: 1371875903}
-    slotText: {fileID: 1113059250}
-  - slotRoot: {fileID: 1426577152}
-    slotIcon: {fileID: 796798895}
-    slotText: {fileID: 992285837}
-  - slotRoot: {fileID: 1974230373}
-    slotIcon: {fileID: 1794248238}
-    slotText: {fileID: 118651827}
-  - slotRoot: {fileID: 1140938971}
-    slotIcon: {fileID: 1438211850}
-    slotText: {fileID: 596230281}
-  automationCostSlots:
-  - slotRoot: {fileID: 450875749}
-    slotIcon: {fileID: 857850694}
-    slotText: {fileID: 1830975979}
-  - slotRoot: {fileID: 1427080369}
-    slotIcon: {fileID: 1448076056}
-    slotText: {fileID: 222978805}
-  - slotRoot: {fileID: 893500059}
-    slotIcon: {fileID: 708132562}
-    slotText: {fileID: 766430740}
-  - slotRoot: {fileID: 1277072829}
-    slotIcon: {fileID: 1568166505}
-    slotText: {fileID: 55609744}
-  - slotRoot: {fileID: 579369775}
-    slotIcon: {fileID: 1596574672}
-    slotText: {fileID: 547347760}
-  - slotRoot: {fileID: 910354287}
-    slotIcon: {fileID: 1654915045}
-    slotText: {fileID: 1528073146}
-  labPanel: {fileID: 1177054175}
-  coinIcon: {fileID: 3570696057915082496, guid: 11cf0f11c25a7ea459cd78575ace12ed, type: 3}
-  researchUI:
-    button: {fileID: 2037311701}
-    buttonText: {fileID: 1152546528}
-    buttonFade: {fileID: 2037311704}
-    sliderFade: {fileID: 592862091}
-    slider: {fileID: 592862089}
-    sliderText: {fileID: 262056232}
-    warningText: {fileID: 0}
-    dropdown: {fileID: 102191728}
-    rainbowText: {fileID: 1152546530}
-  automationUI:
-    button: {fileID: 1883893570}
-    buttonText: {fileID: 1305423395}
-    buttonFade: {fileID: 1883893569}
-    sliderFade: {fileID: 1266168920}
-    slider: {fileID: 1266168918}
-    sliderText: {fileID: 1217870083}
-    warningText: {fileID: 1532878864}
-    dropdown: {fileID: 274739614}
-    rainbowText: {fileID: 1305423394}
-  fadeWait: 0.4
 --- !u!1 &1184297970
 GameObject:
   m_ObjectHideFlags: 0
@@ -19968,15 +19941,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.47450984, g: 0.28235295, b: 0.25490198, a: 1}
+  m_Color: {r: 0.64705884, g: 0.26666668, b: 0.27058825, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2720535173406242035, guid: cf00e8384c1af0e4487015780f9777aa, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 1724218191242498544, guid: 6edd184fa16a20a4ea022b9560d055c1, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -25828,6 +25801,115 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1739009653}
   m_CullTransparentMesh: 1
+--- !u!1 &1754008093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1754008094}
+  - component: {fileID: 1754008095}
+  m_Layer: 0
+  m_Name: LaboratoryUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1754008094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754008093}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 27744355}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1754008095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754008093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d5839f28e50ee458c9d89987d9c7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  labManager: {fileID: 27744354}
+  resourceManager: {fileID: 1980694396}
+  journalManager: {fileID: 2014554203}
+  researchCostSlots:
+  - slotRoot: {fileID: 1792989863}
+    slotIcon: {fileID: 690146484}
+    slotText: {fileID: 755285646}
+  - slotRoot: {fileID: 1635189073}
+    slotIcon: {fileID: 429606047}
+    slotText: {fileID: 1682705869}
+  - slotRoot: {fileID: 261645551}
+    slotIcon: {fileID: 1371875903}
+    slotText: {fileID: 1113059250}
+  - slotRoot: {fileID: 1426577152}
+    slotIcon: {fileID: 796798895}
+    slotText: {fileID: 992285837}
+  - slotRoot: {fileID: 1974230373}
+    slotIcon: {fileID: 1794248238}
+    slotText: {fileID: 118651827}
+  - slotRoot: {fileID: 1140938971}
+    slotIcon: {fileID: 1438211850}
+    slotText: {fileID: 596230281}
+  automationCostSlots:
+  - slotRoot: {fileID: 450875749}
+    slotIcon: {fileID: 857850694}
+    slotText: {fileID: 1830975979}
+  - slotRoot: {fileID: 1427080369}
+    slotIcon: {fileID: 1448076056}
+    slotText: {fileID: 222978805}
+  - slotRoot: {fileID: 893500059}
+    slotIcon: {fileID: 708132562}
+    slotText: {fileID: 766430740}
+  - slotRoot: {fileID: 1277072829}
+    slotIcon: {fileID: 1568166505}
+    slotText: {fileID: 55609744}
+  - slotRoot: {fileID: 579369775}
+    slotIcon: {fileID: 1596574672}
+    slotText: {fileID: 547347760}
+  - slotRoot: {fileID: 910354287}
+    slotIcon: {fileID: 1654915045}
+    slotText: {fileID: 1528073146}
+  laboratoryButton: {fileID: 1116376553}
+  labPanel: {fileID: 1177054175}
+  coinIcon: {fileID: 3570696057915082496, guid: 11cf0f11c25a7ea459cd78575ace12ed, type: 3}
+  researchUI:
+    button: {fileID: 2037311701}
+    buttonText: {fileID: 1152546528}
+    buttonFade: {fileID: 2037311704}
+    sliderFade: {fileID: 592862091}
+    slider: {fileID: 592862089}
+    sliderText: {fileID: 262056232}
+    warningText: {fileID: 0}
+    dropdown: {fileID: 102191728}
+    rainbowText: {fileID: 1152546530}
+  automationUI:
+    button: {fileID: 1883893570}
+    buttonText: {fileID: 1305423395}
+    buttonFade: {fileID: 1883893569}
+    sliderFade: {fileID: 1266168920}
+    slider: {fileID: 1266168918}
+    sliderText: {fileID: 1217870083}
+    warningText: {fileID: 1532878864}
+    dropdown: {fileID: 274739614}
+    rainbowText: {fileID: 1305423394}
+  fadeWait: 0.4
 --- !u!1 &1777272073
 GameObject:
   m_ObjectHideFlags: 0
@@ -26974,7 +27056,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1177054179}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LaboratoryUI, Assembly-CSharp
         m_MethodName: StartAutomationUI
         m_Mode: 1
@@ -29781,7 +29863,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1177054179}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LaboratoryUI, Assembly-CSharp
         m_MethodName: StartResearchUI
         m_Mode: 1
@@ -31884,3 +31966,4 @@ SceneRoots:
   - {fileID: 984328202}
   - {fileID: 1073760207}
   - {fileID: 1777272077}
+  - {fileID: 678332763}

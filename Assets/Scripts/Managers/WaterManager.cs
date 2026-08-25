@@ -13,6 +13,7 @@ public class WaterManager : MonoBehaviour
     //==========================================================================
 
     public event Action<int> OnWaterChanged;
+    public event Action<int> OnWaterRefilled;
 
     //==========================================================================
     // References
@@ -35,7 +36,7 @@ public class WaterManager : MonoBehaviour
     [Header("Passive Water")]
 
     // Water gained automatically every interval.
-    [SerializeField] private int passiveWaterRate = 1;
+    [SerializeField] private int passiveWaterRate = 0;
 
     [SerializeField] private float passiveWaterInterval = 2.5f;
     public float PassiveWaterInterval => passiveWaterInterval;
@@ -90,6 +91,7 @@ public class WaterManager : MonoBehaviour
 
         resourceManager.TrySpendCoins(WaterPrice);
         AddWater(waterPerClick);
+        OnWaterRefilled?.Invoke(waterPerClick);
     }
 
     //==========================================================================

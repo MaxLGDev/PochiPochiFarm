@@ -32,12 +32,13 @@ class ObjState
     }
 
     public void SetObjectiveComplete() => IsComplete = true;
-    public void SetObjectiveClaimed()
+    public bool SetObjectiveClaimed()
     {
         if (!IsComplete)
-            return;
+            return false;
 
         IsClaimed = true;
+        return true;
     }
 }
 
@@ -51,9 +52,15 @@ public class Chapter
 public class JournalManager : MonoBehaviour
 {
     public event Action OnChapter1Claimed;
+    public event Action OnObjectiveClaimed;
 
     private Action<int> onCoinsEarnedHandler;
     private Action onTileHarvestedHandler;
+    private Action<int> onWaterRefilledHandler;
+    private Action onCropGatheredHandler;
+    private Action<CropData> onRequestedCropUnlockedHandler;
+    private Action<CropData> onRequestedCropResearchedHandler;
+    private Action<CropData> onRequestedCropAutomatedHandler;
 
 
     public event Action<ObjData> OnObjectiveCompleted;
@@ -74,6 +81,11 @@ public class JournalManager : MonoBehaviour
     {
         onCoinsEarnedHandler = (amount) => HandleObjectiveProgress(ObjectiveType.CoinsEarned, amount);
         onTileHarvestedHandler = () => HandleObjectiveProgress(ObjectiveType.ClickCount, 1);
+        onWaterRefilledHandler = (amount) => HandleObjectiveProgress(ObjectiveType.WaterRefilled, amount);
+        onCropGatheredHandler = () => HandleObjectiveProgress(ObjectiveType.CropGathered, 1);
+        onRequestedCropUnlockedHandler = (crop) => HandleObjectiveProgress(ObjectiveType.UnlockCrop, 1, crop);
+        onRequestedCropResearchedHandler = (crop) => HandleObjectiveProgress(ObjectiveType.ResearchCrop, 1, crop);
+        onRequestedCropAutomatedHandler = (crop) => HandleObjectiveProgress(ObjectiveType.AutomateCrop, 1, crop);
 
         for (int i = 0; i < chaptersList.Count; i++)
         {
@@ -94,12 +106,22 @@ public class JournalManager : MonoBehaviour
     {
         resourceManager.OnCoinsEarned += onCoinsEarnedHandler;
         gridManager.OnTileHarvested += onTileHarvestedHandler;
+        waterManager.OnWaterRefilled += onWaterRefilledHandler;
+        gridManager.OnCropGathered += onCropGatheredHandler;
+        gridManager.OnCropUnlocked += onRequestedCropUnlockedHandler;
+        labManager.OnRequestedCropResearched += onRequestedCropResearchedHandler;
+        labManager.OnRequestedCropAutomated += onRequestedCropAutomatedHandler;
     }
 
     private void OnDisable()
     {
         resourceManager.OnCoinsEarned -= onCoinsEarnedHandler;
         gridManager.OnTileHarvested -= onTileHarvestedHandler;
+        waterManager.OnWaterRefilled -= onWaterRefilledHandler;
+        gridManager.OnCropGathered -= onCropGatheredHandler;
+        gridManager.OnCropUnlocked -= onRequestedCropUnlockedHandler;
+        labManager.OnRequestedCropResearched -= onRequestedCropResearchedHandler;
+        labManager.OnRequestedCropAutomated -= onRequestedCropAutomatedHandler;
     }
 
     public bool IsChapterUnlocked(Chapter chapter) => chapterUnlocked[chapter];
@@ -125,7 +147,12 @@ public class JournalManager : MonoBehaviour
     public int GetProgress(ObjData obj) => objectivesStates[obj].Progress;
     public bool IsObjectiveComplete(ObjData obj) => objectivesStates[obj].IsComplete;
     public bool IsObjectiveClaimed(ObjData obj) => objectivesStates[obj].IsClaimed;
-    public void ClaimObjective(ObjData obj) => objectivesStates[obj].SetObjectiveClaimed();
+
+    public void ClaimObjective(ObjData obj)
+    {
+        if(objectivesStates[obj].SetObjectiveClaimed())
+            OnObjectiveClaimed?.Invoke();
+    }
 
     public (int completed, int total) GetChapterProgress(ObjData obj)
     {
@@ -140,7 +167,7 @@ public class JournalManager : MonoBehaviour
         return (completed, total);
     }
 
-    private void HandleObjectiveProgress(ObjectiveType type, int amount)
+    private void HandleObjectiveProgress(ObjectiveType type, int amount, CropData requestedCrop = null)
     {
         foreach (ObjData obj in objectivesStates.Keys)
         {
@@ -149,6 +176,9 @@ public class JournalManager : MonoBehaviour
                 ObjState state = objectivesStates[obj];
 
                 if (state.IsComplete)
+                    continue;
+
+                if (obj.RelatedCrop != null && obj.RelatedCrop != requestedCrop)
                     continue;
 
                 state.IncreaseProgress(amount, obj.Target);
@@ -162,4 +192,23 @@ public class JournalManager : MonoBehaviour
     }
 
     public Chapter GetChapter(int index) => chaptersList[index];
+
+    public (int completed, int total) GetTotalJournalProgress()
+    {
+        int completed = 0;
+        int total = 0;
+
+        foreach(Chapter chap in chaptersList)
+        {
+            foreach(ObjData obj in chap.objectives)
+            {
+                total++;
+
+                if (IsObjectiveClaimed(obj))
+                    completed++;
+            }
+        }
+
+        return (completed, total);
+    }
 }

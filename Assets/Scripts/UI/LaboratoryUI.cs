@@ -32,7 +32,7 @@ public class LaboratoryUI : MonoBehaviour
         /// <summary>
         /// Crop currently selected in the dropdown.
         /// </summary>
-        [NonSerialized] public CropData selectedCrop;
+        [NonSerialized] public CropData SelectedCrop;
 
         // Starts the action.
         public Button button;
@@ -60,9 +60,9 @@ public class LaboratoryUI : MonoBehaviour
         /// Reference to the currently running UI animation coroutine.
         /// Allows restarting without duplicates.
         /// </summary>
-        [NonSerialized] public Coroutine activeCoroutine;
+        [NonSerialized] public Coroutine ActiveCoroutine;
 
-        [NonSerialized] public bool completeFadePlayed;
+        [NonSerialized] public bool CompleteFadePlayed;
 
         public RainbowCyclingColor rainbowText;
     }
@@ -107,6 +107,7 @@ public class LaboratoryUI : MonoBehaviour
     {
         labPanel.SetActive(false);
         laboratoryButton.interactable = false;
+        Debug.Log(laboratoryButton.interactable);
 
         OnResearchCropSelected(0);
         OnAutomationCropSelected(0);
@@ -131,6 +132,8 @@ public class LaboratoryUI : MonoBehaviour
 
     private void HandleJournalChapter1Claimed()
     {
+        Debug.Log(laboratoryButton.interactable);
+        
         if (laboratoryUnlocked)
             return;
 
@@ -146,7 +149,7 @@ public class LaboratoryUI : MonoBehaviour
     /// </summary>
     public void OnResearchCropSelected(int index)
     {
-        researchUI.selectedCrop = labManager.GetCropAt(index);
+        researchUI.SelectedCrop = labManager.GetCropAt(index);
     }
 
     /// <summary>
@@ -154,7 +157,7 @@ public class LaboratoryUI : MonoBehaviour
     /// </summary>
     public void OnAutomationCropSelected(int index)
     {
-        automationUI.selectedCrop = labManager.GetCropAt(index);
+        automationUI.SelectedCrop = labManager.GetCropAt(index);
     }
 
     /// <summary>
@@ -179,10 +182,10 @@ public class LaboratoryUI : MonoBehaviour
     /// </summary>
     private void StartActionUI(ActionUI ui, Action<CropData> startAction)
     {
-        if (ui.activeCoroutine != null)
-            StopCoroutine(ui.activeCoroutine);
+        if (ui.ActiveCoroutine != null)
+            StopCoroutine(ui.ActiveCoroutine);
 
-        ui.activeCoroutine = StartCoroutine(PlayStartActionRoutine(ui, startAction));
+        ui.ActiveCoroutine = StartCoroutine(PlayStartActionRoutine(ui, startAction));
 
         // Prevent repeated clicks while animation is playing.
         ui.button.interactable = false;
@@ -203,8 +206,8 @@ public class LaboratoryUI : MonoBehaviour
         yield return new WaitForSeconds(fadeWait);
 
         // Begin the actual laboratory action.
-        startAction(ui.selectedCrop);
-        ui.activeCoroutine = null;
+        startAction(ui.SelectedCrop);
+        ui.ActiveCoroutine = null;
     }
 
     //==========================================================================
@@ -221,12 +224,12 @@ public class LaboratoryUI : MonoBehaviour
         ActionUI ui = researchUI;
 
         // No crop selected yet.
-        if (ui.selectedCrop == null)
+        if (ui.SelectedCrop == null)
             return;
 
-        List<CostEntry> costs = ui.selectedCrop.ResearchCost;
+        List<CostEntry> costs = ui.SelectedCrop.ResearchCost;
         bool canAfford = resourceManager.CanAfford(costs);
-        bool isDone = labManager.IsCropResearched(ui.selectedCrop);
+        bool isDone = labManager.IsCropResearched(ui.SelectedCrop);
         bool isDoing = labManager.IsResearching();
 
         if (isDone || isDoing)
@@ -261,7 +264,7 @@ public class LaboratoryUI : MonoBehaviour
             // Idle state.
             ui.slider.value = 0f;
 
-            if (ui.activeCoroutine == null)
+            if (ui.ActiveCoroutine == null)
             {
                 ui.slider.gameObject.SetActive(false);
                 ui.button.gameObject.SetActive(true);
@@ -272,10 +275,10 @@ public class LaboratoryUI : MonoBehaviour
             if (isDone)
             {
                 ui.rainbowText.enabled = true;
-                if (!ui.completeFadePlayed)
+                if (!ui.CompleteFadePlayed)
                 {
                     ui.buttonFade.Fade(true);
-                    ui.completeFadePlayed = true;
+                    ui.CompleteFadePlayed = true;
                 }
                 ui.buttonText.text = "RESEARCHED";
             }
@@ -290,7 +293,7 @@ public class LaboratoryUI : MonoBehaviour
         {
             // Active research state.
             ui.rainbowText.enabled = false;
-            ui.completeFadePlayed = false;
+            ui.CompleteFadePlayed = false;
             ui.dropdown.interactable = false;
             ui.button.gameObject.SetActive(false);
             ui.slider.gameObject.SetActive(true);
@@ -306,13 +309,13 @@ public class LaboratoryUI : MonoBehaviour
     {
         ActionUI ui = automationUI;
 
-        if (ui.selectedCrop == null)
+        if (ui.SelectedCrop == null)
             return;
 
-        List<CostEntry> costs = ui.selectedCrop.AutomationCost;
+        List<CostEntry> costs = ui.SelectedCrop.AutomationCost;
         bool canAfford = resourceManager.CanAfford(costs);
         bool isDoing = labManager.IsAutomating();
-        bool isDone = labManager.IsCropAutomated(ui.selectedCrop);
+        bool isDone = labManager.IsCropAutomated(ui.SelectedCrop);
 
         if (isDoing || isDone)
         {
@@ -346,7 +349,7 @@ public class LaboratoryUI : MonoBehaviour
             // Idle state.
             ui.slider.value = 0f;
 
-            if (ui.activeCoroutine == null)
+            if (ui.ActiveCoroutine == null)
             {
                 ui.slider.gameObject.SetActive(false);
                 ui.button.gameObject.SetActive(true);
@@ -357,10 +360,10 @@ public class LaboratoryUI : MonoBehaviour
             if (isDone)
             {
                 ui.rainbowText.enabled = true;
-                if (!ui.completeFadePlayed)
+                if (!ui.CompleteFadePlayed)
                 {
                     ui.buttonFade.Fade(true);
-                    ui.completeFadePlayed = true;
+                    ui.CompleteFadePlayed = true;
                 }
                 ui.warningText.SetActive(false);
                 ui.buttonText.text = "AUTOMATED";

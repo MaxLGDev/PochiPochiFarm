@@ -14,6 +14,8 @@ public class GridManager : MonoBehaviour
     // References
     //==========================================================================
     public event Action OnTileHarvested;
+    public event Action OnCropGathered;
+    public event Action<CropData> OnCropUnlocked;
 
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private LaboratoryManager labManager;
@@ -253,7 +255,10 @@ public class GridManager : MonoBehaviour
         bool success = TryUnlockTile(tile);
 
         if (success)
+        {
+            OnCropUnlocked?.Invoke(tile.CropData);
             tile.UnlockTile();
+        }
         else
             Debug.Log("Cannot unlock tile.");
     }
@@ -282,12 +287,14 @@ public class GridManager : MonoBehaviour
 
         resourceManager.HandleHarvest(tile);
         tile.ResetGrowth();
+        OnCropGathered?.Invoke();
 
         if (isManual)
         {
             OnTileHarvested?.Invoke();
         }
         return true;
+
     }
 
     private void HandleCropMatured(Tile tile)
