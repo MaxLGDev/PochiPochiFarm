@@ -40,6 +40,7 @@ public class WaterManager : MonoBehaviour
 
     [SerializeField] private float passiveWaterInterval = 2.5f;
     public float PassiveWaterInterval => passiveWaterInterval;
+    public float PassiveWaterRate => passiveWaterRate;
 
     // Water gained when purchasing water.
     [SerializeField] private int waterPerClick = 1;

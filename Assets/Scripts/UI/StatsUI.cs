@@ -5,6 +5,7 @@ using TMPro;
 public class StatsUI : MonoBehaviour
 {
     [SerializeField] private JournalManager journalManager;
+    [SerializeField] private StatsManager statsManager;
     
     [Header("Journal Stats")]
     [SerializeField] private TMP_Text journalProgressionText;
@@ -15,11 +16,8 @@ public class StatsUI : MonoBehaviour
     [Header("Playtime")]
     [SerializeField] private TMP_Text gameTotalPlaytimeText;
 
-    private float totalPlaytime;
-
     private void Start()
     {
-        totalPlaytime = PlayerPrefs.GetFloat("TotalPlaytime", 0f);
         HandleJournalProgression();
     }
 
@@ -39,11 +37,6 @@ public class StatsUI : MonoBehaviour
         journalManager.OnObjectiveClaimed -= HandleJournalProgression;
     }
 
-    private void UpdateDisplay()
-    {
-        
-    }
-
     private void HandleJournalProgression()
     {
         var (completed, total) = journalManager.GetTotalJournalProgress();
@@ -51,19 +44,5 @@ public class StatsUI : MonoBehaviour
         journalProgressionText.text = $"{completed}/{total}  ({percent:F0}%)";
     }
 
-    private void UpdateTotalPlaytime()
-    {
-        totalPlaytime += Time.deltaTime;
-        gameTotalPlaytimeText.text = FormatPlaytime(totalPlaytime);
-    }
-
-    private string FormatPlaytime(float seconds)
-    {
-        int totalSeconds = (int)seconds;
-        int minutes = (totalSeconds % 3600) / 60;
-        int hours = totalSeconds / 3600;
-        int secs = totalSeconds % 60;
-
-        return $"{hours}h{minutes}m{secs}s";
-    }
+    private void UpdateTotalPlaytime() => gameTotalPlaytimeText.text = StatsFormatter.FormatPlaytime(statsManager.GetTotalPlaytime());
 }

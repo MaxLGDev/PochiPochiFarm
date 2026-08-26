@@ -62,6 +62,9 @@ public class WaterUI : MonoBehaviour
     /// </summary>
     private void UpdateSliderUI()
     {
+        if (waterManager.PassiveWaterRate == 0)
+            return;
+        
         if (waterManager.Water == waterManager.MaxWater)
         {
             waterSlider.value = 0f;

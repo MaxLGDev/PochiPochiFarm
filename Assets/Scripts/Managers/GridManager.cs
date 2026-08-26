@@ -243,6 +243,17 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
+    public bool IsCropUnlocked(CropData crop)
+    {
+        foreach (Tile tile in grid)
+        {
+            if (tile.CropData == crop && tile.IsUnlocked)
+                return true;
+        }
+
+        return false;
+    }
+
     //==========================================================================
     // Event Handlers
     //==========================================================================

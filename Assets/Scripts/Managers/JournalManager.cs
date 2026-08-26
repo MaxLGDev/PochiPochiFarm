@@ -52,6 +52,7 @@ public class Chapter
 public class JournalManager : MonoBehaviour
 {
     public event Action OnChapter1Claimed;
+    public event Action OnLastChapterClaimed;
     public event Action OnObjectiveClaimed;
 
     private Action<int> onCoinsEarnedHandler;
@@ -73,7 +74,7 @@ public class JournalManager : MonoBehaviour
 
     [SerializeField] List<Chapter> chaptersList;
 
-    Dictionary<ObjData, ObjState> objectivesStates = new();
+    private Dictionary<ObjData, ObjState> objectivesStates = new();
     Dictionary<ObjData, Chapter> objectiveToChapter = new();
     Dictionary<Chapter, bool> chapterUnlocked = new();
 
@@ -140,8 +141,16 @@ public class JournalManager : MonoBehaviour
         chapterUnlocked[chaptersList[nextIndex]] = true;
         gridManager.UnlockZone(chapter);
 
-        if (nextIndex == 1) // Assuming chapter 1 is at index 0
-            OnChapter1Claimed?.Invoke();
+        switch (nextIndex)
+        {
+            // Assuming chapter 1 is at index 0
+            case 1:
+                OnChapter1Claimed?.Invoke();
+                break;
+            case 4:
+                OnLastChapterClaimed?.Invoke();
+                break;
+        }
     }
 
     public int GetProgress(ObjData obj) => objectivesStates[obj].Progress;
@@ -175,6 +184,11 @@ public class JournalManager : MonoBehaviour
             {
                 ObjState state = objectivesStates[obj];
 
+                Chapter chapter = objectiveToChapter[obj];
+
+                if (!chapterUnlocked[chapter])
+                    continue;
+                
                 if (state.IsComplete)
                     continue;
 
