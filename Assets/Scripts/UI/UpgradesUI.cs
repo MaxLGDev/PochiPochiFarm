@@ -9,6 +9,7 @@ public class UpgradesUI : MonoBehaviour
     private Action<CropData> onRequestedCropUnlockedHandler;
     private Action<CropData> onRequestedCropResearchedHandler;
     private Action<CropData> onRequestedCropAutomatedHandler;
+    private Action<UpgradeData> onNodeClickedHandler;
     
     [SerializeField] private GridManager gridManager;
     [SerializeField] private LaboratoryManager laboratoryManager;
@@ -19,8 +20,6 @@ public class UpgradesUI : MonoBehaviour
     [SerializeField] private List<UpgradeNodeUI> upgradeNodes;
     [SerializeField] private GameObject upgradesPanel;
     [SerializeField] private Button upgradesButton;
-    
-    [SerializeField] private UpgradeNodeUI[] nodesUI;
 
     private bool upgradesUnlocked = false;
 
@@ -30,18 +29,27 @@ public class UpgradesUI : MonoBehaviour
         onRequestedCropUnlockedHandler = (crop) => RefreshAll();
         onRequestedCropResearchedHandler = (crop) => RefreshAll();
         onRequestedCropAutomatedHandler = (crop) => RefreshAll();
-        
-        nodesUI = GetComponentsInChildren<UpgradeNodeUI>();
+
+        onNodeClickedHandler = (upgradeData) =>
+        {
+            upgradeManager.UnlockUpgrade(upgradeData);
+            RefreshAll();
+        };
     }
 
     private void Start()
     {
         upgradesPanel.SetActive(false);
         upgradesButton.interactable = false;
+
+        RefreshAll();
     }
 
     private void OnEnable()
     {
+        foreach (var node in upgradeNodes)
+            node.OnNodeClicked += onNodeClickedHandler;
+        
         journalManager.OnChapter1Claimed += HandleJournalChapter1Claimed;
         gridManager.OnCropUnlocked += onRequestedCropUnlockedHandler;
         laboratoryManager.OnRequestedCropResearched += onRequestedCropResearchedHandler;
@@ -52,6 +60,9 @@ public class UpgradesUI : MonoBehaviour
 
     private void OnDisable()
     {
+        foreach(var node in upgradeNodes)
+            node.OnNodeClicked -= onNodeClickedHandler;
+        
         journalManager.OnChapter1Claimed -= HandleJournalChapter1Claimed;
         gridManager.OnCropUnlocked -= onRequestedCropUnlockedHandler;
         laboratoryManager.OnRequestedCropResearched -= onRequestedCropResearchedHandler;
@@ -62,24 +73,19 @@ public class UpgradesUI : MonoBehaviour
 
     private void RefreshAll()
     {
-        foreach (UpgradeNodeUI node in upgradeNodes)
+        foreach (var node in upgradeNodes)
         {
-            node.Refresh();
+            node.Refresh(upgradeManager.GetUpgradeState(node.UpgradeDataSo));
         }
     }
     
     private void HandleJournalChapter1Claimed()
     {
-        Debug.Log(upgradesButton.interactable);
-        
         if (upgradesUnlocked)
             return;
-
-        if (!upgradesUnlocked)
-        {
-            upgradesUnlocked = true;
-            upgradesButton.interactable = true;
-        }
+        
+        upgradesUnlocked = true;
+        upgradesButton.interactable = true;
     }
     
     public void ToggleUpgradesPanel() => upgradesPanel.SetActive(!upgradesPanel.activeSelf);

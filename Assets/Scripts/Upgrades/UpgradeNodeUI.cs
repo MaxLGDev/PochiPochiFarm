@@ -8,7 +8,7 @@ public class UpgradeNodeUI : MonoBehaviour
     public event Action<UpgradeData> OnNodeClicked;
     
     private UpgradeState upgradeState;
-    [SerializeField] private UpgradeData upgradeDataSO;
+    [SerializeField] private UpgradeData upgradeDataSo;
     [SerializeField] private Button upgradeNodeButton;
     [SerializeField] private Image upgradeIcon;
     [SerializeField] private Image boughtOutline;
@@ -18,16 +18,13 @@ public class UpgradeNodeUI : MonoBehaviour
     [SerializeField] private Color availableColor;
     [SerializeField] private Color boughtColor;
 
-    public UpgradeData UpgradeDataSO => upgradeDataSO;
+    public UpgradeData UpgradeDataSo => upgradeDataSo;
 
-    public void TryUnlockNode()
-    {
-        OnNodeClicked?.Invoke(upgradeDataSO);
-    }
+    public void TryUnlockNode() => OnNodeClicked?.Invoke(upgradeDataSo);
 
-    public void Refresh(UpgradeState upgradeState)
+    public void Refresh(UpgradeState state)
     {
-        switch (upgradeState)
+        switch (state)
         {
             case UpgradeState.Locked:
                 SetVisualState(false, false, 0.4f, lockedColor);
@@ -45,7 +42,7 @@ public class UpgradeNodeUI : MonoBehaviour
     {
         upgradeNodeButton.interactable = buttonInteractable;
         boughtOutline.enabled = boughtOutlineEnabled;
-        Color c = upgradeIcon.color;
+        var c = upgradeIcon.color;
         c.a = alpha;
         upgradeIcon.color = c;
 
