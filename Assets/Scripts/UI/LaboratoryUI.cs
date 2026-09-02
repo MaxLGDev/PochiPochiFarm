@@ -107,7 +107,6 @@ public class LaboratoryUI : MonoBehaviour
     {
         labPanel.SetActive(false);
         laboratoryButton.interactable = false;
-        Debug.Log(laboratoryButton.interactable);
 
         OnResearchCropSelected(0);
         OnAutomationCropSelected(0);
