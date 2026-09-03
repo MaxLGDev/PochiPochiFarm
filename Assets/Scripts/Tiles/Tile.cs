@@ -24,6 +24,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     [SerializeField] private PunchAnim punchAnim;
     [SerializeField] private WiggleAnim cropWiggle;
     [SerializeField] private WiggleAnim fogWiggle;
+    [SerializeField] private PunchAnim fogPunch;
 
     [Header("Sprites")]
     [SerializeField] private SpriteRenderer soilRenderer;
@@ -152,6 +153,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     public void FogBlockedAnimation()
     {
         fogWiggle.Wiggle();
+        fogPunch.PunchScale();
     }
 
     //==========================================================================

@@ -13,6 +13,7 @@ public class JournalUI : MonoBehaviour
 
     [SerializeField] private TMP_Text clearedObjectivesCounterText;
     [SerializeField] private Button claimRewardsButton;
+    [SerializeField] private TMP_Text claimButtonText;
 
     [SerializeField] private GameObject rowPrefab;
     [SerializeField] private Transform rowParent;
@@ -30,14 +31,14 @@ public class JournalUI : MonoBehaviour
 
     private Vector2[] originalTabPositions;
 
-    private List<QuestRowUI> currentRows = new();
+    private readonly List<QuestRowUI> currentRows = new();
     private Chapter currentChapter;
 
     private void Awake()
     {
         originalTabPositions = new Vector2[tabs.Length];
 
-        for (int i = 0; i < tabs.Length; i++)
+        for (var i = 0; i < tabs.Length; i++)
             originalTabPositions[i] = tabs[i].anchoredPosition;
 
         pageFlipDuration = pageFlip.length;
@@ -61,9 +62,9 @@ public class JournalUI : MonoBehaviour
         journalManager.OnObjectiveCompleted -= HandleObjectiveCompleted;
     }
 
-    public void SetActiveTab(int index)
+    private void SetActiveTab(int index)
     {
-        for(int i = 0; i < tabs.Length; i++)
+        for(var i = 0; i < tabs.Length; i++)
         {
             tabs[i].anchoredPosition = originalTabPositions[i];
 
@@ -109,6 +110,12 @@ public class JournalUI : MonoBehaviour
 
         currentRows.Clear();
 
+        var nextChapter = journalManager.GetNextChapter(chapter);
+        var claimed = nextChapter != null && journalManager.IsChapterUnlocked(nextChapter);
+
+        claimRewardsButton.interactable = !claimed;
+        claimButtonText.text = claimed ? "CLAIMED" : "CLAIM";
+
         foreach (var obj in chapter.objectives)
         {
             Debug.Log($"CREATING ROW FOR: {obj.Description}");
@@ -127,6 +134,7 @@ public class JournalUI : MonoBehaviour
             PlayPageFlip(chapterIndex + 1, currentChapterIndex + 1);
 
         currentChapterIndex = chapterIndex;
+
         SetActiveTab(chapterIndex + 1);
         ShowChapter(chapter);
         HandleObjectiveCompleted(chapter.objectives[0]);
@@ -136,9 +144,10 @@ public class JournalUI : MonoBehaviour
     {
         journalManager.UnlockNextChapter(currentChapter);
         RefreshTabLocks();
+        HandleObjectiveCompleted(currentChapter.objectives[0]);
     }
 
-    public void RefreshTabLocks()
+    private void RefreshTabLocks()
     {
         for (int i = 0; i < tabButtons.Length; i++)
         {
@@ -151,7 +160,7 @@ public class JournalUI : MonoBehaviour
     {
         if (journalPanel != null)
         {
-            bool opening = !journalPanel.activeSelf;
+            var opening = !journalPanel.activeSelf;
             journalPanel.SetActive(opening);
 
             if(opening)
@@ -171,28 +180,34 @@ public class JournalUI : MonoBehaviour
             ShowChapter(currentChapter);
     }
 
-    public void HandleObjectiveCompleted(ObjData obj)
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void HandleObjectiveCompleted(ObjData obj)
     {
         var (completed, total) = journalManager.GetChapterProgress(obj);
 
-        if (clearedObjectivesCounterText == null)
+        if (!clearedObjectivesCounterText)
+            return;
+
+        var chapter = journalManager.GetChapterForObjective(obj);
+        var nextChapter = journalManager.GetNextChapter(chapter);
+        var claimed = nextChapter != null && journalManager.IsChapterUnlocked(nextChapter);
+
+        if (claimed)
         {
-            Debug.Log("ClearedObjectivesText is missing");
+            claimButtonText.text = "CLAIMED";
+            claimRewardsButton.interactable = false;
             return;
         }
 
-        if (completed >= total)
-            clearedObjectivesCounterText.text = $"<color=green>{completed}/{total}</color>";
-        else
-            clearedObjectivesCounterText.text = $"<color=red>{completed}/{total}</color>";
-
+        clearedObjectivesCounterText.text = completed >= total ? $"<color=green>{completed}/{total}</color>" : $"<color=red>{completed}/{total}</color>";
+        
         claimRewardsButton.interactable = completed >= total;
     }
 
     private void PlayPageFlip(int newChapterIndex, int oldChapterIndex)
     {
-        bool forward = newChapterIndex >= oldChapterIndex;
-        string clipName = forward ? "PageFlip" : "PageFlipReverse";
+        var forward = newChapterIndex >= oldChapterIndex;
+        var clipName = forward ? "PageFlip" : "PageFlipReverse";
 
         pageFlipObject.SetActive(true);
         pageFlipAnimator.Play(clipName, 0, 0f);

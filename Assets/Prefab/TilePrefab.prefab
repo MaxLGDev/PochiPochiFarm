@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 738451491131260114}
   - component: {fileID: 5395524588232099566}
   - component: {fileID: 7879466841013855546}
+  - component: {fileID: 7909041524942890975}
   m_Layer: 0
   m_Name: FogRend
   m_TagString: Untagged
@@ -106,6 +107,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WiggleAnim
   wiggleAngle: 20
   wiggleDuration: 0.05
+--- !u!114 &7909041524942890975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4822951180000789327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cac4fb63e0372d4b88c922b3010fbba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PunchAnim
+  maxScale: 1.2
+  punchUpDuration: 0.1
+  punchDownDuration: 0.1
 --- !u!1 &5464282864718516857
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,6 +233,7 @@ MonoBehaviour:
   punchAnim: {fileID: 4681016580881300231}
   cropWiggle: {fileID: 1462376007229002839}
   fogWiggle: {fileID: 7879466841013855546}
+  fogPunch: {fileID: 7909041524942890975}
   soilRenderer: {fileID: 74138344643098413}
   cropRenderer: {fileID: 2921914963320175895}
   fogRenderer: {fileID: 5395524588232099566}

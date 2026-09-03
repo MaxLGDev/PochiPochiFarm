@@ -78,7 +78,19 @@ public class UpgradesUI : MonoBehaviour
             node.Refresh(upgradeManager.GetUpgradeState(node.UpgradeDataSo));
         }
     }
-    
+
+   private UpgradeNodeUI FindNodeFor(UpgradeData data)
+   {
+       foreach (var node in upgradeNodes)
+       {
+           if (node.UpgradeDataSo == data)
+               return node;
+       }
+
+       return null;
+   }
+
+ 
     private void HandleJournalChapter1Claimed()
     {
         if (upgradesUnlocked)
@@ -87,6 +99,6 @@ public class UpgradesUI : MonoBehaviour
         upgradesUnlocked = true;
         upgradesButton.interactable = true;
     }
-    
+
     public void ToggleUpgradesPanel() => upgradesPanel.SetActive(!upgradesPanel.activeSelf);
 }

@@ -207,6 +207,15 @@ public class JournalManager : MonoBehaviour
 
     public Chapter GetChapter(int index) => chaptersList[index];
 
+    public Chapter GetChapterForObjective(ObjData obj) => objectiveToChapter[obj];
+
+    public Chapter GetNextChapter(Chapter chapter)
+    {
+        int index = chaptersList.IndexOf(chapter);
+        int nextIndex = index + 1;
+        return nextIndex < chaptersList.Count ? chaptersList[nextIndex] : null;
+    }
+
     public (int completed, int total) GetTotalJournalProgress()
     {
         int completed = 0;
