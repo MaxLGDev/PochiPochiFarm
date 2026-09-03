@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Serialization;
 
 public class UpgradeNodeUI : MonoBehaviour
 {
@@ -10,8 +11,11 @@ public class UpgradeNodeUI : MonoBehaviour
     private UpgradeState upgradeState;
     [SerializeField] private UpgradeData upgradeDataSo;
     [SerializeField] private Button upgradeNodeButton;
-    [SerializeField] private Image upgradeIcon;
+    [FormerlySerializedAs("upgradeIcon")] [SerializeField] private Image nodeIcon;
     [SerializeField] private Image boughtOutline;
+    [SerializeField] private Image nodeBorder;
+    [SerializeField] private Image nodeBackground;
+    [SerializeField] private Image nodeOverlay;
     [SerializeField] private TMP_Text upgradeNameText;
 
     [SerializeField] private Color lockedColor;
@@ -27,26 +31,35 @@ public class UpgradeNodeUI : MonoBehaviour
         switch (state)
         {
             case UpgradeState.Locked:
-                SetVisualState(false, false, 0.4f, lockedColor);
+                SetVisualState(false, false, true,0.4f, lockedColor);
                 break;
             case UpgradeState.Available:
-                SetVisualState(true, false, 1f, availableColor);
+                SetVisualState(true, false, true, 1f, availableColor);
                 break;
             case UpgradeState.Bought:
-                SetVisualState(true, true, 1f, boughtColor);
+                SetVisualState(true, true, false, 1f, boughtColor);
                 break;
         }
     }
 
-    private void SetVisualState(bool buttonInteractable, bool boughtOutlineEnabled, float alpha, Color textColor)
+    private void SetVisualState(bool buttonInteractable, bool boughtOutlineEnabled, bool overlayEnabled, float alpha, Color textColor)
     {
         upgradeNodeButton.interactable = buttonInteractable;
         boughtOutline.enabled = boughtOutlineEnabled;
-        var c = upgradeIcon.color;
-        c.a = alpha;
-        upgradeIcon.color = c;
+        nodeOverlay.enabled = overlayEnabled;
+        SetColorOf(nodeIcon, alpha);
+        SetColorOf(nodeBackground, alpha);
+
+        nodeIcon.sprite = upgradeDataSo.Sprite;
 
         upgradeNameText.color = textColor;
+    }
+
+    private static void SetColorOf(Image image, float alpha)
+    {
+        var c = image.color;
+        c.a = alpha;
+        image.color = c;
     }
 
 }
