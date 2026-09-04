@@ -1,6 +1,6 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public enum UpgradeState
 {
@@ -11,61 +11,55 @@ public enum UpgradeState
 
 public class UpgradeManager : MonoBehaviour
 {
-    public event Action OnUpgradeUnlocked;
-    
+    // --- Events ---
+    public event Action<UpgradeData> OnUpgradeUnlocked;
+
+    // --- References ---
     [SerializeField] private GridManager gridManager;
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private LaboratoryManager laboratoryManager;
 
-    private Dictionary<UpgradeData, bool> allUpgrades;
+    // --- Upgrade Data ---
     [SerializeField] private List<UpgradeData> allUpgradesList;
+
+    // --- Runtime State ---
+    private Dictionary<UpgradeData, bool> allUpgrades;
+
     public IReadOnlyList<UpgradeData> AllUpgrades => allUpgradesList;
+
+
+    // ==============================
+    // Unity Lifecycle
+    // ==============================
 
     private void Awake()
     {
         allUpgrades = new Dictionary<UpgradeData, bool>();
-        
-        foreach (var upgrade in allUpgradesList)
+
+        foreach (UpgradeData upgrade in allUpgradesList)
+        {
             allUpgrades[upgrade] = false;
+        }
     }
+
+
+    // ==============================
+    // Upgrade Management
+    // ==============================
 
     public void UnlockUpgrade(UpgradeData upgradeData)
     {
         if (GetUpgradeState(upgradeData) != UpgradeState.Available)
             return;
-        
+
         if (!resourceManager.TrySpendCoins(upgradeData.UnlockCost))
         {
             Debug.Log("Not enough coins");
             return;
         }
-        
+
         allUpgrades[upgradeData] = true;
-        OnUpgradeUnlocked?.Invoke();
-    }
-
-    private bool AreRequirementsMet(UpgradeData data)
-    {
-        bool cropRequirementMet = false;
-
-        if (data.PreviousUpgrade != null && !allUpgrades[data.PreviousUpgrade])
-            return false;
-        
-        if (data.TargetCrop == null)
-            cropRequirementMet = true;
-        
-        if (data.TargetCrop != null && data.CropState != RequiredCropState.None)
-        {
-            cropRequirementMet = data.CropState switch
-            {
-                RequiredCropState.Unlocked => gridManager.IsCropUnlocked(data.TargetCrop),
-                RequiredCropState.Researched => laboratoryManager.IsCropResearched(data.TargetCrop),
-                RequiredCropState.Automated => laboratoryManager.IsCropAutomated(data.TargetCrop),
-                _ => cropRequirementMet
-            };
-        }
-        
-        return cropRequirementMet;
+        OnUpgradeUnlocked?.Invoke(upgradeData);
     }
 
     public UpgradeState GetUpgradeState(UpgradeData data)
@@ -73,6 +67,43 @@ public class UpgradeManager : MonoBehaviour
         if (allUpgrades[data])
             return UpgradeState.Bought;
 
-        return AreRequirementsMet(data) ? UpgradeState.Available : UpgradeState.Locked;
+        return AreRequirementsMet(data)
+            ? UpgradeState.Available
+            : UpgradeState.Locked;
+    }
+
+
+    // ==============================
+    // Requirement Checks
+    // ==============================
+
+    private bool AreRequirementsMet(UpgradeData data)
+    {
+        bool cropRequirementMet = false;
+
+        if (data.PreviousUpgrade != null && !allUpgrades[data.PreviousUpgrade])
+            return false;
+
+        if (data.TargetCrop == null)
+            cropRequirementMet = true;
+
+        if (data.TargetCrop != null && data.CropState != RequiredCropState.None)
+        {
+            cropRequirementMet = data.CropState switch
+            {
+                RequiredCropState.Unlocked =>
+                    gridManager.IsCropUnlocked(data.TargetCrop),
+
+                RequiredCropState.Researched =>
+                    laboratoryManager.IsCropResearched(data.TargetCrop),
+
+                RequiredCropState.Automated =>
+                    laboratoryManager.IsCropAutomated(data.TargetCrop),
+
+                _ => cropRequirementMet
+            };
+        }
+
+        return cropRequirementMet;
     }
 }

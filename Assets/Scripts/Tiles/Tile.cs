@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,55 +8,47 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class Tile : MonoBehaviour, IPointerClickHandler
 {
-    //==========================================================================
-    // Events
-    //==========================================================================
-
+    // --- Events ---
     public event System.Action<Tile> OnHarvestRequested;
     public event System.Action<Tile> OnUnlockRequested;
     public event System.Action<Tile> OnCropMatured;
 
-    //==========================================================================
-    // References
-    //==========================================================================
-
+    // --- Animation References ---
     [SerializeField] private PunchAnim punchAnim;
     [SerializeField] private WiggleAnim cropWiggle;
     [SerializeField] private WiggleAnim fogWiggle;
     [SerializeField] private PunchAnim fogPunch;
 
-    [Header("Sprites")]
+    // --- Sprite References ---
     [SerializeField] private SpriteRenderer soilRenderer;
     [SerializeField] private SpriteRenderer cropRenderer;
     [SerializeField] private SpriteRenderer fogRenderer;
 
-    //==========================================================================
-    // Properties
-    //==========================================================================
-
+    // --- State ---
     public CropData CropData { get; private set; }
-
     public Vector2Int GridPosition { get; private set; }
-
     public float GrowthTimer { get; private set; }
-
     public bool IsUnlocked { get; private set; }
-
     public bool IsAutomated { get; private set; }
-
     public bool IsMature { get; private set; }
 
     // Prevents updating the crop sprite every frame.
     private int lastStageIndex = -1;
+
+
+    // ==============================
+    // Unity Lifecycle
+    // ==============================
 
     private void Update()
     {
         GrowCrop();
     }
 
-    //==========================================================================
+
+    // ==============================
     // Crop Growth
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Advances crop growth over time.
@@ -73,8 +64,15 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         GrowthTimer += Time.deltaTime;
 
         float fraction = GrowthTimer / CropData.GrowthTime;
-        int rawIndex = Mathf.FloorToInt(fraction * (CropData.GrowthSprites.Length - 1));
-        int stageIndex = Mathf.Min(rawIndex, CropData.GrowthSprites.Length - 1);
+
+        int rawIndex = Mathf.FloorToInt(
+            fraction * (CropData.GrowthSprites.Length - 1)
+        );
+
+        int stageIndex = Mathf.Min(
+            rawIndex,
+            CropData.GrowthSprites.Length - 1
+        );
 
         // Only update the sprite when the growth stage changes.
         if (stageIndex != lastStageIndex)
@@ -87,6 +85,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         {
             IsMature = true;
             OnCropMatured?.Invoke(this);
+
             punchAnim.PunchScale();
             StartCoroutine(BlinkCropColor(0.3f));
         }
@@ -115,9 +114,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         cropRenderer.color = originalColor;
     }
 
-    //==========================================================================
+
+    // ==============================
     // Player Interaction
-    //==========================================================================
+    // ==============================
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -156,14 +156,20 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         fogPunch.PunchScale();
     }
 
-    //==========================================================================
+
+    // ==============================
     // Initialization
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Sets up the tile with its crop, position, and initial state.
     /// </summary>
-    public void InitializeCrop(CropData cropData, Vector2Int gridPosition, bool startUnlocked, Sprite groundSprite)
+    public void InitializeCrop(
+        CropData cropData,
+        Vector2Int gridPosition,
+        bool startUnlocked,
+        Sprite groundSprite
+    )
     {
         if (cropData == null)
         {
@@ -182,7 +188,11 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
         if (cropData.GrowthTime <= 0f)
         {
-            Debug.LogWarning($"Crop {cropData.name} has a growth time of {cropData.GrowthTime}. It will be considered mature immediately.");
+            Debug.LogWarning(
+                $"Crop {cropData.name} has a growth time of {cropData.GrowthTime}. " +
+                "It will be considered mature immediately."
+            );
+
             IsMature = true;
         }
         else
@@ -193,14 +203,17 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         soilRenderer.sprite = groundSprite;
 
         // Display the mature sprite until growth begins.
-        cropRenderer.sprite = CropData.GrowthSprites[CropData.GrowthSprites.Length - 1];
+        cropRenderer.sprite = CropData.GrowthSprites[
+            CropData.GrowthSprites.Length - 1
+        ];
 
         UpdateFogVisibility();
     }
 
-    //==========================================================================
+
+    // ==============================
     // Tile State
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Shows or hides the locked overlay.

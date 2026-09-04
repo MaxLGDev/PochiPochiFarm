@@ -1,7 +1,5 @@
 using System.Collections;
-
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Plays a quick scale "punch" animation.

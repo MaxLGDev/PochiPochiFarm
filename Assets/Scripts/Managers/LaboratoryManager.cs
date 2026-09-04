@@ -3,80 +3,123 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
+// ============================================
+// Laboratory State
+// ============================================
+
 /// <summary>
 /// Stores the research and automation state of a crop.
 /// </summary>
 public class LabState
 {
+    // --- Research ---
     public bool IsResearched { get; private set; }
-    public bool IsAutomated { get; private set; }
-
     public float ResearchTimer { get; private set; }
+
+    // --- Automation ---
+    public bool IsAutomated { get; private set; }
     public float AutomationTimer { get; private set; }
+
+
+    // ==============================
+    // Research
+    // ==============================
 
     /// <summary>
     /// Resets the research timer.
     /// </summary>
-    public void StartResearch() => ResearchTimer = 0f;
+    public void StartResearch()
+    {
+        ResearchTimer = 0f;
+    }
 
     /// <summary>
     /// Advances the research timer.
     /// </summary>
-    public void ProgressResearch() => ResearchTimer += Time.deltaTime;
-
-    /// <summary>
-    /// Resets the automation timer.
-    /// </summary>
-    public void StartAutomation() => AutomationTimer = 0f;
-
-    /// <summary>
-    /// Advances the automation timer.
-    /// </summary>
-    public void ProgressAutomation() => AutomationTimer += Time.deltaTime;
+    public void ProgressResearch()
+    {
+        ResearchTimer += Time.deltaTime;
+    }
 
     /// <summary>
     /// Marks the crop as researched.
     /// </summary>
-    public void FlagCropAsResearched() => IsResearched = true;
+    public void FlagCropAsResearched()
+    {
+        IsResearched = true;
+    }
+
+
+    // ==============================
+    // Automation
+    // ==============================
+
+    /// <summary>
+    /// Resets the automation timer.
+    /// </summary>
+    public void StartAutomation()
+    {
+        AutomationTimer = 0f;
+    }
+
+    /// <summary>
+    /// Advances the automation timer.
+    /// </summary>
+    public void ProgressAutomation()
+    {
+        AutomationTimer += Time.deltaTime;
+    }
 
     /// <summary>
     /// Marks the crop as automated.
     /// </summary>
-    public void FlagCropAsAutomated() => IsAutomated = true;
+    public void FlagCropAsAutomated()
+    {
+        IsAutomated = true;
+    }
 }
+
+
+// ============================================
+// Laboratory Manager
+// ============================================
 
 /// <summary>
 /// Manages crop research and automation.
 /// </summary>
 public class LaboratoryManager : MonoBehaviour
 {
+    // --- Events ---
     public event Action<CropData> OnCropAutomated;
     public event Action<CropData> OnRequestedCropResearched;
     public event Action<CropData> OnRequestedCropAutomated;
 
-    //==========================================================================
-    // References
-    //==========================================================================
-
+    // --- References ---
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private FarmLayout farmLayout;
 
-    //==========================================================================
-    // Research Data
-    //==========================================================================
-
+    // --- Research Data ---
     [SerializeField] private List<CropData> researchableCrops;
 
+    // --- Runtime State ---
     private readonly Dictionary<CropData, LabState> cropsResearch = new();
 
     private CropData currentResearchingCrop;
     private CropData currentAutomatingCrop;
 
+
+    // ==============================
+    // Unity Lifecycle
+    // ==============================
+
     private void Start()
     {
         currentResearchingCrop = null;
 
-        var allCrops = farmLayout.tiles.Select(t => t.cropData).Distinct();
+        var allCrops = farmLayout.tiles
+            .Select(tile => tile.cropData)
+            .Distinct();
 
         foreach (CropData crop in allCrops)
         {
@@ -95,11 +138,20 @@ public class LaboratoryManager : MonoBehaviour
         UpdateAutomationProgress();
     }
 
-    public CropData GetCropAt(int index) => researchableCrops[index];
 
-    //==========================================================================
+    // ==============================
+    // Crop Access
+    // ==============================
+
+    public CropData GetCropAt(int index)
+    {
+        return researchableCrops[index];
+    }
+
+
+    // ==============================
     // Research
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Starts researching the selected crop.
@@ -141,7 +193,7 @@ public class LaboratoryManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns whether a research is currently in progress.
+    /// Returns whether research is currently in progress.
     /// </summary>
     public bool IsResearching()
     {
@@ -157,6 +209,7 @@ public class LaboratoryManager : MonoBehaviour
             return 0f;
 
         LabState state = cropsResearch[currentResearchingCrop];
+
         return state.ResearchTimer / currentResearchingCrop.ResearchDuration;
     }
 
@@ -171,9 +224,10 @@ public class LaboratoryManager : MonoBehaviour
         return cropsResearch[crop].IsResearched;
     }
 
-    //==========================================================================
+
+    // ==============================
     // Automation
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Starts automating the selected crop.
@@ -212,14 +266,16 @@ public class LaboratoryManager : MonoBehaviour
         if (state.AutomationTimer >= currentAutomatingCrop.AutomationDuration)
         {
             state.FlagCropAsAutomated();
+
             OnCropAutomated?.Invoke(currentAutomatingCrop);
             OnRequestedCropAutomated?.Invoke(currentAutomatingCrop);
+
             currentAutomatingCrop = null;
         }
     }
 
     /// <summary>
-    /// Returns whether an automation is currently in progress.
+    /// Returns whether automation is currently in progress.
     /// </summary>
     public bool IsAutomating()
     {
@@ -235,6 +291,7 @@ public class LaboratoryManager : MonoBehaviour
             return 0f;
 
         LabState state = cropsResearch[currentAutomatingCrop];
+
         return state.AutomationTimer / currentAutomatingCrop.AutomationDuration;
     }
 

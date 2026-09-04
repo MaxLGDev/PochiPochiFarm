@@ -118,7 +118,6 @@ public class JournalUI : MonoBehaviour
 
         foreach (var obj in chapter.objectives)
         {
-            Debug.Log($"CREATING ROW FOR: {obj.Description}");
             var row = Instantiate(rowPrefab, rowParent).GetComponent<QuestRowUI>();
             row.Setup(obj, journalManager);
             row.OnQuestClaimed += () => HandleObjectiveCompleted(obj);

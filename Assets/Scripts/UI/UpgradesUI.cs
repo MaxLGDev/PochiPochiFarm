@@ -5,11 +5,22 @@ using UnityEngine.UI;
 
 public class UpgradesUI : MonoBehaviour
 {
+    
+    [System.Serializable]
+    private class ConnectorEntry
+    {
+        public ConnectorLine connector;
+        public UpgradeNodeUI sourceNode;
+        public UpgradeNodeUI targetNode;
+    }
+
+    [SerializeField] private List<ConnectorEntry> connectors;
     private Action<int> onCoinsChangedHandler;
     private Action<CropData> onRequestedCropUnlockedHandler;
     private Action<CropData> onRequestedCropResearchedHandler;
     private Action<CropData> onRequestedCropAutomatedHandler;
     private Action<UpgradeData> onNodeClickedHandler;
+    private Action<UpgradeData> onUpgradeUnlockedHandler;
     
     [SerializeField] private GridManager gridManager;
     [SerializeField] private LaboratoryManager laboratoryManager;
@@ -29,6 +40,7 @@ public class UpgradesUI : MonoBehaviour
         onRequestedCropUnlockedHandler = (crop) => RefreshAll();
         onRequestedCropResearchedHandler = (crop) => RefreshAll();
         onRequestedCropAutomatedHandler = (crop) => RefreshAll();
+        onUpgradeUnlockedHandler = (upgradeData) => RefreshAll();
 
         onNodeClickedHandler = (upgradeData) =>
         {
@@ -41,6 +53,9 @@ public class UpgradesUI : MonoBehaviour
     {
         upgradesPanel.SetActive(false);
         upgradesButton.interactable = false;
+        
+        foreach(var entry in connectors)
+            entry.connector.SetEndpoints(entry.sourceNode.RectTransform, entry.targetNode.RectTransform);
 
         RefreshAll();
     }
@@ -55,7 +70,7 @@ public class UpgradesUI : MonoBehaviour
         laboratoryManager.OnRequestedCropResearched += onRequestedCropResearchedHandler;
         laboratoryManager.OnRequestedCropAutomated += onRequestedCropAutomatedHandler;
         resourceManager.OnCoinsChanged += onCoinsChangedHandler;
-        upgradeManager.OnUpgradeUnlocked += RefreshAll;
+        upgradeManager.OnUpgradeUnlocked += onUpgradeUnlockedHandler;
     }
 
     private void OnDisable()
@@ -68,14 +83,18 @@ public class UpgradesUI : MonoBehaviour
         laboratoryManager.OnRequestedCropResearched -= onRequestedCropResearchedHandler;
         laboratoryManager.OnRequestedCropAutomated -= onRequestedCropAutomatedHandler;
         resourceManager.OnCoinsChanged -= onCoinsChangedHandler;
-        upgradeManager.OnUpgradeUnlocked -= RefreshAll;
+        upgradeManager.OnUpgradeUnlocked -= onUpgradeUnlockedHandler;
     }
 
     private void RefreshAll()
     {
         foreach (var node in upgradeNodes)
-        {
             node.Refresh(upgradeManager.GetUpgradeState(node.UpgradeDataSo));
+
+        foreach (var entry in connectors)
+        {
+            bool visible = upgradeManager.GetUpgradeState(entry.sourceNode.UpgradeDataSo) == UpgradeState.Bought;
+            entry.connector.SetVisible(visible);
         }
     }
 

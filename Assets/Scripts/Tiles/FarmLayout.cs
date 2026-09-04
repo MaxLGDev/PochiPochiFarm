@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-
 using UnityEngine;
 
 /// <summary>
@@ -8,6 +7,8 @@ using UnityEngine;
 [System.Serializable]
 public class FarmInfo
 {
+    // --- Tile Data ---
+
     // Grid position of the tile.
     public Vector2Int position;
 
@@ -25,5 +26,6 @@ public class FarmInfo
 [CreateAssetMenu(menuName = "Farm/Farm Layout")]
 public class FarmLayout : ScriptableObject
 {
+    // --- Farm Tiles ---
     public List<FarmInfo> tiles;
 }

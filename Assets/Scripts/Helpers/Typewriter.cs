@@ -4,29 +4,43 @@ using UnityEngine;
 
 public class Typewriter : MonoBehaviour
 {
+    // --- References ---
     [SerializeField] private TMP_Text text;
+
+    // --- Settings ---
     [SerializeField] private float charactersPerSecond = 30f;
 
-    private Coroutine TypeTextCo;
+    // --- State ---
+    private Coroutine typeTextCoroutine;
+
+
+    // ==============================
+    // Public Methods
+    // ==============================
 
     public void ShowText(string message)
     {
-        if(TypeTextCo != null)
-            StopCoroutine(TypeTextCo);
+        // Stop the previous animation before starting a new one.
+        if (typeTextCoroutine != null)
+            StopCoroutine(typeTextCoroutine);
 
-        TypeTextCo = StartCoroutine(TypeText(message));
-        
+        typeTextCoroutine = StartCoroutine(TypeText(message));
     }
+
+
+    // ==============================
+    // Animation
+    // ==============================
 
     private IEnumerator TypeText(string message)
     {
         text.text = message;
         text.maxVisibleCharacters = 0;
 
-        while(text.maxVisibleCharacters < message.Length)
+        while (text.maxVisibleCharacters < message.Length)
         {
             text.maxVisibleCharacters++;
-            yield return new WaitForSeconds(1f /  charactersPerSecond);
+            yield return new WaitForSeconds(1f / charactersPerSecond);
         }
     }
 }

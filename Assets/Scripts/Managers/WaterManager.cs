@@ -1,5 +1,4 @@
 using System;
-
 using UnityEngine;
 
 /// <summary>
@@ -8,53 +7,69 @@ using UnityEngine;
 /// </summary>
 public class WaterManager : MonoBehaviour
 {
-    //==========================================================================
-    // Events
-    //==========================================================================
-
+    // --- Events ---
     public event Action<int> OnWaterChanged;
     public event Action<int> OnWaterRefilled;
+    private event Action<UpgradeData> onUpgradeUnlockedHandler;
 
-    //==========================================================================
-    // References
-    //==========================================================================
-
+    // --- References ---
     [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private UpgradeManager upgradeManager;
 
-    //==========================================================================
-    // Properties
-    //==========================================================================
-
-    public int Water { get; private set; } = 0;
-
+    // --- Water Settings ---
     [SerializeField] private int maxWater;
-    public int MaxWater => maxWater;
-
     [SerializeField] private int waterPrice;
-    public int WaterPrice => waterPrice;
 
     [Header("Passive Water")]
-
-    // Water gained automatically every interval.
     [SerializeField] private int passiveWaterRate = 0;
-
     [SerializeField] private float passiveWaterInterval = 2.5f;
-    public float PassiveWaterInterval => passiveWaterInterval;
-    public float PassiveWaterRate => passiveWaterRate;
 
     // Water gained when purchasing water.
     [SerializeField] private int waterPerClick = 1;
 
+    // --- State ---
     private float regenTimer;
+
+
+    // ==============================
+    // Properties
+    // ==============================
+
+    public int Water { get; private set; } = 0;
+    public int MaxWater => maxWater;
+    public int WaterPrice => waterPrice;
+    public float PassiveWaterInterval => passiveWaterInterval;
+    public float PassiveWaterRate => passiveWaterRate;
+
+
+    // ==============================
+    // Unity Lifecycle
+    // ==============================
+
+    private void Awake()
+    {
+        onUpgradeUnlockedHandler = HandleUpgradeUnlocked;
+    }
+
+    private void OnEnable()
+    {
+        upgradeManager.OnUpgradeUnlocked += onUpgradeUnlockedHandler;
+    }
+
+    private void OnDisable()
+    {
+        upgradeManager.OnUpgradeUnlocked -= onUpgradeUnlockedHandler;
+    }
 
     private void Update()
     {
         RegenWater(passiveWaterInterval);
     }
 
-    //==========================================================================
+
+    // ==============================
     // Water Management
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Adds water up to the maximum capacity.
@@ -91,13 +106,31 @@ public class WaterManager : MonoBehaviour
             return;
 
         resourceManager.TrySpendCoins(WaterPrice);
+
         AddWater(waterPerClick);
         OnWaterRefilled?.Invoke(waterPerClick);
     }
 
-    //==========================================================================
+    private void HandleUpgradeUnlocked(UpgradeData upgrade)
+    {
+        switch (upgrade.EffectType)
+        {
+            case EffectType.MaxWater:
+                maxWater += upgrade.EffectAmount;
+                OnWaterChanged?.Invoke(Water);
+                break;
+            case EffectType.WaterRegen:
+                passiveWaterRate += upgrade.EffectAmount;
+                OnWaterRefilled?.Invoke(passiveWaterRate);
+                break;
+            default:
+                break;
+        }
+    }
+
+    // ==============================
     // Passive Regeneration
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Regenerates water automatically over time.

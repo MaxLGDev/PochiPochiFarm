@@ -8,6 +8,14 @@ public enum RequiredCropState
     Automated
 }
 
+public enum EffectType
+{
+    None,
+    MaxCoins,
+    MaxWater,
+    WaterRegen
+}
+
 [CreateAssetMenu(fileName = "New Upgrade", menuName = "Upgrades/Upgrade Data")]
 public class UpgradeData : ScriptableObject
 {
@@ -18,4 +26,7 @@ public class UpgradeData : ScriptableObject
     public UpgradeData PreviousUpgrade;
     public RequiredCropState CropState;
     public CropData TargetCrop;
+
+    public EffectType EffectType;
+    public int EffectAmount;
 }

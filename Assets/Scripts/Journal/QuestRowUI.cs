@@ -1,31 +1,42 @@
 using System;
-
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class QuestRowUI : MonoBehaviour
 {
+    // --- Events ---
     public event Action OnQuestClaimed;
 
+    // --- State ---
     private ObjData objectiveData;
     private JournalManager journalManager;
 
+    // --- UI References ---
     [SerializeField] private TMP_Text questObjNameText;
     [SerializeField] private TMP_Text questObjGoalText;
-
     [SerializeField] private GameObject objectiveCompletePanel;
     [SerializeField] private GameObject objectiveClaimedPanel;
     [SerializeField] private Button objectiveCompleteButton;
 
+
+    // ==============================
+    // Unity Lifecycle
+    // ==============================
+
     private void OnDisable()
     {
-        if(journalManager != null)
-        {
-            journalManager.OnObjectiveProgressed -= HandleObjectiveProgressed;
-            journalManager.OnObjectiveCompleted -= HandleObjectiveProgressed;
-        }
+        if (journalManager == null)
+            return;
+
+        journalManager.OnObjectiveProgressed -= HandleObjectiveProgressed;
+        journalManager.OnObjectiveCompleted -= HandleObjectiveProgressed;
     }
+
+
+    // ==============================
+    // Setup
+    // ==============================
 
     public void Setup(ObjData obj, JournalManager manager)
     {
@@ -38,6 +49,11 @@ public class QuestRowUI : MonoBehaviour
         RefreshDisplay();
     }
 
+
+    // ==============================
+    // Display
+    // ==============================
+
     public void RefreshDisplay()
     {
         if (questObjNameText == null)
@@ -45,7 +61,6 @@ public class QuestRowUI : MonoBehaviour
             Debug.Log("NameText is missing");
             return;
         }
-
 
         if (questObjGoalText == null)
         {
@@ -55,10 +70,13 @@ public class QuestRowUI : MonoBehaviour
 
         questObjNameText.text = objectiveData.Description;
 
-        if (!journalManager.IsObjectiveComplete(objectiveData))
-            questObjGoalText.text = $"<color=red>{FormatNumber(journalManager.GetProgress(objectiveData))}/{FormatNumber(objectiveData.Target)}</color>";
-        else
-            questObjGoalText.text = $"<color=green>{FormatNumber(journalManager.GetProgress(objectiveData))}/{FormatNumber(objectiveData.Target)}</color>";
+        int progress = journalManager.GetProgress(objectiveData);
+        int target = objectiveData.Target;
+        bool isComplete = journalManager.IsObjectiveComplete(objectiveData);
+
+        string color = isComplete ? "green" : "red";
+        questObjGoalText.text =
+            $"<color={color}>{FormatNumber(progress)}/{FormatNumber(target)}</color>";
 
         ToggleClaimedObjectivePanel();
         ToggleCompletedObjectivePanel();
@@ -72,10 +90,11 @@ public class QuestRowUI : MonoBehaviour
             return;
         }
 
-        if (journalManager.IsObjectiveComplete(objectiveData) && !journalManager.IsObjectiveClaimed(objectiveData))
-            objectiveCompletePanel.SetActive(true);
-        else
-            objectiveCompletePanel.SetActive(false);
+        bool shouldShow =
+            journalManager.IsObjectiveComplete(objectiveData) &&
+            !journalManager.IsObjectiveClaimed(objectiveData);
+
+        objectiveCompletePanel.SetActive(shouldShow);
     }
 
     private void ToggleClaimedObjectivePanel()
@@ -86,39 +105,28 @@ public class QuestRowUI : MonoBehaviour
             return;
         }
 
-        if (journalManager.IsObjectiveClaimed(objectiveData))
-            objectiveClaimedPanel.SetActive(true);
-        else
-            objectiveClaimedPanel.SetActive(false);
+        objectiveClaimedPanel.SetActive(
+            journalManager.IsObjectiveClaimed(objectiveData)
+        );
     }
+
+
+    // ==============================
+    // Event Handlers
+    // ==============================
 
     public void HandleObjectiveProgressed(ObjData obj)
     {
-        if (obj != this.objectiveData)
+        if (obj != objectiveData)
             return;
-
-        if (questObjNameText == null)
-        {
-            Debug.Log("NameText is missing");
-            return;
-        }
-
-
-        if (questObjGoalText == null)
-        {
-            Debug.Log("GoalText is missing");
-            return;
-        }
-
-        questObjNameText.text = obj.Description;
-
-        if (!journalManager.IsObjectiveComplete(obj))
-            questObjGoalText.text = $"<color=red>{FormatNumber(journalManager.GetProgress(obj))}/{FormatNumber(obj.Target)}</color>";
-        else
-            questObjGoalText.text = $"<color=green>{FormatNumber(journalManager.GetProgress(obj))}/{FormatNumber(obj.Target)}</color>";
 
         RefreshDisplay();
     }
+
+
+    // ==============================
+    // Quest Actions
+    // ==============================
 
     public void MarkQuestAsClaimed()
     {
@@ -128,16 +136,23 @@ public class QuestRowUI : MonoBehaviour
             return;
         }
 
-        if (objectiveCompletePanel.activeSelf && journalManager.IsObjectiveComplete(objectiveData))
+        if (objectiveCompletePanel.activeSelf &&
+            journalManager.IsObjectiveComplete(objectiveData))
         {
             journalManager.ClaimObjective(objectiveData);
+
             objectiveCompleteButton.interactable = false;
             objectiveCompletePanel.SetActive(false);
             objectiveClaimedPanel.SetActive(true);
+
             OnQuestClaimed?.Invoke();
         }
-
     }
+
+
+    // ==============================
+    // Formatting
+    // ==============================
 
     private string FormatNumber(int value)
     {

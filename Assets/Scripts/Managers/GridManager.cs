@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using UnityEngine;
 
 /// <summary>
@@ -10,13 +9,12 @@ using UnityEngine;
 /// </summary>
 public class GridManager : MonoBehaviour
 {
-    //==========================================================================
-    // References
-    //==========================================================================
+    // --- Events ---
     public event Action OnTileHarvested;
     public event Action OnCropGathered;
     public event Action<CropData> OnCropUnlocked;
 
+    // --- References ---
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private LaboratoryManager labManager;
     [SerializeField] private WaterManager waterManager;
@@ -25,29 +23,31 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform gridParent;
     [SerializeField] private List<ZoneData> zonesData;
 
-    //==========================================================================
-    // Grid Settings
-    //==========================================================================
-
+    // --- Grid Settings ---
     [SerializeField] private int width = 10;
     [SerializeField] private int height = 10;
-
     [SerializeField] private float cellSize = 1f;
 
+    // --- Runtime Data ---
     private Tile[,] grid;
     private List<ZoneRuntime> zones;
+
+
+    // ==============================
+    // Unity Lifecycle
+    // ==============================
 
     private void Awake()
     {
         if (farmLayout == null)
         {
-            Debug.LogError("FarmLayout is not assigned");
+            Debug.LogError("FarmLayout is not assigned.");
             return;
         }
 
         grid = new Tile[width, height];
 
-        // Create runtime copies of the zones.
+        // Create runtime copies of the configured zones.
         zones = zonesData.Select(z => new ZoneRuntime(z)).ToList();
 
         // Unlock the starting zone.
@@ -66,9 +66,10 @@ public class GridManager : MonoBehaviour
         labManager.OnCropAutomated -= HandleCropAutomated;
     }
 
-    //==========================================================================
+
+    // ==============================
     // Tile Unlocking
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Attempts to unlock the selected tile.
@@ -77,21 +78,21 @@ public class GridManager : MonoBehaviour
     {
         if (!IsUnlockedAt(tile.GridPosition))
         {
-            Debug.Log("Zone not unlocked");
+            Debug.Log("Zone not unlocked.");
             tile.FogBlockedAnimation();
             return false;
         }
 
         if (!IsAdjacentToUnlocked(tile.GridPosition))
         {
-            Debug.Log("Not adjacent to an unlocked tile");
+            Debug.Log("Not adjacent to an unlocked tile.");
             tile.FogBlockedAnimation();
             return false;
         }
 
         if (!resourceManager.HasEnoughCoinsForTile(tile))
         {
-            Debug.Log("Not enough coins");
+            Debug.Log("Not enough coins.");
             tile.FogBlockedAnimation();
             return false;
         }
@@ -112,12 +113,12 @@ public class GridManager : MonoBehaviour
                 return zone.IsUnlocked;
         }
 
-        Debug.Log("Zone has not been unlocked yet");
+        Debug.Log("Zone has not been unlocked yet.");
         return false;
     }
 
     /// <summary>
-    /// Checks if the tile is adjacent to an unlocked tile.
+    /// Checks if the position is adjacent to an unlocked tile.
     /// </summary>
     private bool IsAdjacentToUnlocked(Vector2Int position)
     {
@@ -143,22 +144,25 @@ public class GridManager : MonoBehaviour
 
     public void UnlockZone(Chapter chapter)
     {
-        Debug.Log("Zone called");
+        Debug.Log("Zone called.");
+
         foreach (ZoneRuntime zone in zones)
         {
-            if (zone.Data.unlockChapterName == chapter.chapterName)
-            {
-                zone.Unlock();
-                Debug.Log($"Zone {zone.Data.zoneName} unlocked.");
-                return;
-            }
+            if (zone.Data.unlockChapterName != chapter.chapterName)
+                continue;
+
+            zone.Unlock();
+            Debug.Log($"Zone {zone.Data.zoneName} unlocked.");
+            return;
         }
-        Debug.Log($"No zone found for chapter {chapter.chapterName}");
+
+        Debug.Log($"No zone found for chapter {chapter.chapterName}.");
     }
 
-    //==========================================================================
+
+    // ==============================
     // Grid Generation
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Creates every tile in the farm grid.
@@ -172,9 +176,18 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                Vector3 position = new Vector3(x * cellSize + xOffset, y * cellSize + yOffset, 0f);
+                Vector3 position = new Vector3(
+                    x * cellSize + xOffset,
+                    y * cellSize + yOffset,
+                    0f
+                );
 
-                Tile newTile = Instantiate(tilePrefab, position, Quaternion.identity, gridParent);
+                Tile newTile = Instantiate(
+                    tilePrefab,
+                    position,
+                    Quaternion.identity,
+                    gridParent
+                );
 
                 // Store the tile for quick lookup.
                 grid[x, y] = newTile;
@@ -182,20 +195,28 @@ public class GridManager : MonoBehaviour
                 Vector2Int gridPosition = new(x, y);
                 FarmInfo info = GetFarmInfoAt(gridPosition);
 
-                bool startUnlocked = (x == 0 && y == 0);
+                bool startUnlocked = x == 0 && y == 0;
 
-                newTile.OnHarvestRequested += (tile) => HandleHarvestRequested(tile, true);
+                newTile.OnHarvestRequested +=
+                    tile => HandleHarvestRequested(tile, true);
+
                 newTile.OnUnlockRequested += HandleUnlockRequested;
                 newTile.OnCropMatured += HandleCropMatured;
 
-                newTile.InitializeCrop(info.cropData, gridPosition, startUnlocked, info.tileSprite);
+                newTile.InitializeCrop(
+                    info.cropData,
+                    gridPosition,
+                    startUnlocked,
+                    info.tileSprite
+                );
             }
         }
     }
 
-    //==========================================================================
+
+    // ==============================
     // Grid Helpers
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Returns whether the position is inside the grid.
@@ -239,7 +260,7 @@ public class GridManager : MonoBehaviour
                 return info;
         }
 
-        Debug.LogError($"No CropData found at {position}");
+        Debug.LogError($"No CropData found at {position}.");
         return null;
     }
 
@@ -254,9 +275,10 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
-    //==========================================================================
+
+    // ==============================
     // Event Handlers
-    //==========================================================================
+    // ==============================
 
     /// <summary>
     /// Handles tile unlock requests.
@@ -271,7 +293,9 @@ public class GridManager : MonoBehaviour
             tile.UnlockTile();
         }
         else
+        {
             Debug.Log("Cannot unlock tile.");
+        }
     }
 
     /// <summary>
@@ -298,14 +322,13 @@ public class GridManager : MonoBehaviour
 
         resourceManager.HandleHarvest(tile);
         tile.ResetGrowth();
+
         OnCropGathered?.Invoke();
 
         if (isManual)
-        {
             OnTileHarvested?.Invoke();
-        }
-        return true;
 
+        return true;
     }
 
     private void HandleCropMatured(Tile tile)

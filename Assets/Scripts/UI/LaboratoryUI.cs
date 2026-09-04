@@ -256,7 +256,7 @@ public class LaboratoryUI : MonoBehaviour
         for (int i = costs.Count; i < researchCostSlots.Count; i++)
             researchCostSlots[i].slotRoot.SetActive(false);
 
-        ui.button.interactable = canAfford && !isDoing && !isDone;
+        ui.button.interactable = canAfford && !isDoing && !isDone && ui.ActiveCoroutine == null;
 
         if (!isDoing)
         {
@@ -276,7 +276,10 @@ public class LaboratoryUI : MonoBehaviour
                 ui.rainbowText.enabled = true;
                 if (!ui.CompleteFadePlayed)
                 {
-                    ui.buttonFade.Fade(true);
+                    if(ui.button.gameObject.activeInHierarchy)
+                        ui.buttonFade.Fade(true);
+                    else
+                        ui.buttonFade.SetInstant(true);
                     ui.CompleteFadePlayed = true;
                 }
                 ui.buttonText.text = "RESEARCHED";
@@ -341,7 +344,7 @@ public class LaboratoryUI : MonoBehaviour
         for (int i = costs.Count; i < automationCostSlots.Count; i++)
             automationCostSlots[i].slotRoot.SetActive(false);
 
-        ui.button.interactable = canAfford && !isDoing && !isDone;
+        ui.button.interactable = canAfford && !isDoing && !isDone && ui.ActiveCoroutine == null;
 
         if (!isDoing)
         {
@@ -361,7 +364,11 @@ public class LaboratoryUI : MonoBehaviour
                 ui.rainbowText.enabled = true;
                 if (!ui.CompleteFadePlayed)
                 {
-                    ui.buttonFade.Fade(true);
+                    if (ui.button.gameObject.activeInHierarchy)
+                        ui.buttonFade.Fade(true);
+                    else
+                        ui.buttonFade.SetInstant(true);
+                    
                     ui.CompleteFadePlayed = true;
                 }
                 ui.warningText.SetActive(false);

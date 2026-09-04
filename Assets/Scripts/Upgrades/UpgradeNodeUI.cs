@@ -21,6 +21,8 @@ public class UpgradeNodeUI : MonoBehaviour
     [SerializeField] private Color lockedColor;
     [SerializeField] private Color availableColor;
     [SerializeField] private Color boughtColor;
+    
+    public RectTransform RectTransform => (RectTransform)transform;
 
     public UpgradeData UpgradeDataSo => upgradeDataSo;
 

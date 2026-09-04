@@ -27,6 +27,18 @@ public class FadeAnim : MonoBehaviour
 
         fadeCO = StartCoroutine(FadeCo(fadeDuration, fadeIn));
     }
+    
+    /// <summary>
+    /// Instantly sets the end state without animating.
+    /// Safe to call even when the GameObject is inactive.
+    /// </summary>
+    public void SetInstant(bool visible)
+    {
+        if (fadeCO != null)
+            StopCoroutine(fadeCO);
+
+        canvasGroup.alpha = visible ? 1f : 0f;
+    }
 
     /// <summary>
     /// Fades in or fades out the button.

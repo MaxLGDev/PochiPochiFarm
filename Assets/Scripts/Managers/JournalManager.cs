@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
-
 using UnityEngine;
+
+
+// ============================================
+// Enums
+// ============================================
 
 public enum ObjectiveType
 {
@@ -13,6 +17,11 @@ public enum ObjectiveType
     WaterRefilled,
     CropGathered
 }
+
+
+// ============================================
+// Objective State
+// ============================================
 
 class ObjState
 {
@@ -31,7 +40,11 @@ class ObjState
         }
     }
 
-    public void SetObjectiveComplete() => IsComplete = true;
+    public void SetObjectiveComplete()
+    {
+        IsComplete = true;
+    }
+
     public bool SetObjectiveClaimed()
     {
         if (!IsComplete)
@@ -42,6 +55,11 @@ class ObjState
     }
 }
 
+
+// ============================================
+// Chapter Data
+// ============================================
+
 [Serializable]
 public class Chapter
 {
@@ -49,12 +67,21 @@ public class Chapter
     public List<ObjData> objectives = new();
 }
 
+
+// ============================================
+// Journal Manager
+// ============================================
+
 public class JournalManager : MonoBehaviour
 {
+    // --- Events ---
     public event Action OnChapter1Claimed;
     public event Action OnLastChapterClaimed;
     public event Action OnObjectiveClaimed;
+    public event Action<ObjData> OnObjectiveCompleted;
+    public event Action<ObjData> OnObjectiveProgressed;
 
+    // --- Event Handlers ---
     private Action<int> onCoinsEarnedHandler;
     private Action onTileHarvestedHandler;
     private Action<int> onWaterRefilledHandler;
@@ -63,42 +90,61 @@ public class JournalManager : MonoBehaviour
     private Action<CropData> onRequestedCropResearchedHandler;
     private Action<CropData> onRequestedCropAutomatedHandler;
 
-
-    public event Action<ObjData> OnObjectiveCompleted;
-    public event Action<ObjData> OnObjectiveProgressed;
-
+    // --- References ---
     [SerializeField] private GridManager gridManager;
     [SerializeField] private LaboratoryManager labManager;
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private WaterManager waterManager;
 
-    [SerializeField] List<Chapter> chaptersList;
+    // --- Chapter Data ---
+    [SerializeField] private List<Chapter> chaptersList;
 
+    // --- Runtime State ---
     private Dictionary<ObjData, ObjState> objectivesStates = new();
-    Dictionary<ObjData, Chapter> objectiveToChapter = new();
-    Dictionary<Chapter, bool> chapterUnlocked = new();
+    private Dictionary<ObjData, Chapter> objectiveToChapter = new();
+    private Dictionary<Chapter, bool> chapterUnlocked = new();
+
+
+    // ==============================
+    // Unity Lifecycle
+    // ==============================
 
     private void Awake()
     {
-        onCoinsEarnedHandler = (amount) => HandleObjectiveProgress(ObjectiveType.CoinsEarned, amount);
-        onTileHarvestedHandler = () => HandleObjectiveProgress(ObjectiveType.ClickCount, 1);
-        onWaterRefilledHandler = (amount) => HandleObjectiveProgress(ObjectiveType.WaterRefilled, amount);
-        onCropGatheredHandler = () => HandleObjectiveProgress(ObjectiveType.CropGathered, 1);
-        onRequestedCropUnlockedHandler = (crop) => HandleObjectiveProgress(ObjectiveType.UnlockCrop, 1, crop);
-        onRequestedCropResearchedHandler = (crop) => HandleObjectiveProgress(ObjectiveType.ResearchCrop, 1, crop);
-        onRequestedCropAutomatedHandler = (crop) => HandleObjectiveProgress(ObjectiveType.AutomateCrop, 1, crop);
+        // Create event handlers so they can be subscribed and unsubscribed reliably.
+        onCoinsEarnedHandler =
+            amount => HandleObjectiveProgress(ObjectiveType.CoinsEarned, amount);
 
+        onTileHarvestedHandler =
+            () => HandleObjectiveProgress(ObjectiveType.ClickCount, 1);
+
+        onWaterRefilledHandler =
+            amount => HandleObjectiveProgress(ObjectiveType.WaterRefilled, amount);
+
+        onCropGatheredHandler =
+            () => HandleObjectiveProgress(ObjectiveType.CropGathered, 1);
+
+        onRequestedCropUnlockedHandler =
+            crop => HandleObjectiveProgress(ObjectiveType.UnlockCrop, 1, crop);
+
+        onRequestedCropResearchedHandler =
+            crop => HandleObjectiveProgress(ObjectiveType.ResearchCrop, 1, crop);
+
+        onRequestedCropAutomatedHandler =
+            crop => HandleObjectiveProgress(ObjectiveType.AutomateCrop, 1, crop);
+
+        // Initialize the runtime state for every chapter and objective.
         for (int i = 0; i < chaptersList.Count; i++)
         {
-            Chapter chap = chaptersList[i];
-            chapterUnlocked[chap] = (i == 0);
+            Chapter chapter = chaptersList[i];
+            chapterUnlocked[chapter] = i == 0;
 
-            foreach (ObjData obj in chap.objectives)
+            foreach (ObjData objective in chapter.objectives)
             {
                 ObjState state = new ObjState();
 
-                objectivesStates[obj] = state;
-                objectiveToChapter[obj] = chap;
+                objectivesStates[objective] = state;
+                objectiveToChapter[objective] = chapter;
             }
         }
     }
@@ -125,8 +171,22 @@ public class JournalManager : MonoBehaviour
         labManager.OnRequestedCropAutomated -= onRequestedCropAutomatedHandler;
     }
 
-    public bool IsChapterUnlocked(Chapter chapter) => chapterUnlocked[chapter];
-    public bool IsChapterFullyClaimed(Chapter chapter) => GetChapterProgress(chapter.objectives[0]).completed == chapter.objectives.Count;
+
+    // ==============================
+    // Chapter
+    // ==============================
+
+    public bool IsChapterUnlocked(Chapter chapter)
+    {
+        return chapterUnlocked[chapter];
+    }
+
+    public bool IsChapterFullyClaimed(Chapter chapter)
+    {
+        return GetChapterProgress(chapter.objectives[0]).completed ==
+               chapter.objectives.Count;
+    }
+
     public void UnlockNextChapter(Chapter chapter)
     {
         int currentIndex = chaptersList.IndexOf(chapter);
@@ -143,23 +203,60 @@ public class JournalManager : MonoBehaviour
 
         switch (nextIndex)
         {
-            // Assuming chapter 1 is at index 0
+            // Chapter 1 is assumed to be at index 0.
             case 1:
                 OnChapter1Claimed?.Invoke();
                 break;
+
             case 4:
                 OnLastChapterClaimed?.Invoke();
                 break;
         }
     }
 
-    public int GetProgress(ObjData obj) => objectivesStates[obj].Progress;
-    public bool IsObjectiveComplete(ObjData obj) => objectivesStates[obj].IsComplete;
-    public bool IsObjectiveClaimed(ObjData obj) => objectivesStates[obj].IsClaimed;
+    public Chapter GetChapter(int index)
+    {
+        return chaptersList[index];
+    }
+
+    public Chapter GetChapterForObjective(ObjData obj)
+    {
+        return objectiveToChapter[obj];
+    }
+
+    public Chapter GetNextChapter(Chapter chapter)
+    {
+        int index = chaptersList.IndexOf(chapter);
+        int nextIndex = index + 1;
+
+        return nextIndex < chaptersList.Count
+            ? chaptersList[nextIndex]
+            : null;
+    }
+
+
+    // ==============================
+    // Objectives
+    // ==============================
+
+    public int GetProgress(ObjData obj)
+    {
+        return objectivesStates[obj].Progress;
+    }
+
+    public bool IsObjectiveComplete(ObjData obj)
+    {
+        return objectivesStates[obj].IsComplete;
+    }
+
+    public bool IsObjectiveClaimed(ObjData obj)
+    {
+        return objectivesStates[obj].IsClaimed;
+    }
 
     public void ClaimObjective(ObjData obj)
     {
-        if(objectivesStates[obj].SetObjectiveClaimed())
+        if (objectivesStates[obj].SetObjectiveClaimed())
             OnObjectiveClaimed?.Invoke();
     }
 
@@ -168,52 +265,14 @@ public class JournalManager : MonoBehaviour
         Chapter chapter = objectiveToChapter[obj];
         int completed = 0;
         int total = chapter.objectives.Count;
+
         foreach (ObjData chapterObj in chapter.objectives)
         {
             if (IsObjectiveClaimed(chapterObj))
                 completed++;
         }
+
         return (completed, total);
-    }
-
-    private void HandleObjectiveProgress(ObjectiveType type, int amount, CropData requestedCrop = null)
-    {
-        foreach (ObjData obj in objectivesStates.Keys)
-        {
-            if (obj.Type == type)
-            {
-                ObjState state = objectivesStates[obj];
-
-                Chapter chapter = objectiveToChapter[obj];
-
-                if (!chapterUnlocked[chapter])
-                    continue;
-                
-                if (state.IsComplete)
-                    continue;
-
-                if (obj.RelatedCrop != null && obj.RelatedCrop != requestedCrop)
-                    continue;
-
-                state.IncreaseProgress(amount, obj.Target);
-
-                OnObjectiveProgressed?.Invoke(obj);
-
-                if (state.IsComplete)
-                    OnObjectiveCompleted?.Invoke(obj);
-            }
-        }
-    }
-
-    public Chapter GetChapter(int index) => chaptersList[index];
-
-    public Chapter GetChapterForObjective(ObjData obj) => objectiveToChapter[obj];
-
-    public Chapter GetNextChapter(Chapter chapter)
-    {
-        int index = chaptersList.IndexOf(chapter);
-        int nextIndex = index + 1;
-        return nextIndex < chaptersList.Count ? chaptersList[nextIndex] : null;
     }
 
     public (int completed, int total) GetTotalJournalProgress()
@@ -221,17 +280,57 @@ public class JournalManager : MonoBehaviour
         int completed = 0;
         int total = 0;
 
-        foreach(Chapter chap in chaptersList)
+        foreach (Chapter chapter in chaptersList)
         {
-            foreach(ObjData obj in chap.objectives)
+            foreach (ObjData objective in chapter.objectives)
             {
                 total++;
 
-                if (IsObjectiveClaimed(obj))
+                if (IsObjectiveClaimed(objective))
                     completed++;
             }
         }
 
         return (completed, total);
+    }
+
+
+    // ==============================
+    // Event Handlers
+    // ==============================
+
+    private void HandleObjectiveProgress(
+        ObjectiveType type,
+        int amount,
+        CropData requestedCrop = null)
+    {
+        foreach (ObjData objective in objectivesStates.Keys)
+        {
+            if (objective.Type != type)
+                continue;
+
+            ObjState state = objectivesStates[objective];
+            Chapter chapter = objectiveToChapter[objective];
+
+            if (!chapterUnlocked[chapter])
+                continue;
+
+            if (state.IsComplete)
+                continue;
+
+            // Crop-specific objectives only respond to their related crop.
+            if (objective.RelatedCrop != null &&
+                objective.RelatedCrop != requestedCrop)
+            {
+                continue;
+            }
+
+            state.IncreaseProgress(amount, objective.Target);
+
+            OnObjectiveProgressed?.Invoke(objective);
+
+            if (state.IsComplete)
+                OnObjectiveCompleted?.Invoke(objective);
+        }
     }
 }

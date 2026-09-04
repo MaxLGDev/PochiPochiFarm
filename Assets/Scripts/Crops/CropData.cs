@@ -1,8 +1,12 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+
+// ============================================
+// Enums
+// ============================================
 
 /// <summary>
-/// Types of crops available in the game.
+/// Defines the different crop types available in the game.
 /// </summary>
 public enum CropType
 {
@@ -21,12 +25,23 @@ public enum CropType
     Tomato
 }
 
+/// <summary>
+/// Defines the different resource types that can be used or earned.
+/// </summary>
 public enum ResourceType
 {
     Coin,
     Crop
 }
 
+
+// ============================================
+// Serializable Data
+// ============================================
+
+/// <summary>
+/// Represents a resource required to purchase or unlock something.
+/// </summary>
 [System.Serializable]
 public class CostEntry
 {
@@ -35,45 +50,62 @@ public class CostEntry
     public int amount;
 }
 
+
+// ============================================
+// Crop Data
+// ============================================
+
 /// <summary>
-/// Stores all data related to a crop.
-/// Used by tiles to determine appearance, growth, and rewards.
+/// Stores all data associated with a crop.
+/// Used by gameplay systems to determine its appearance,
+/// growth behaviour, costs, and rewards.
 /// </summary>
 [CreateAssetMenu(fileName = "New Crop Data", menuName = "Crops/Crop")]
 public class CropData : ScriptableObject
 {
+    // --- Identity ---
     public string CropName;
     public CropType CropType;
     public bool startsResearched;
 
+
+    // --- Research & Automation ---
     public List<CostEntry> ResearchCost;
     public List<CostEntry> AutomationCost;
 
+
+    // --- Sprites ---
     [Header("Sprites")]
 
-    // Sprite displayed in the shop.
+    // Sprite displayed for the crop's seed.
     public Sprite SeedSprite;
 
-    // Sprites used throughout the crop's growth stages.
+    // Sprites representing each stage of the crop's growth.
     public Sprite[] GrowthSprites;
 
+
+    // --- Gameplay ---
     [Header("Gameplay")]
 
-    // Time in seconds for the crop to fully mature.
+    // Time, in seconds, required for the crop to fully mature.
     public float GrowthTime;
 
-    // Water required before the crop can grow.
+    // Amount of water required before the crop can grow.
     public int RequiredWater;
 
-    // Coins earned when harvesting.
+    // Number of coins awarded when the crop is harvested.
     public int CoinYield;
 
-    // Cost to unlock this crop.
+    // Cost required to unlock the crop.
     public int UnlockCost;
 
-    // Duration for the research
+
+    // --- Research ---
+    // Time, in seconds, required to research and unlock the crop.
     public float ResearchDuration;
 
-    // Duration for the automation
+
+    // --- Automation ---
+    // Time, in seconds, required to automate the crop.
     public float AutomationDuration;
 }

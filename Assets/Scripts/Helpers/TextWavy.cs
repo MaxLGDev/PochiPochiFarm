@@ -1,19 +1,27 @@
-using UnityEngine;
-using TMPro;
-using UnityEngine.EventSystems;
 using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    // --- Colors ---
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color hoverColor = Color.yellow;
 
+    // --- Animation ---
     [SerializeField] private float moveAmount = 5f;
     [SerializeField] private float animationSpeed = 8f;
 
+    // --- State ---
     private TMP_Text text;
     private Vector3 startPosition;
     private Coroutine animationCoroutine;
+
+
+    // ==============================
+    // Unity Lifecycle
+    // ==============================
 
     private void Awake()
     {
@@ -22,6 +30,22 @@ public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerE
 
         text.color = normalColor;
     }
+
+    private void OnDisable()
+    {
+        if (animationCoroutine != null)
+        {
+            StopCoroutine(animationCoroutine);
+            animationCoroutine = null;
+        }
+
+        ResetVisual();
+    }
+
+
+    // ==============================
+    // Pointer Events
+    // ==============================
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -32,6 +56,11 @@ public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         StartAnimation(false);
     }
+
+
+    // ==============================
+    // Animation
+    // ==============================
 
     private void StartAnimation(bool hover)
     {
@@ -71,19 +100,14 @@ public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerE
         text.color = targetColor;
     }
 
-    private void OnDisable()
-    {
-        if(animationCoroutine != null)
-        {
-            StopCoroutine(animationCoroutine);
-            animationCoroutine = null;
-        }
 
-        ResetVisual();
-    }
+    // ==============================
+    // Reset
+    // ==============================
 
     private void ResetVisual()
     {
+        // Restore the text to its default appearance.
         transform.localPosition = startPosition;
         text.color = normalColor;
     }

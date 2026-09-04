@@ -2,41 +2,75 @@ using UnityEngine;
 
 public class StatsManager : MonoBehaviour
 {
-     [SerializeField] private GridManager gridManager;
-     [SerializeField] private ResourceManager resourceManager;
-     [SerializeField] private JournalManager journalManager;
-     
-     private float totalPlaytime;
-     private int totalGoldMade;
-     private int totalCropsGathered;
+    // --- References ---
+    [SerializeField] private GridManager gridManager;
+    [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private JournalManager journalManager;
 
-     private void Update()
-     {
-          UpdateTotalPlaytime();
-     }
+    // --- Stats ---
+    private float totalPlaytime;
+    private int totalGoldMade;
+    private int totalCropsGathered;
 
-     private void OnEnable()
-     {
-          gridManager.OnCropGathered += HandleCropGatheredCounter;
-          resourceManager.OnCoinsEarned += HandleCoinGatheredCounter;
-     }
 
-     private void OnDisable()
-     {
-          gridManager.OnCropGathered -= HandleCropGatheredCounter;
-          resourceManager.OnCoinsEarned -= HandleCoinGatheredCounter;
-     }
+    // ==============================
+    // Unity Lifecycle
+    // ==============================
 
-     private void HandleCropGatheredCounter() => totalCropsGathered++;
+    private void Update()
+    {
+        UpdateTotalPlaytime();
+    }
 
-     private void HandleCoinGatheredCounter(int obj) => totalGoldMade += obj;
+    private void OnEnable()
+    {
+        gridManager.OnCropGathered += HandleCropGatheredCounter;
+        resourceManager.OnCoinsEarned += HandleCoinGatheredCounter;
+    }
 
-     public void UpdateTotalPlaytime()
-     {
-          totalPlaytime += Time.deltaTime;
-     }
+    private void OnDisable()
+    {
+        gridManager.OnCropGathered -= HandleCropGatheredCounter;
+        resourceManager.OnCoinsEarned -= HandleCoinGatheredCounter;
+    }
 
-     public float GetTotalPlaytime() => totalPlaytime;
-     public int GetTotalGoldMade() => totalGoldMade;
-     public int GetTotalCropsGathered() => totalCropsGathered;
+
+    // ==============================
+    // Stats Tracking
+    // ==============================
+
+    private void HandleCropGatheredCounter()
+    {
+        totalCropsGathered++;
+    }
+
+    private void HandleCoinGatheredCounter(int amount)
+    {
+        totalGoldMade += amount;
+    }
+
+    public void UpdateTotalPlaytime()
+    {
+        totalPlaytime += Time.deltaTime;
+    }
+
+
+    // ==============================
+    // Getters
+    // ==============================
+
+    public float GetTotalPlaytime()
+    {
+        return totalPlaytime;
+    }
+
+    public int GetTotalGoldMade()
+    {
+        return totalGoldMade;
+    }
+
+    public int GetTotalCropsGathered()
+    {
+        return totalCropsGathered;
+    }
 }

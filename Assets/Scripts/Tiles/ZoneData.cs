@@ -6,10 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Zone - ", menuName = "Farm/New Zone")]
 public class ZoneData : ScriptableObject
 {
+    // --- Zone Information ---
     public string zoneName;
     public float zoneTier;
     public string unlockChapterName;
 
+    // --- Bounds ---
     [Header("Bounds")]
 
     // Bottom-left corner of the zone.
@@ -18,12 +20,17 @@ public class ZoneData : ScriptableObject
     // Top-right corner of the zone.
     public Vector2 maxCorner;
 
+
+    // ==============================
+    // Zone Checks
+    // ==============================
+
     /// <summary>
     /// Returns whether the given grid position is inside this zone.
     /// </summary>
-    public bool IsPositionInZone(Vector2Int pos)
+    public bool IsPositionInZone(Vector2Int position)
     {
-        return pos.x >= minCorner.x && pos.x <= maxCorner.x
-            && pos.y >= minCorner.y && pos.y <= maxCorner.y;
+        return position.x >= minCorner.x && position.x <= maxCorner.x
+                                         && position.y >= minCorner.y && position.y <= maxCorner.y;
     }
 }
