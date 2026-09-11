@@ -13,7 +13,11 @@ public enum EffectType
     None,
     MaxCoins,
     MaxWater,
-    WaterRegen
+    WaterRegenPower,
+    WaterRegenSpeed,
+    SkipWaterChance,
+    ClickMultiplier,
+    YieldMultiplier
 }
 
 [CreateAssetMenu(fileName = "New Upgrade", menuName = "Upgrades/Upgrade Data")]

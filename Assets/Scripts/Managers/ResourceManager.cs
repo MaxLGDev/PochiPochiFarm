@@ -20,6 +20,12 @@ public class ResourceManager : MonoBehaviour
 
     [SerializeField] private int maxCoins = 20;
 
+    private int clickPower = 1;
+    public int ClickPower => clickPower;
+
+    private int yieldPower = 1;
+    public int YieldPower => yieldPower;
+
     public int MaxCoins => maxCoins;
 
     // --- Crop Inventory ---
@@ -37,7 +43,7 @@ public class ResourceManager : MonoBehaviour
 
     private void Awake()
     {
-        handleUpgradeUnlocked = HandleUpgraadeUnlocked;
+        handleUpgradeUnlocked = HandleUpgradeUnlocked;
     }
 
     private void OnEnable()
@@ -121,13 +127,19 @@ public class ResourceManager : MonoBehaviour
         return true;
     }
 
-    private void HandleUpgraadeUnlocked(UpgradeData upgrade)
+    private void HandleUpgradeUnlocked(UpgradeData upgrade)
     {
         switch (upgrade.EffectType)
         {
             case EffectType.MaxCoins:
                 maxCoins += upgrade.EffectAmount;
                 OnCoinsChanged?.Invoke(Coins);
+                break;
+            case EffectType.ClickMultiplier:
+                clickPower += upgrade.EffectAmount;
+                break;
+            case EffectType.YieldMultiplier:
+                yieldPower += upgrade.EffectAmount;
                 break;
             default:
                 break;
@@ -236,12 +248,12 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// Processes a harvested tile.
     /// </summary>
-    public void HandleHarvest(Tile tile)
+    public void HandleHarvest(Tile tile, int power)
     {
         if (tile == null)
             return;
 
-        AddCrop(tile.CropData, 1);
+        AddCrop(tile.CropData, power);
     }
 
 

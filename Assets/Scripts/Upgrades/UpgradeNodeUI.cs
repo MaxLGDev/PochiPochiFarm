@@ -55,6 +55,7 @@ public class UpgradeNodeUI : MonoBehaviour
         nodeIcon.sprite = upgradeDataSo.Sprite;
 
         upgradeNameText.color = textColor;
+        upgradeNameText.text = upgradeDataSo.UpgradeName;
     }
 
     private static void SetColorOf(Image image, float alpha)

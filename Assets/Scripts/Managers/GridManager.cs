@@ -320,19 +320,21 @@ public class GridManager : MonoBehaviour
             waterManager.SpendWater(tile.CropData.RequiredWater);
         }
 
-        resourceManager.HandleHarvest(tile);
+        resourceManager.HandleHarvest(tile, isManual ? resourceManager.ClickPower : resourceManager.YieldPower);
         tile.ResetGrowth();
 
         OnCropGathered?.Invoke();
 
         if (isManual)
+        {
             OnTileHarvested?.Invoke();
+            
+        }
 
         return true;
     }
 
-    private void HandleCropMatured(Tile tile)
-    {
+    private void HandleCropMatured(Tile tile) {
         if (!labManager.IsCropAutomated(tile.CropData))
             return;
 

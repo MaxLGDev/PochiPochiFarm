@@ -15,7 +15,8 @@ public class WaterUI : MonoBehaviour
     {
         UpdateWaterUI(waterManager.Water);
 
-        waterSlider.maxValue = waterManager.PassiveWaterInterval;
+        waterSlider.minValue = 0f;
+        waterSlider.maxValue = 1f;
         waterSlider.value = 0f;
     }
 
@@ -62,18 +63,12 @@ public class WaterUI : MonoBehaviour
     /// </summary>
     private void UpdateSliderUI()
     {
-        if (waterManager.PassiveWaterRate == 0)
-            return;
-        
-        if (waterManager.Water == waterManager.MaxWater)
+        if (waterManager.Water >= waterManager.MaxWater)
         {
             waterSlider.value = 0f;
             return;
         }
 
-        waterSlider.value += Time.deltaTime;
-
-        if (waterSlider.value >= waterManager.PassiveWaterInterval)
-            waterSlider.value = 0f;
+        waterSlider.value = waterManager.RegenProgress;
     }
 }

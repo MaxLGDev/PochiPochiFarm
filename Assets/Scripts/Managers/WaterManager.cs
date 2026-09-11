@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+
 /// <summary>
 /// Manages the player's water resource.
 /// Handles spending, purchasing, and passive regeneration.
@@ -21,14 +22,15 @@ public class WaterManager : MonoBehaviour
     [SerializeField] private int waterPrice;
 
     [Header("Passive Water")]
-    [SerializeField] private int passiveWaterRate = 0;
-    [SerializeField] private float passiveWaterInterval = 2.5f;
+    [SerializeField] private int waterRefillPower = 0;
+    [SerializeField] private float waterRefillSpeed = 10f;
 
     // Water gained when purchasing water.
     [SerializeField] private int waterPerClick = 1;
 
     // --- State ---
     private float regenTimer;
+    public float RegenTimer => regenTimer;
 
 
     // ==============================
@@ -36,10 +38,11 @@ public class WaterManager : MonoBehaviour
     // ==============================
 
     public int Water { get; private set; } = 0;
+    private float skipRate = 0;
     public int MaxWater => maxWater;
     public int WaterPrice => waterPrice;
-    public float PassiveWaterInterval => passiveWaterInterval;
-    public float PassiveWaterRate => passiveWaterRate;
+    public float WaterRefillSpeed => waterRefillSpeed;
+    public float WaterRefillPower => waterRefillPower;
 
 
     // ==============================
@@ -63,7 +66,8 @@ public class WaterManager : MonoBehaviour
 
     private void Update()
     {
-        RegenWater(passiveWaterInterval);
+        RegenWater();
+        Debug.Log(waterRefillPower + " " + waterRefillSpeed);
     }
 
 
@@ -86,6 +90,14 @@ public class WaterManager : MonoBehaviour
     /// </summary>
     public void SpendWater(int amount)
     {
+        bool isWaterSkipped = false;
+
+        float skipCheck = UnityEngine.Random.Range(0f, 100f);
+        isWaterSkipped = skipCheck <= skipRate;
+
+        if (isWaterSkipped)
+            return;
+        
         if (amount > Water)
             return;
 
@@ -119,11 +131,17 @@ public class WaterManager : MonoBehaviour
                 maxWater += upgrade.EffectAmount;
                 OnWaterChanged?.Invoke(Water);
                 break;
-            case EffectType.WaterRegen:
-                passiveWaterRate += upgrade.EffectAmount;
-                OnWaterRefilled?.Invoke(passiveWaterRate);
+            case EffectType.WaterRegenPower:
+                waterRefillPower += upgrade.EffectAmount;
+                OnWaterRefilled?.Invoke(waterRefillPower);
                 break;
-            default:
+            case EffectType.WaterRegenSpeed:
+                waterRefillSpeed = Mathf.Max(0.1f, waterRefillSpeed - upgrade.EffectAmount);
+                OnWaterRefilled?.Invoke(waterRefillPower);
+                break;
+            case EffectType.SkipWaterChance:
+                skipRate += upgrade.EffectAmount;
+                OnWaterChanged?.Invoke(Water);
                 break;
         }
     }
@@ -135,17 +153,22 @@ public class WaterManager : MonoBehaviour
     /// <summary>
     /// Regenerates water automatically over time.
     /// </summary>
-    private void RegenWater(float regenInterval)
+    private void RegenWater()
     {
         if (Water >= MaxWater)
             return;
 
+        if (waterRefillPower <= 0 || waterRefillSpeed <= 0)
+            return;
+
         regenTimer += Time.deltaTime;
 
-        if (regenTimer >= regenInterval)
+        if (regenTimer >= waterRefillSpeed)
         {
-            AddWater(passiveWaterRate);
-            regenTimer = 0f;
+            AddWater(waterRefillPower);
+            regenTimer -= waterRefillSpeed;
         }
     }
+    
+    public float RegenProgress => waterRefillSpeed <= 0f ? 0f : RegenTimer / waterRefillSpeed;
 }
