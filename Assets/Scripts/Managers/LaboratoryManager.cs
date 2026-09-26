@@ -37,9 +37,9 @@ public class LabState
     /// <summary>
     /// Advances the research timer.
     /// </summary>
-    public void ProgressResearch()
+    public void ProgressResearch(float speedMultiplier)
     {
-        ResearchTimer += Time.deltaTime;
+        ResearchTimer += Time.deltaTime * speedMultiplier;
     }
 
     /// <summary>
@@ -66,9 +66,9 @@ public class LabState
     /// <summary>
     /// Advances the automation timer.
     /// </summary>
-    public void ProgressAutomation()
+    public void ProgressAutomation(float speedMultiplier)
     {
-        AutomationTimer += Time.deltaTime;
+        AutomationTimer += Time.deltaTime * speedMultiplier;
     }
 
     /// <summary>
@@ -94,9 +94,11 @@ public class LaboratoryManager : MonoBehaviour
     public event Action<CropData> OnCropAutomated;
     public event Action<CropData> OnRequestedCropResearched;
     public event Action<CropData> OnRequestedCropAutomated;
+    private event Action<UpgradeData> onUpgradeUnlockedHandler;
 
     // --- References ---
     [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private UpgradeManager upgradeManager;
     [SerializeField] private FarmLayout farmLayout;
 
     // --- Research Data ---
@@ -104,6 +106,8 @@ public class LaboratoryManager : MonoBehaviour
 
     // --- Runtime State ---
     private readonly Dictionary<CropData, LabState> cropsResearch = new();
+    private float researchSpeedMultiplier = 1f;
+    private float automationSpeedMultiplier = 1f;
 
     private CropData currentResearchingCrop;
     private CropData currentAutomatingCrop;
@@ -112,6 +116,11 @@ public class LaboratoryManager : MonoBehaviour
     // ==============================
     // Unity Lifecycle
     // ==============================
+
+    private void Awake()
+    {
+        onUpgradeUnlockedHandler = HandleUpgradeUnlocked;
+    }
 
     private void Start()
     {
@@ -132,12 +141,34 @@ public class LaboratoryManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        upgradeManager.OnUpgradeUnlocked += onUpgradeUnlockedHandler;
+    }
+
+    private void OnDisable()
+    {
+        upgradeManager.OnUpgradeUnlocked -= onUpgradeUnlockedHandler;
+    }
+
     private void Update()
     {
         UpdateResearchProgress();
         UpdateAutomationProgress();
     }
 
+    private void HandleUpgradeUnlocked(UpgradeData upgrade)
+    {
+        switch (upgrade.EffectType)
+        {
+            case EffectType.ResearchSpeed:
+                researchSpeedMultiplier += upgrade.EffectAmount;
+                break;
+            case EffectType.AutomationSpeed:
+                automationSpeedMultiplier += upgrade.EffectAmount;
+                break;
+        }
+    }
 
     // ==============================
     // Crop Access
@@ -182,7 +213,7 @@ public class LaboratoryManager : MonoBehaviour
             return;
 
         LabState state = cropsResearch[currentResearchingCrop];
-        state.ProgressResearch();
+        state.ProgressResearch(researchSpeedMultiplier);
 
         if (state.ResearchTimer >= currentResearchingCrop.ResearchDuration)
         {
@@ -261,7 +292,7 @@ public class LaboratoryManager : MonoBehaviour
             return;
 
         LabState state = cropsResearch[currentAutomatingCrop];
-        state.ProgressAutomation();
+        state.ProgressAutomation(automationSpeedMultiplier);
 
         if (state.AutomationTimer >= currentAutomatingCrop.AutomationDuration)
         {

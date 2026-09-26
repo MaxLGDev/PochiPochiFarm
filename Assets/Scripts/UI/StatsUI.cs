@@ -1,10 +1,10 @@
-using System;
 using UnityEngine;
 using TMPro;
 
 public class StatsUI : MonoBehaviour
 {
     [SerializeField] private JournalManager journalManager;
+    [SerializeField] private UpgradeManager upgradeManager;
     [SerializeField] private StatsManager statsManager;
     
     [Header("Journal Stats")]
@@ -19,6 +19,7 @@ public class StatsUI : MonoBehaviour
     private void Start()
     {
         HandleJournalProgression();
+        HandleUpgradesProgression(null);
     }
 
     private void Update()
@@ -29,12 +30,13 @@ public class StatsUI : MonoBehaviour
     private void OnEnable()
     {
         journalManager.OnObjectiveClaimed += HandleJournalProgression;
-        //upgradeManager.OnUpgradeBought += HandleUpgradesProgression;
+        upgradeManager.OnUpgradeUnlocked += HandleUpgradesProgression;
     }
 
     private void OnDisable()
     {
         journalManager.OnObjectiveClaimed -= HandleJournalProgression;
+        upgradeManager.OnUpgradeUnlocked -= HandleUpgradesProgression;
     }
 
     private void HandleJournalProgression()
@@ -42,6 +44,13 @@ public class StatsUI : MonoBehaviour
         var (completed, total) = journalManager.GetTotalJournalProgress();
         float percent = total > 0 ? (float)completed / total * 100f : 0f;
         journalProgressionText.text = $"{completed}/{total}  ({percent:F0}%)";
+    }
+
+    private void HandleUpgradesProgression(UpgradeData upgrade)
+    {
+        var (completed, total) = upgradeManager.GetTotalUpgradesProgress();
+        float percent = total > 0 ? (float)completed / total * 100f : 0f;
+        upgradesProgressionText.text = $"{completed}/{total} ({percent:F0}%)";
     }
 
     private void UpdateTotalPlaytime() => gameTotalPlaytimeText.text = StatsFormatter.FormatPlaytime(statsManager.GetTotalPlaytime());

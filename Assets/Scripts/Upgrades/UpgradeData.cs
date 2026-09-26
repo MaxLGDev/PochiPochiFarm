@@ -17,7 +17,9 @@ public enum EffectType
     WaterRegenSpeed,
     SkipWaterChance,
     ClickMultiplier,
-    YieldMultiplier
+    YieldMultiplier,
+    ResearchSpeed,
+    AutomationSpeed
 }
 
 [CreateAssetMenu(fileName = "New Upgrade", menuName = "Upgrades/Upgrade Data")]

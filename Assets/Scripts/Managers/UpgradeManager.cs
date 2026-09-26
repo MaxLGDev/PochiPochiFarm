@@ -42,6 +42,19 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
+    public (int completed, int total) GetTotalUpgradesProgress()
+    {
+        int completed = 0;
+        int total = allUpgradesList.Count;
+
+        foreach (UpgradeData upgrade in allUpgradesList)
+        {
+            if (allUpgrades[upgrade])
+                completed++;
+        }
+
+        return (completed, total);
+    }
 
     // ==============================
     // Upgrade Management
