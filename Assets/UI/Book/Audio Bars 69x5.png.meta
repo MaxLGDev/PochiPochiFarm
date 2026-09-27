@@ -116,10 +116,10 @@ TextureImporter:
       name: Audio Bars 69x5_0
       rect:
         serializedVersion: 2
-        x: 69
-        y: 20
-        width: 69
-        height: 5
+        x: 4
+        y: 21
+        width: 61
+        height: 3
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,6 +130,204 @@ TextureImporter:
       bones: []
       spriteID: e69ee8eeefaf43090800000000000000
       internalID: -8055537860627994258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Audio Bars 69x5_1
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 20
+        width: 69
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bb407c37122044499a803935ebf54c0
+      internalID: -584540946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Audio Bars 69x5_2
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 16
+        width: 61
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a31ed6e648169a143b7c91d70c85bc5e
+      internalID: -951472727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Audio Bars 69x5_3
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 16
+        width: 61
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4f6a1a23457faf4fab0ea5c16a149e7
+      internalID: 891765826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Audio Bars 69x5_4
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 11
+        width: 61
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f016dd2160b21ea4f94a8a5cf3453d5f
+      internalID: -2049113287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Audio Bars 69x5_5
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 10
+        width: 69
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68f41befa71c5d648b03148652a755bf
+      internalID: -598643255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Audio Bars 69x5_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5
+        width: 69
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 806ac0be48c263c46ab9623db19c1b21
+      internalID: -1295887735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Audio Bars 69x5_7
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 5
+        width: 69
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40719f0db17652e40a1e3e0c648e52d8
+      internalID: 878111393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Audio Bars 69x5_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 69
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f9a6ca0780657c4d866af3a9302d8ae
+      internalID: -2085101596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Audio Bars 69x5_9
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 0
+        width: 69
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d74f6e90ba409bd439a9a0b9a5b5c031
+      internalID: 300940895
       vertices: []
       indices: 
       edges: []
@@ -146,9 +344,20 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":69.0,"y":5.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Audio Bars 69x5_0: -8055537860627994258
+      Audio Bars 69x5_1: -584540946
+      Audio Bars 69x5_2: -951472727
+      Audio Bars 69x5_3: 891765826
+      Audio Bars 69x5_4: -2049113287
+      Audio Bars 69x5_5: -598643255
+      Audio Bars 69x5_6: -1295887735
+      Audio Bars 69x5_7: 878111393
+      Audio Bars 69x5_8: -2085101596
+      Audio Bars 69x5_9: 300940895
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
