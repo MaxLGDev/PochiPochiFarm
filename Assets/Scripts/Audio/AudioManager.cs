@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 // BGM・効果音・音量管理を行うクラス
 public class SoundManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance;
 
     [SerializeField] private AudioMixer mixer;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
 
     // AudioMixer のパラメータ名
     private const string MASTER_VOLUME = "MasterVolume";
@@ -136,8 +139,7 @@ public class SoundManager : MonoBehaviour
             return;
         }
         
-        Sound sfxSound =
-            Array.Find(effectSounds, s => s.soundName == name);
+        Sound sfxSound = Array.Find(effectSounds, s => s.soundName == name);
 
         if (sfxSound == null)
         {
@@ -147,7 +149,6 @@ public class SoundManager : MonoBehaviour
 
         sfxSource.pitch = pitch;
         sfxSource.PlayOneShot(sfxSound.audioClip);
-        sfxSource.pitch = 1f; // 元に戻す
     }
 
     // ボタン用ラッパー

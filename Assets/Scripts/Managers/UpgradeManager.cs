@@ -119,4 +119,39 @@ public class UpgradeManager : MonoBehaviour
 
         return cropRequirementMet;
     }
+
+    public UpgradesSaveData CaptureState()
+    {
+        UpgradesSaveData data = new UpgradesSaveData();
+
+        foreach (KeyValuePair<UpgradeData, bool> pair in allUpgrades)
+        {
+            if(pair.Value)
+                data.boughtUpgradeIds.Add(pair.Key.name);
+        }
+
+        return data;
+    }
+
+    public void ApplyState(UpgradesSaveData data)
+    {
+        List<UpgradeData> restored = new List<UpgradeData>();
+
+        foreach (string id in data.boughtUpgradeIds)
+        {
+            UpgradeData upgrade = allUpgradesList.Find(u => u.name == id);
+            if (upgrade == null)
+            {
+                Debug.LogWarning($"Save refers to unknown upgrade '{id}'");
+                continue;
+            }
+
+            allUpgrades[upgrade] = true;
+            restored.Add(upgrade);
+        }
+
+        foreach (UpgradeData upgrade in restored)
+            OnUpgradeUnlocked?.Invoke(upgrade);
+
+    }
 }

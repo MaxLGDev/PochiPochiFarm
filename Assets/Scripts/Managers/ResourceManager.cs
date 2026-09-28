@@ -15,6 +15,8 @@ public class ResourceManager : MonoBehaviour
     
     private Action<UpgradeData> handleUpgradeUnlocked;
 
+    [SerializeField] private List<CropData> allCrops;
+
     // --- Coin Resources ---
     public int Coins { get; private set; }
 
@@ -316,5 +318,43 @@ public class ResourceManager : MonoBehaviour
         {
             TrySellCrops(crop, GetCropCount(crop));
         }
+    }
+
+    public ResourcesSaveData CaptureState()
+    {
+        ResourcesSaveData data = new ResourcesSaveData();
+        data.coins = Coins;
+
+        foreach (KeyValuePair<CropData, int> pair in cropInventory)
+        {
+            data.cropCounts.Add(new CropCountSaveEntry
+            {
+                cropName = pair.Key.name,
+                count = pair.Value
+            });
+        }
+
+        return data;
+    }
+
+    public void ApplyState(ResourcesSaveData data)
+    {
+        Coins = data.coins;
+        cropInventory.Clear();
+
+        foreach (CropCountSaveEntry entry in data.cropCounts)
+        {
+            CropData crop = allCrops.Find(c => c.name == entry.cropName);
+            if (crop == null)
+            {
+                Debug.LogWarning($"Save refers to unknown crop '{entry.cropName}'");
+                continue;
+            }
+
+            cropInventory[crop] = entry.count;
+            OnCropChanged?.Invoke(crop, entry.count);
+        }
+
+        OnCoinsChanged?.Invoke(Coins);
     }
 }

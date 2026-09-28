@@ -1,16 +1,21 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private string githubUrl;
+    [SerializeField] private string unityroomUrl;
+    [SerializeField] private Toggle fullScreenToggle;
+
+    private void Start()
     {
-        
+        SoundManager.Instance.PlayMusic("MainSong");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public void OpenGithubLink() => Application.OpenURL(githubUrl);
+    
+    public void OpenUnityRoomLink() => Application.OpenURL(unityroomUrl);
+
+    public void SetFullScreenTo(bool isOn) => fullScreenToggle.isOn = isOn;
 }

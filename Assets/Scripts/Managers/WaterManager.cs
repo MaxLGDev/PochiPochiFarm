@@ -67,7 +67,6 @@ public class WaterManager : MonoBehaviour
     private void Update()
     {
         RegenWater();
-        Debug.Log(waterRefillPower + " " + waterRefillSpeed);
     }
 
 
@@ -171,4 +170,18 @@ public class WaterManager : MonoBehaviour
     }
     
     public float RegenProgress => waterRefillSpeed <= 0f ? 0f : RegenTimer / waterRefillSpeed;
+
+    public WaterSaveData CaptureState()
+    {
+        WaterSaveData data = new WaterSaveData();
+        data.currentWater = Water;
+
+        return data;
+    }
+
+    public void ApplyState(WaterSaveData data)
+    {
+        Water = data.currentWater;
+        OnWaterChanged?.Invoke(Water);
+    }
 }

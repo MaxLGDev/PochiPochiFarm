@@ -73,4 +73,21 @@ public class StatsManager : MonoBehaviour
     {
         return totalCropsGathered;
     }
+
+    public StatsSaveData CaptureState()
+    {
+        StatsSaveData data = new StatsSaveData();
+        data.totalPlaytime = GetTotalPlaytime();
+        data.totalEarnedCoins = GetTotalGoldMade();
+        data.totalCropsGathered = GetTotalCropsGathered();
+
+        return data;
+    }
+
+    public void ApplyState(StatsSaveData data)
+    {
+        totalPlaytime = data.totalPlaytime;
+        totalGoldMade = data.totalEarnedCoins;
+        totalCropsGathered = data.totalCropsGathered;
+    }
 }
