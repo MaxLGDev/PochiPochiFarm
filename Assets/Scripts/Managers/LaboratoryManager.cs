@@ -78,6 +78,14 @@ public class LabState
     {
         IsAutomated = true;
     }
+    
+    public void Restore(bool researched, bool automated, float researchTimer, float automationTimer)
+    {
+        IsResearched = researched;
+        IsAutomated = automated;
+        ResearchTimer = researchTimer;
+        AutomationTimer = automationTimer;
+    }
 }
 
 
@@ -120,12 +128,7 @@ public class LaboratoryManager : MonoBehaviour
     private void Awake()
     {
         onUpgradeUnlockedHandler = HandleUpgradeUnlocked;
-    }
-
-    private void Start()
-    {
-        currentResearchingCrop = null;
-
+        
         var allCrops = farmLayout.tiles
             .Select(tile => tile.cropData)
             .Distinct();
@@ -335,5 +338,71 @@ public class LaboratoryManager : MonoBehaviour
             return false;
 
         return cropsResearch[crop].IsAutomated;
+    }
+
+    public LabSaveData CaptureState()
+    {
+        LabSaveData data = new LabSaveData();
+
+        foreach (KeyValuePair<CropData, LabState> pair in cropsResearch)
+        {
+            data.crops.Add(new LabCropSaveEntry
+            {
+                cropName = pair.Key.name,
+                isResearched = pair.Value.IsResearched,
+                isAutomated = pair.Value.IsAutomated
+            });
+        }
+
+        data.activeResearchCrop = "";
+        if (currentResearchingCrop != null)
+        {
+            data.activeResearchCrop = currentResearchingCrop.name;
+            data.researchElapsed = cropsResearch[currentResearchingCrop].ResearchTimer;
+        }
+
+        data.activeAutomationCrop = "";
+        if (currentAutomatingCrop != null)
+        {
+            data.activeAutomationCrop = currentAutomatingCrop.name;
+            data.automationElapsed = cropsResearch[currentAutomatingCrop].AutomationTimer;
+        }
+
+        return data;
+    }
+
+    public void ApplyState(LabSaveData data)
+    {
+        foreach (LabCropSaveEntry entry in data.crops)
+        {
+            CropData crop = FindCropByName(entry.cropName);
+            if (crop == null)
+            {
+                Debug.LogWarning($"Save refers to unknown crop '{entry.cropName}'");
+                continue;
+            }
+
+            float researchTimer = entry.cropName == data.activeResearchCrop ? data.researchElapsed : 0f;
+            float automationTimer = entry.cropName == data.activeAutomationCrop ? data.automationElapsed : 0f;
+
+            cropsResearch[crop].Restore(entry.isResearched, entry.isAutomated, researchTimer, automationTimer);
+        }
+
+        currentResearchingCrop =
+                string.IsNullOrEmpty(data.activeResearchCrop) ? null : FindCropByName(data.activeResearchCrop);
+
+            currentAutomatingCrop =
+                string.IsNullOrEmpty(data.activeAutomationCrop) ? null : FindCropByName(data.activeAutomationCrop);
+
+            foreach (KeyValuePair<CropData, LabState> pair in cropsResearch)
+            {
+                if (pair.Value.IsAutomated)
+                    OnCropAutomated?.Invoke(pair.Key);
+            }
+    }
+
+    private CropData FindCropByName(string cropName)
+    {
+        return cropsResearch.Keys.FirstOrDefault(crop => crop.name == cropName);
     }
 }
