@@ -11,6 +11,8 @@ public class WaterManager : MonoBehaviour
     // --- Events ---
     public event Action<int> OnWaterChanged;
     public event Action<int> OnWaterRefilled;
+    public event Action<int> OnWaterGained;
+    public event Action<int> OnWaterSpent;
     private event Action<UpgradeData> onUpgradeUnlockedHandler;
 
     // --- References ---
@@ -79,7 +81,13 @@ public class WaterManager : MonoBehaviour
     /// </summary>
     public void AddWater(int amount)
     {
-        Water = Mathf.Clamp(Water + amount, 0, MaxWater);
+        int newWater = Mathf.Clamp(Water + amount, 0, MaxWater);
+        int gained = newWater - Water;
+
+        Water = newWater;
+
+        if (gained > 0)
+            OnWaterGained?.Invoke(gained);
 
         OnWaterChanged?.Invoke(Water);
     }
@@ -102,6 +110,7 @@ public class WaterManager : MonoBehaviour
 
         Water -= amount;
 
+        OnWaterSpent?.Invoke(amount);
         OnWaterChanged?.Invoke(Water);
     }
 

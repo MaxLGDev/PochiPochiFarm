@@ -106,10 +106,24 @@ public class LaboratoryUI : MonoBehaviour
     private void Start()
     {
         labPanel.SetActive(false);
-        laboratoryButton.interactable = false;
+        SetLaboratoryUnlocked(journalManager.IsChapter1Claimed());
 
-        OnResearchCropSelected(0);
-        OnAutomationCropSelected(0);
+        researchUI.dropdown.onValueChanged.AddListener(OnResearchCropSelected);
+        automationUI.dropdown.onValueChanged.AddListener(OnAutomationCropSelected);
+
+        OnResearchCropSelected(researchUI.dropdown.value);
+        OnAutomationCropSelected(automationUI.dropdown.value);
+    }
+
+    private void HandleJournalChapter1Claimed()
+    {
+        SetLaboratoryUnlocked(true);
+    }
+
+    private void SetLaboratoryUnlocked(bool unlocked)
+    {
+        laboratoryUnlocked = unlocked;
+        laboratoryButton.interactable = unlocked;
     }
 
     private void Update()
@@ -127,20 +141,6 @@ public class LaboratoryUI : MonoBehaviour
     private void OnDisable()
     {
         journalManager.OnChapter1Claimed -= HandleJournalChapter1Claimed;
-    }
-
-    private void HandleJournalChapter1Claimed()
-    {
-        Debug.Log(laboratoryButton.interactable);
-        
-        if (laboratoryUnlocked)
-            return;
-
-        if (!laboratoryUnlocked)
-        {
-            laboratoryUnlocked = true;
-            laboratoryButton.interactable = true;
-        }
     }
 
     /// <summary>
@@ -172,6 +172,9 @@ public class LaboratoryUI : MonoBehaviour
     /// </summary>
     public void StartAutomationUI()
     {
+        if (!labManager.IsCropResearched(automationUI.SelectedCrop))
+            return;
+        
         StartActionUI(automationUI, labManager.StartAutomating);
     }
 

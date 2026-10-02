@@ -311,7 +311,7 @@ public class GridManager : MonoBehaviour
 
         if (tile.CropData.RequiredWater > 0)
         {
-            if (waterManager.Water <= 0)
+            if (waterManager.Water < tile.CropData.RequiredWater)
             {
                 Debug.Log("Not enough water to harvest.");
                 return false;

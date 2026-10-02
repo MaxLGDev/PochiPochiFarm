@@ -200,6 +200,11 @@ public class JournalManager : MonoBehaviour
         return next != null ? chapterUnlocked[next] : lastChapterClaimed;
     }
 
+    public bool IsChapter1Claimed()
+    {
+        return chaptersList.Count > 0 && IsChapterClaimed(chaptersList[0]);
+    }
+
     public bool IsChapterFullyClaimed(Chapter chapter)
     {
         return GetChapterProgress(chapter.objectives[0]).completed ==

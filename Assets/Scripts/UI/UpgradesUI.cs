@@ -52,7 +52,7 @@ public class UpgradesUI : MonoBehaviour
     private void Start()
     {
         upgradesPanel.SetActive(false);
-        upgradesButton.interactable = false;
+        SetUpgradesUnlocked(journalManager.IsChapter1Claimed());
         
         foreach(var entry in connectors)
             entry.connector.SetEndpoints(entry.sourceNode.RectTransform, entry.targetNode.RectTransform);
@@ -86,6 +86,17 @@ public class UpgradesUI : MonoBehaviour
         upgradeManager.OnUpgradeUnlocked -= onUpgradeUnlockedHandler;
     }
 
+    private void HandleJournalChapter1Claimed()
+    {
+        SetUpgradesUnlocked(true);
+    }
+
+    private void SetUpgradesUnlocked(bool unlocked)
+    {
+        upgradesUnlocked = unlocked;
+        upgradesButton.interactable = unlocked;
+    }
+
     private void RefreshAll()
     {
         foreach (var node in upgradeNodes)
@@ -108,16 +119,6 @@ public class UpgradesUI : MonoBehaviour
 
        return null;
    }
-
- 
-    private void HandleJournalChapter1Claimed()
-    {
-        if (upgradesUnlocked)
-            return;
-        
-        upgradesUnlocked = true;
-        upgradesButton.interactable = true;
-    }
 
     public void ToggleUpgradesPanel() => upgradesPanel.SetActive(!upgradesPanel.activeSelf);
 }

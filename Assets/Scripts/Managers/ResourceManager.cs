@@ -11,7 +11,10 @@ public class ResourceManager : MonoBehaviour
     // --- Events ---
     public event Action<int> OnCoinsChanged;
     public event Action<int> OnCoinsEarned;
+    public event Action<int> OnCoinsSpent;
+    public event Action OnCoinsFull;
     public event Action<CropData, int> OnCropChanged;
+    public event Action<Tile, int> OnCropHarvested;
     
     private Action<UpgradeData> handleUpgradeUnlocked;
 
@@ -214,12 +217,15 @@ public class ResourceManager : MonoBehaviour
     /// </summary>
     public void AddCoins(int amount)
     {
-        Coins = Mathf.Min(Coins + amount, maxCoins);
+        int newCoins = Mathf.Min(Coins + amount, maxCoins);
+        int gained = newCoins - Coins;
 
-        Debug.Log($"Added {amount} coins. Total coins: {Coins}");
+        Coins = newCoins;
 
+        if (gained > 0)
+            OnCoinsEarned?.Invoke(gained);
+        
         OnCoinsChanged?.Invoke(Coins);
-        OnCoinsEarned?.Invoke(Coins);
     }
 
     /// <summary>
@@ -234,9 +240,8 @@ public class ResourceManager : MonoBehaviour
         }
 
         Coins -= amount;
-
-        Debug.Log($"Removed {amount} coins. Total coins: {Coins}");
-
+        
+        OnCoinsSpent?.Invoke(amount);
         OnCoinsChanged?.Invoke(Coins);
 
         return true;
@@ -252,10 +257,11 @@ public class ResourceManager : MonoBehaviour
     /// </summary>
     public void HandleHarvest(Tile tile, int power)
     {
-        if (tile == null)
+        if (!tile)
             return;
 
         AddCrop(tile.CropData, power);
+        OnCropHarvested?.Invoke(tile, power);
     }
 
 
@@ -273,6 +279,9 @@ public class ResourceManager : MonoBehaviour
             return 0;
 
         int coinRoom = maxCoins - Coins;
+
+        if (coinRoom <= 0 && GetCropCount(crop) > 0)
+            OnCoinsFull?.Invoke();
 
         if (crop.CoinYield <= 0)
         {
@@ -310,6 +319,12 @@ public class ResourceManager : MonoBehaviour
 
     public void SellAllCrops()
     {
+        if (Coins >= maxCoins)
+        {
+            OnCoinsFull?.Invoke();
+            return;
+        }
+        
         // Sell crops from lowest to highest coin yield.
         var sortedCrops = cropInventory.Keys
             .OrderBy(crop => crop.CoinYield);
@@ -317,6 +332,12 @@ public class ResourceManager : MonoBehaviour
         foreach (CropData crop in sortedCrops)
         {
             TrySellCrops(crop, GetCropCount(crop));
+
+            if (Coins >= maxCoins)
+            {
+                OnCoinsFull?.Invoke();
+                break;
+            }
         }
     }
 
