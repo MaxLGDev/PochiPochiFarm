@@ -354,4 +354,73 @@ public class GridManager : MonoBehaviour
             HandleHarvestRequested(tile, false);
         }
     }
+    
+    // ==============================
+    // SAVE SYSTEM
+    // ==============================
+
+    public TilesSaveData CaptureTiles()
+    {
+        TilesSaveData data = new TilesSaveData();
+
+        foreach (Tile tile in grid)
+        {
+            data.tiles.Add(new TileSaveEntry
+            {
+                x = tile.GridPosition.x,
+                y = tile.GridPosition.y,
+                isUnlocked = tile.IsUnlocked,
+                isMature = tile.IsMature,
+                growthTimer = tile.GrowthTimer
+            });
+        }
+
+        return data;
+    }
+
+    public void ApplyTiles(TilesSaveData data)
+    {
+        foreach (TileSaveEntry entry in data.tiles)
+        {
+            Tile tile = GetTileAt(new Vector2Int(entry.x, entry.y));
+            if (tile == null)
+            {
+                Debug.LogWarning($"Save refers to an unknown tile ({entry.x},{entry.y})");
+                continue;
+            }
+            tile.Restore(entry.isUnlocked, entry.isMature, entry.growthTimer);
+        }
+    }
+
+    public ZonesSaveData CaptureZones()
+    {
+        ZonesSaveData data = new ZonesSaveData();
+
+        foreach (ZoneRuntime zone in zones)
+        {
+            data.zones.Add(new ZoneSaveEntry
+            {
+                zoneId = zone.Data.name,
+                isUnlocked = zone.IsUnlocked
+            });
+        }
+
+        return data;
+    }
+
+    public void ApplyZones(ZonesSaveData data)
+    {
+        foreach (ZoneSaveEntry entry in data.zones)
+        {
+            ZoneRuntime zone = zones.Find(z => z.Data.name == entry.zoneId);
+            if (zone == null)
+            {
+                Debug.LogWarning($"Save refers to an unknown zone ({entry.zoneId})");
+                continue;
+            }
+
+            if (entry.isUnlocked)
+                zone.Unlock();
+        }
+    }
 }

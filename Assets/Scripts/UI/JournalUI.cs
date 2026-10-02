@@ -109,9 +109,8 @@ public class JournalUI : MonoBehaviour
             Destroy(row.gameObject);
 
         currentRows.Clear();
-
-        var nextChapter = journalManager.GetNextChapter(chapter);
-        var claimed = nextChapter != null && journalManager.IsChapterUnlocked(nextChapter);
+        
+        var claimed = journalManager.IsChapterClaimed(chapter);
 
         claimRewardsButton.interactable = !claimed;
         claimButtonText.text = claimed ? "CLAIMED" : "CLAIM";
@@ -164,6 +163,7 @@ public class JournalUI : MonoBehaviour
 
             if(opening)
             {
+                RefreshTabLocks();
                 currentChapterIndex = -1;
                 PlayPageFlip(0, 0);
                 currentChapterIndex = 0;
@@ -182,23 +182,23 @@ public class JournalUI : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private void HandleObjectiveCompleted(ObjData obj)
     {
-        var (completed, total) = journalManager.GetChapterProgress(obj);
-
         if (!clearedObjectivesCounterText)
             return;
 
         var chapter = journalManager.GetChapterForObjective(obj);
-        var nextChapter = journalManager.GetNextChapter(chapter);
-        var claimed = nextChapter != null && journalManager.IsChapterUnlocked(nextChapter);
+        if (currentChapter != null && chapter != currentChapter)
+            return;
+        
+        var (completed, total) = journalManager.GetChapterProgress(obj);
 
-        if (claimed)
+        clearedObjectivesCounterText.text = completed >= total ? $"<color=green>{completed}/{total}</color>" : $"<color=red>{completed}/{total}</color>";
+        
+        if (journalManager.IsChapterClaimed(chapter))
         {
             claimButtonText.text = "CLAIMED";
             claimRewardsButton.interactable = false;
             return;
         }
-
-        clearedObjectivesCounterText.text = completed >= total ? $"<color=green>{completed}/{total}</color>" : $"<color=red>{completed}/{total}</color>";
         
         claimRewardsButton.interactable = completed >= total;
     }

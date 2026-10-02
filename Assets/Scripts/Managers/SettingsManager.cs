@@ -11,11 +11,12 @@ public class SettingsManager : MonoBehaviour
     private void Start()
     {
         SoundManager.Instance.PlayMusic("MainSong");
+        fullScreenToggle.SetIsOnWithoutNotify(Screen.fullScreen);
     }
 
     public void OpenGithubLink() => Application.OpenURL(githubUrl);
     
     public void OpenUnityRoomLink() => Application.OpenURL(unityroomUrl);
 
-    public void SetFullScreenTo(bool isOn) => fullScreenToggle.isOn = isOn;
+    public void SetFullScreenTo(bool isOn) => Screen.fullScreen = isOn;
 }

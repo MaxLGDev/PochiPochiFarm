@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 
 // ============================================
@@ -53,6 +54,13 @@ class ObjState
         IsClaimed = true;
         return true;
     }
+
+    public void Restore(int progress, bool complete, bool claimed)
+    {
+        Progress = progress;
+        IsComplete = complete;
+        IsClaimed = claimed;
+    }
 }
 
 
@@ -103,6 +111,9 @@ public class JournalManager : MonoBehaviour
     private Dictionary<ObjData, ObjState> objectivesStates = new();
     private Dictionary<ObjData, Chapter> objectiveToChapter = new();
     private Dictionary<Chapter, bool> chapterUnlocked = new();
+
+    // The last chapter has no "next chapter" to infer its claimed state from.
+    private bool lastChapterClaimed;
 
 
     // ==============================
@@ -181,6 +192,14 @@ public class JournalManager : MonoBehaviour
         return chapterUnlocked[chapter];
     }
 
+    // A chapter counts as claimed once the next chapter is unlocked.
+    // The last chapter has no next chapter, so it uses its own flag.
+    public bool IsChapterClaimed(Chapter chapter)
+    {
+        Chapter next = GetNextChapter(chapter);
+        return next != null ? chapterUnlocked[next] : lastChapterClaimed;
+    }
+
     public bool IsChapterFullyClaimed(Chapter chapter)
     {
         return GetChapterProgress(chapter.objectives[0]).completed ==
@@ -190,28 +209,31 @@ public class JournalManager : MonoBehaviour
     public void UnlockNextChapter(Chapter chapter)
     {
         int currentIndex = chaptersList.IndexOf(chapter);
-        int nextIndex = currentIndex + 1;
 
         if (currentIndex < 0)
             return;
 
-        if (nextIndex >= chaptersList.Count)
+        // Prevents claiming twice (and firing the win event twice).
+        if (IsChapterClaimed(chapter) || !IsChapterFullyClaimed(chapter))
             return;
 
-        chapterUnlocked[chaptersList[nextIndex]] = true;
         gridManager.UnlockZone(chapter);
 
-        switch (nextIndex)
-        {
-            // Chapter 1 is assumed to be at index 0.
-            case 1:
-                OnChapter1Claimed?.Invoke();
-                break;
+        Chapter next = GetNextChapter(chapter);
 
-            case 4:
-                OnLastChapterClaimed?.Invoke();
-                break;
+        // No next chapter: this was the last one, so the game is won.
+        if (next == null)
+        {
+            lastChapterClaimed = true;
+            OnLastChapterClaimed?.Invoke();
+            return;
         }
+
+        chapterUnlocked[next] = true;
+
+        // Chapter 1 is assumed to be at index 0.
+        if (currentIndex == 0)
+            OnChapter1Claimed?.Invoke();
     }
 
     public Chapter GetChapter(int index)
@@ -333,4 +355,57 @@ public class JournalManager : MonoBehaviour
                 OnObjectiveCompleted?.Invoke(objective);
         }
     }
+
+    // ==============================
+    // SAVE SYSTEM
+    // ==============================
+
+    public JournalSaveData CaptureState()
+    {
+        JournalSaveData data = new JournalSaveData();
+
+        for (int i = 0; i < chaptersList.Count; i++)
+        {
+            if (chapterUnlocked[chaptersList[i]])
+                data.highestUnlockedChapter = i;
+        }
+
+        data.lastChapterClaimed = lastChapterClaimed;
+
+        foreach (KeyValuePair<ObjData, ObjState> pair in objectivesStates)
+        {
+            data.objectives.Add(new ObjectiveSaveEntry
+            {
+                objectiveId = pair.Key.name,
+                progress = pair.Value.Progress,
+                isCompleted = pair.Value.IsComplete,
+                isClaimed = pair.Value.IsClaimed
+            });
+        }
+
+        return data;
+    }
+
+    public void ApplyState(JournalSaveData data)
+    {
+        foreach (ObjectiveSaveEntry entry in data.objectives)
+        {
+            ObjData obj = objectivesStates.Keys.FirstOrDefault(o => o.name == entry.objectiveId);
+
+            if (obj == null)
+            {
+                Debug.LogWarning($"Save refers to an unknown objective ({entry.objectiveId})");
+                continue;
+            }
+
+            int progress = Mathf.Clamp(entry.progress, 0, obj.Target);
+            objectivesStates[obj].Restore(progress, entry.isCompleted, entry.isClaimed);
+        }
+
+        for (int i = 0; i < chaptersList.Count; i++)
+            chapterUnlocked[chaptersList[i]] = i <= data.highestUnlockedChapter;
+
+        lastChapterClaimed = data.lastChapterClaimed;
+    }
+
 }

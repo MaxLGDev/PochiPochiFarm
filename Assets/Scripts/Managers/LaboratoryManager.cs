@@ -391,14 +391,8 @@ public class LaboratoryManager : MonoBehaviour
         currentResearchingCrop =
                 string.IsNullOrEmpty(data.activeResearchCrop) ? null : FindCropByName(data.activeResearchCrop);
 
-            currentAutomatingCrop =
-                string.IsNullOrEmpty(data.activeAutomationCrop) ? null : FindCropByName(data.activeAutomationCrop);
-
-            foreach (KeyValuePair<CropData, LabState> pair in cropsResearch)
-            {
-                if (pair.Value.IsAutomated)
-                    OnCropAutomated?.Invoke(pair.Key);
-            }
+        currentAutomatingCrop =
+            string.IsNullOrEmpty(data.activeAutomationCrop) ? null : FindCropByName(data.activeAutomationCrop);
     }
 
     private CropData FindCropByName(string cropName)

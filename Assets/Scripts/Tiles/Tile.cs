@@ -45,6 +45,21 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         GrowCrop();
     }
 
+    /// <summary>
+    /// Restores saved runtime state. Only used by GridManager.ApplyTiles.
+    /// </summary>
+    public void Restore(bool unlocked, bool mature, float growthTimer)
+    {
+        IsUnlocked = unlocked;
+        IsMature = mature;
+        GrowthTimer = growthTimer;
+        lastStageIndex = -1; // Forces the sprite next frame to load
+
+        if (mature)
+            cropRenderer.sprite = CropData.GrowthSprites[^1];
+        
+        UpdateFogVisibility();
+    }
 
     // ==============================
     // Crop Growth

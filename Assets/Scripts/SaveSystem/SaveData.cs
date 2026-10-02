@@ -102,12 +102,14 @@ public class ObjectiveSaveEntry
     public string objectiveId;
     public int progress;
     public bool isCompleted;
+    public bool isClaimed;
 }
 
 [Serializable]
 public class JournalSaveData
 {
-    public int currentChapter;
+    public bool lastChapterClaimed;
+    public int highestUnlockedChapter;
     public List<ObjectiveSaveEntry> objectives = new List<ObjectiveSaveEntry>();
 }
 
