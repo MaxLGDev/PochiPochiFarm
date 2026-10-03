@@ -24,6 +24,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     [SerializeField] private SpriteRenderer cropRenderer;
     [SerializeField] private SpriteRenderer fogRenderer;
 
+    [SerializeField] private ParticleSystem unlockParticles;
+
     // --- State ---
     public CropData CropData { get; private set; }
     public Vector2Int GridPosition { get; private set; }
@@ -251,6 +253,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
         IsUnlocked = true;
         UpdateFogVisibility();
+        
+        if(unlockParticles != null)
+            unlockParticles.Play();
     }
 
     /// <summary>

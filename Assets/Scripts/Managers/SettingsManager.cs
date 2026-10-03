@@ -19,4 +19,6 @@ public class SettingsManager : MonoBehaviour
     public void OpenUnityRoomLink() => Application.OpenURL(unityroomUrl);
 
     public void SetFullScreenTo(bool isOn) => Screen.fullScreen = isOn;
+
+    public void CloseGame() => Application.Quit();
 }

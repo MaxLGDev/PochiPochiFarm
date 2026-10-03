@@ -48,15 +48,6 @@ public class FloatingTextSpawner : MonoBehaviour
         onCropHarvestHandler = (tile, amount) => Spawn($"+{amount} {tile.CropData.CropName.ToUpper()}", cropColor, tile.transform.position + tileOffset);
     }
 
-    private void Start()
-    {
-        if (punchAnim != null)
-            punchAnim.PunchScale();
-        
-        if(wiggleAnim != null)
-            wiggleAnim.Wiggle();
-    }
-
     private void OnEnable()
     {
         resourceManager.OnCoinsEarned += onCoinsEarnedHandler;
