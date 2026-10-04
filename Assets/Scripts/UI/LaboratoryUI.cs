@@ -102,6 +102,8 @@ public class LaboratoryUI : MonoBehaviour
     [SerializeField] private float fadeWait = 0.2f;
 
     private bool laboratoryUnlocked = false;
+    private bool researchLoopPlaying;
+    private bool automationLoopPlaying;
 
     private void Start()
     {
@@ -131,6 +133,7 @@ public class LaboratoryUI : MonoBehaviour
         // Refresh both interfaces every frame.
         UpdateResearchUI();
         UpdateAutomationUI();
+        RefreshProgressLoop();
     }
 
     private void OnEnable()
@@ -141,6 +144,40 @@ public class LaboratoryUI : MonoBehaviour
     private void OnDisable()
     {
         journalManager.OnChapter1Claimed -= HandleJournalChapter1Claimed;
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopLoop("Research");
+            SoundManager.Instance.StopLoop("Automation");
+        }
+        
+    }
+    
+    /// <summary>
+    /// Plays the progress loop only while the panel is open and research or automation is running.
+    /// </summary>
+    private void RefreshProgressLoop()
+    {
+        bool panelOpen = labPanel.activeSelf;
+
+        SetLoop(panelOpen && labManager.IsResearching(),
+            ref researchLoopPlaying, "ResearchSlider", "Research");
+        
+        SetLoop(panelOpen && labManager.IsAutomating(),
+            ref automationLoopPlaying, "AutomationSlider", "Automation");
+    }
+
+    private static void SetLoop(bool shouldPlay, ref bool isPlaying, string soundName, string owner)
+    {
+        if (shouldPlay == isPlaying)
+            return;
+
+        isPlaying = shouldPlay;
+
+        if (shouldPlay)
+            SoundManager.Instance.StartLoop(soundName, owner);
+        else
+            SoundManager.Instance.StopLoop(owner);
     }
 
     /// <summary>
@@ -216,7 +253,11 @@ public class LaboratoryUI : MonoBehaviour
     // UI Updates
     //==========================================================================
 
-    public void ToggleLabPanel() => labPanel.SetActive(!labPanel.activeSelf);
+    public void ToggleLabPanel()
+    {
+        labPanel.SetActive(!labPanel.activeSelf);
+        SoundManager.Instance.PlaySFX("TogglePanel");
+    }
 
     /// <summary>
     /// Updates all research-related UI elements.

@@ -73,6 +73,7 @@ public class UpgradeManager : MonoBehaviour
 
         allUpgrades[upgradeData] = true;
         OnUpgradeUnlocked?.Invoke(upgradeData);
+        SoundManager.Instance.PlaySFX("UpgradeBought");
     }
 
     public UpgradeState GetUpgradeState(UpgradeData data)

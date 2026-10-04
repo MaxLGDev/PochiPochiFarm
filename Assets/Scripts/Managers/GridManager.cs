@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
 /// <summary>
 /// Manages the farm grid, including tile creation,
 /// harvesting, and unlocking.
@@ -291,6 +292,7 @@ public class GridManager : MonoBehaviour
         {
             OnCropUnlocked?.Invoke(tile.CropData);
             tile.UnlockTile();
+            SoundManager.Instance.PlaySFX("TileUnlock");
         }
         else
         {
@@ -314,6 +316,8 @@ public class GridManager : MonoBehaviour
             if (waterManager.Water < tile.CropData.RequiredWater)
             {
                 Debug.Log("Not enough water to harvest.");
+                if (isManual)
+                    SoundManager.Instance.PlaySFX("Blocked");
                 return false;
             }
 
@@ -328,6 +332,7 @@ public class GridManager : MonoBehaviour
         if (isManual)
         {
             OnTileHarvested?.Invoke();
+            SoundManager.Instance.PlaySFX("TileHarvest", UnityEngine.Random.Range(0.85f, 1.15f));
             
         }
 

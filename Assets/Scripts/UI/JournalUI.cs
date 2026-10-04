@@ -28,6 +28,7 @@ public class JournalUI : MonoBehaviour
     [SerializeField] private float pageFlipMultiplier = 1.3f;
     private int currentChapterIndex = -1;
     private float pageFlipDuration;
+    private bool muteFlipSound;
 
     private Vector2[] originalTabPositions;
 
@@ -156,6 +157,7 @@ public class JournalUI : MonoBehaviour
 
     public void ToggleJournalPanel()
     {
+        SoundManager.Instance.PlaySFX("TogglePanel");
         if (journalPanel != null)
         {
             var opening = !journalPanel.activeSelf;
@@ -163,6 +165,7 @@ public class JournalUI : MonoBehaviour
 
             if(opening)
             {
+                muteFlipSound = true;
                 RefreshTabLocks();
                 currentChapterIndex = -1;
                 PlayPageFlip(0, 0);
@@ -172,6 +175,8 @@ public class JournalUI : MonoBehaviour
                 contentsChapters.SetActive(false);
                 introChapter.SetActive(false);
                 ShowIntro();
+
+                muteFlipSound = false;
             }
         }
 
@@ -205,6 +210,8 @@ public class JournalUI : MonoBehaviour
 
     private void PlayPageFlip(int newChapterIndex, int oldChapterIndex)
     {
+        if(!muteFlipSound)
+            SoundManager.Instance.PlaySFX("PageFlipSFX");
         var forward = newChapterIndex >= oldChapterIndex;
         var clipName = forward ? "PageFlip" : "PageFlipReverse";
 

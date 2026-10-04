@@ -165,12 +165,14 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     public void CropBlockAnimation()
     {
         cropWiggle.Wiggle();
+        SoundManager.Instance.PlaySFX("Blocked");
     }
 
     public void FogBlockedAnimation()
     {
         fogWiggle.Wiggle();
         fogPunch.PunchScale();
+        SoundManager.Instance.PlaySFX("Blocked");
     }
 
 

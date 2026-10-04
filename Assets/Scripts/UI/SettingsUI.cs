@@ -7,12 +7,16 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
-    
-    public void ToggleSettingsPanel() => settingsPanel.SetActive(!settingsPanel.activeSelf);
+
+    public void ToggleSettingsPanel()
+    {
+        settingsPanel.SetActive(!settingsPanel.activeSelf);
+        SoundManager.Instance.PlaySFX("TogglePanel");
+    }
 
     private void Start()
     {
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
-        sfxSlider.value = PlayerPrefs.GetFloat("SfxVolume", 0.5f);
+        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
     }
 }

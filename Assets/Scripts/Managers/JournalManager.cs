@@ -231,11 +231,12 @@ public class JournalManager : MonoBehaviour
         {
             lastChapterClaimed = true;
             OnLastChapterClaimed?.Invoke();
+            SoundManager.Instance.PlaySFX("GameWin");
             return;
         }
 
         chapterUnlocked[next] = true;
-
+        SoundManager.Instance.PlaySFX("ChapterClaimed");
         // Chapter 1 is assumed to be at index 0.
         if (currentIndex == 0)
             OnChapter1Claimed?.Invoke();

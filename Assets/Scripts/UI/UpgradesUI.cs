@@ -31,6 +31,8 @@ public class UpgradesUI : MonoBehaviour
     [SerializeField] private List<UpgradeNodeUI> upgradeNodes;
     [SerializeField] private GameObject upgradesPanel;
     [SerializeField] private Button upgradesButton;
+    
+    [SerializeField] private ParticleSystem upgradeParticles;
 
     private bool upgradesUnlocked = false;
 
@@ -44,7 +46,13 @@ public class UpgradesUI : MonoBehaviour
 
         onNodeClickedHandler = (upgradeData) =>
         {
+            bool wasBought = upgradeManager.GetUpgradeState(upgradeData) == UpgradeState.Bought;
             upgradeManager.UnlockUpgrade(upgradeData);
+            bool isBought = upgradeManager.GetUpgradeState(upgradeData) == UpgradeState.Bought;
+
+            if (!wasBought && isBought)
+                PlayPurchaseEffect(upgradeData);
+            
             RefreshAll();
         };
     }
@@ -86,6 +94,16 @@ public class UpgradesUI : MonoBehaviour
         upgradeManager.OnUpgradeUnlocked -= onUpgradeUnlockedHandler;
     }
 
+    private void PlayPurchaseEffect(UpgradeData upgradeData)
+    {
+        UpgradeNodeUI node = FindNodeFor(upgradeData);
+        if (node == null || upgradeParticles == null)
+            return;
+
+        upgradeParticles.transform.position = node.RectTransform.position;
+        upgradeParticles.Play();
+    }
+
     private void HandleJournalChapter1Claimed()
     {
         SetUpgradesUnlocked(true);
@@ -120,5 +138,9 @@ public class UpgradesUI : MonoBehaviour
        return null;
    }
 
-    public void ToggleUpgradesPanel() => upgradesPanel.SetActive(!upgradesPanel.activeSelf);
+   public void ToggleUpgradesPanel()
+   {
+        upgradesPanel.SetActive(!upgradesPanel.activeSelf);
+       SoundManager.Instance.PlaySFX("TogglePanel");
+   }
 }

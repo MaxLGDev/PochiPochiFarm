@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 // BGM・効果音・音量管理を行うクラス
 public class SoundManager : MonoBehaviour
@@ -12,6 +13,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
+
+    private readonly Dictionary<string, AudioSource> loopSources = new();
 
     // AudioMixer のパラメータ名
     private const string MASTER_VOLUME = "MasterVolume";
@@ -128,6 +131,41 @@ public class SoundManager : MonoBehaviour
 
         if (!sfxSource.isPlaying && sfxSource.clip != null)
             sfxSource.UnPause();
+    }
+
+    /// <summary>
+    /// Starts a looping effect. The loop keeps playing until every owner that started it has stopped it.
+    /// </summary>
+    public void StartLoop(string soundName, string owner)
+    {
+        Sound sound = Array.Find(effectSounds, s => s.soundName == soundName);
+
+        if (sound == null)
+        {
+            Debug.LogWarning($"Sound '{soundName}' not found!");
+            return;
+        }
+
+        if (!loopSources.TryGetValue(owner, out AudioSource source))
+        {
+            source = gameObject.AddComponent<AudioSource>();
+            source.outputAudioMixerGroup = sfxSource.outputAudioMixerGroup;
+            source.playOnAwake = false;
+            source.loop = true;
+            loopSources[owner] = source;
+        }
+
+        if (source.isPlaying && source.clip == sound.audioClip)
+            return;
+
+        source.clip = sound.audioClip;
+        source.Play();
+    }
+
+    public void StopLoop(string owner)
+    {
+        if (loopSources.TryGetValue(owner, out AudioSource source))
+            source.Stop();
     }
 
     // 効果音再生（ピッチ変更可）

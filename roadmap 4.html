@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pochi-Pochi Farm - Roadmap</title>
+<style>
+  body {
+    background: #ffffff;
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.5;
+  }
+  h1 {
+    font-size: 22px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 8px;
+  }
+  h2 {
+    font-size: 17px;
+    margin-top: 40px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 4px;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  li {
+    margin: 8px 0;
+    padding-left: 4px;
+  }
+  input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  .done {
+    text-decoration: line-through;
+    color: #777;
+  }
+  .note {
+    font-size: 13px;
+    color: #444;
+    margin: 4px 0 20px 0;
+  }
+  .flag {
+    font-size: 13px;
+    color: #a05a00;
+    margin: 4px 0 20px 0;
+  }
+  #progress-wrap {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    padding: 12px 0 10px 0;
+    border-bottom: 2px solid #000;
+    z-index: 10;
+  }
+  #progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  #progress-track {
+    width: 100%;
+    height: 14px;
+    background: #eee;
+    border: 1px solid #000;
+  }
+  #progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #2e7d32;
+    transition: width 0.2s ease;
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-wrap">
+  <div id="progress-label">
+    <span>Overall progress</span>
+    <span id="progress-text">0 / 0 (0%)</span>
+  </div>
+  <div id="progress-track"><div id="progress-fill"></div></div>
+</div>
+
+<h1>Pochi-Pochi Farm — Build Roadmap</h1>
+<p class="note">Check items off as you go. Restructured to reflect the actual systems built so far — the Laboratory (per-crop research/automation) replaced the old generic Shop-based crop-permission and automation phases. Work top to bottom, phase by phase — don't skip ahead.</p>
+
+<h2>Phase 0 — Project Setup</h2>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Create new Unity 2D project</label></li>
+  <li class="done"><label><input type="checkbox" checked> Set up folder structure (Scripts, ScriptableObjects, Prefabs, Sprites, UI)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Create empty main scene</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add a basic Canvas (Screen Space - Overlay)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Set up version control / save a first commit or backup</label></li>
+</ul>
+
+<h2>Phase 1 — Crop Data (ScriptableObjects)</h2>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Create CropData ScriptableObject script</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add fields: crop name, sprite, growth duration, coin yield, unlock cost</label></li>
+  <li class="done"><label><input type="checkbox" checked> Create the "Dirt" CropData asset (base tile, free)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Create 2-3 additional test CropData assets</label></li>
+  <li class="done"><label><input type="checkbox" checked> Confirm assets show correctly in the Inspector</label></li>
+</ul>
+
+<h2>Phase 2 — Grid Foundation</h2>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Create Tile script (holds reference to its CropData, unlocked state, position)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Create GridManager script</label></li>
+  <li class="done"><label><input type="checkbox" checked> Build the 10x10 array/grid structure in GridManager (from FarmLayout ScriptableObject)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Hardcode which CropData belongs to which grid cell</label></li>
+  <li class="done"><label><input type="checkbox" checked> Instantiate all 100 tiles in the scene from the grid data</label></li>
+  <li class="done"><label><input type="checkbox" checked> Mark starting center tile as unlocked, everything else locked</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add fog visual for locked tiles</label></li>
+  <li class="done"><label><input type="checkbox" checked> Confirm grid displays correctly on play</label></li>
+</ul>
+
+<h2>Phase 3 — Tile Unlocking</h2>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Add click detection on tiles (Physics2DRaycaster on Camera + BoxCollider2D on tile prefab)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Write function to check adjacent tiles (up/down/left/right only)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Only allow unlocking a tile if it's adjacent to an unlocked tile</label></li>
+  <li class="done"><label><input type="checkbox" checked> Deduct coins on unlock, block unlock if not enough coins</label></li>
+  <li class="done"><label><input type="checkbox" checked> Reveal the tile's hidden crop sprite after unlocking</label></li>
+  <li class="done"><label><input type="checkbox" checked> Test unlocking expands correctly in all 4 directions</label></li>
+</ul>
+
+<h2>Phase 4 — Zones</h2>
+<p class="note">Fixed hardcoded rectangular regions layered on top of normal tile unlocking. Implemented as chapter-gated rather than per-zone-Objective-gated: a zone unlocks on completion of its associated Journal chapter, with no separate per-zone unlock button. Tile stays fully unaware of zones — GridManager owns zone logic. Nothing (no tile interaction/unlocking) is possible inside a locked zone.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Create ZoneData ScriptableObject (bounds as two Vector2Int corners, id, list of crops)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Track mutable isUnlocked state outside the ScriptableObject (ZoneRuntime, not on ZoneData)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Write zone-unlock-checking logic in GridManager</label></li>
+  <li class="done"><label><input type="checkbox" checked> Gate zone unlock behind chapter completion (Journal system)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Block all interaction/unlocking on tiles inside a locked zone</label></li>
+  <li class="done"><label><input type="checkbox" checked> Confirm normal adjacency+coin tile unlocking still works inside an unlocked zone</label></li>
+</ul>
+
+<h2>Phase 5 — Coins, Water &amp; Crop Resources</h2>
+<p class="note">Harvesting no longer awards coins directly — it increments a per-crop-type count. Coins come only from explicitly selling. ResourceManager owns coins, per-crop-type counts, and multi-resource costs via CostEntry.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Create ResourceManager script (owns coins + per-crop-type counts)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add Coin variable + UI text display</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add Water variable (current/max) + UI display</label></li>
+  <li class="done"><label><input type="checkbox" checked> Decide: does clicking Dirt still give a coin directly, or does Dirt also accumulate as a sellable count like other crops? — Decided: Dirt flows through the same harvest-then-sell loop as every other crop, no special-casing.</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement water consumption on crop tile interaction (-1 water)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Block crop interaction when water is at 0</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add Watering Can / Refill Water button</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement watering can refill logic (spend coin, add water)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Build CostEntry (ResourceType, crop, amount) + HasEnough/CanAfford/SpendResources on ResourceManager for multi-resource costs</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add fixed display grid on the right showing per-crop-type icon + count (not a movable inventory)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add Sell action per crop type (converts held count to coins)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Test full loop: unlock tiles, harvest crops into counts, sell for coins, water crops until empty, refill</label></li>
+</ul>
+
+<h2>Phase 6 — UI Feedback Helpers</h2>
+<p class="note">Small, reusable, single-purpose animation components — not a big UI manager — so they can be dropped onto any button/element.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Create PunchAnim.cs (scale punch up/down, reusable on any RectTransform)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Create WiggleAnim.cs (rotation wiggle left/right/left/center, reusable)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Create FadeAnim.cs (CanvasGroup alpha fade in/out, reusable)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Create RainbowCyclingColor.cs (cycling text color, toggleable via enabled)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Wire PunchAnim + WiggleAnim to Refill Water button's OnClick</label></li>
+  <li class="done"><label><input type="checkbox" checked> Fix button selection-state stickiness (set Button Navigation to None, or clear EventSystem selection on click)</label></li>
+</ul>
+
+<h2>Phase 7 — Crop Growth Cycle (Manual)</h2>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Add growth timer variable to Tile script</label></li>
+  <li class="done"><label><input type="checkbox" checked> Track mature/not-mature via existing isMature bool (no separate "growing" state needed)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Tick the timer forward each frame while growing</label></li>
+  <li class="done"><label><input type="checkbox" checked> Switch tile to mature (isMature = true) when timer hits growth duration</label></li>
+  <li class="done"><label><input type="checkbox" checked> On click while mature: increment held count for that crop type, reset timer, go back to growing</label></li>
+  <li class="done"><label><input type="checkbox" checked> Block harvest click if water is 0</label></li>
+  <li class="done"><label><input type="checkbox" checked> Test one crop type's full manual cycle start to finish</label></li>
+</ul>
+
+<h2>Phase 8 — Crop Growth Visuals</h2>
+<p class="note">Implemented via discrete seed-growth-stage sprites (swapped as the timer crosses thresholds) instead of a progress bar/slider or continuous sprite scaling.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Show a growth-stage sprite above/on each active tile</label></li>
+  <li class="done"><label><input type="checkbox" checked> Swap growth-stage sprite as timer advances through stages</label></li>
+  <li class="done"><label><input type="checkbox" checked> Advance sprite through seed → growing → mature stages</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add a simple visual change when tile reaches "mature" (e.g. glow, bounce, color) — consider reusing PunchAnim/WiggleAnim here</label></li>
+  <li class="done"><label><input type="checkbox" checked> Test visuals against timer on at least 2 different crops</label></li>
+</ul>
+
+<h2>Phase 9 — Laboratory (Research &amp; Automation)</h2>
+<p class="note">Replaces the old generic "Shop Upgrades: Crop Permissions" and "Shop Upgrades: Automation" phases. Per-crop research and automation live in a dedicated Laboratory system with their own manager and UI, gated by multi-resource CostEntry costs (coins and/or crops) instead of flat coin costs.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Create LaboratoryManager (Dictionary&lt;CropData, LabState&gt;, single active research slot, single active automation slot)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add isResearched / isAutomated flags per crop (LabState)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement StartResearching / StartAutomating, spending CostEntry costs via ResourceManager</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement research/automation progress tracking + GetResearchProgress/GetAutomationProgress</label></li>
+  <li class="done"><label><input type="checkbox" checked> Build LaboratoryUI panel with crop dropdown, cost slots (icon + amount, color-coded by affordability), and progress slider</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add open/close toggle for the Laboratory panel</label></li>
+  <li class="done"><label><input type="checkbox" checked> Make button and progress slider mutually exclusive (no overlap), correctly timed around the start-action animation</label></li>
+  <li class="done"><label><input type="checkbox" checked> Swap button label between action/complete state (RESEARCH/RESEARCHED, AUTOMATE/AUTOMATED)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Play a one-shot fade-in + rainbow color highlight when research/automation completes</label></li>
+  <li class="done"><label><input type="checkbox" checked> Fix rainbow text leaving a stray color on the very first frame before being disabled (reset to white explicitly alongside disabling)</label></li>
+  <li><label><input type="checkbox"> Fill in real ResearchCost/ResearchDuration/AutomationCost/AutomationDuration values for every researchable crop (only Radish has test values so far)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Block tile interaction until a crop is researched, even if the tile is unlocked</label></li>
+  <li class="done"><label><input type="checkbox" checked> On mature + automated: auto-collect into crop count, auto-reset timer, no click needed, still respecting water limits</label></li>
+  <li class="done"><label><input type="checkbox" checked> Test full loop: research a crop, confirm it unlocks interaction, automate it, confirm it runs on its own</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add Research Speed upgrade (LaboratoryManager owns multiplier, subscribes to OnUpgradeUnlocked)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add Automation Speed upgrade (same pattern as Research Speed)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Fix Automate button being clickable while the crop is still being researched (entry-point guard in StartAutomationUI + isResearched in interactable)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Fix Laboratory dropdowns not changing SelectedCrop (subscribe to onValueChanged in code), so costs/state update per crop</label></li>
+</ul>
+
+<h2>Phase 10 — Upgrades UI</h2>
+<p class="note">General Upgrades panel for global upgrades (multipliers, click power, water tank) — separate from the Laboratory, which only handles per-crop research/automation.</p>
+<p class="flag">Data + logic layer fully built (UpgradeData SO with PreviousUpgrade prerequisite chain, UpgradeState enum, UpgradeManager with GetUpgradeState/AreRequirementsMet/UnlockUpgrade, OnUpgradeUnlocked event) and UI scripts written (UpgradeNodeUI, UpgradesUI, ConnectorUI w/ midpoint-distance-Atan2 line math). Node placement, category group labels, and connectors are now in — the scrolling UV animation on ConnectorLine remains abandoned (Unity masking overrides runtime materials).</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Create Upgrades panel (basic UI, can toggle open/closed)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Create upgrade data structure (name, cost, effect type, purchased state)</label></li>
+  <li class="done"><label><input type="checkbox" checked> List upgrades in the Upgrades UI — nodes placed and connected in Editor</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add category group labels above each upgrade branch (WATER, COINS, HARVEST, LABORATORY)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement "buy" logic: deduct coins, mark upgrade as purchased</label></li>
+  <li class="done"><label><input type="checkbox" checked> Disable/gray out upgrades player can't afford yet</label></li>
+  <li class="done"><label><input type="checkbox" checked> Prevent buying the same upgrade twice</label></li>
+  <li class="done"><label><input type="checkbox" checked> Link live "Upgrades %" stat text to StatsUI (subscribed to OnUpgradeUnlocked, via UpgradeManager.GetTotalUpgradesProgress)</label></li>
+</ul>
+
+<h2>Phase 11 — Upgrades: Income &amp; Click Power</h2>
+<p class="note">Revised scope: the +20%/+30% income multiplier upgrades were never built and are not planned — replaced by the max coin storage cap upgrade below.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Add max coin storage cap upgrade (+50)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add click power variable (+1 upgrade)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Apply click power where relevant (e.g. Dirt, if it gives coins directly)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add automated yield power upgrade</label></li>
+</ul>
+
+<h2>Phase 12 — Upgrades: Water Tank</h2>
+<p class="note">Max water capacity, water efficiency (skip-water chance), and water regen power/speed upgrades all complete — WaterManager subscribes to OnUpgradeUnlocked and self-applies each effect. All nodes placed and tested.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Add max water capacity upgrade</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add water efficiency upgrade (chance to skip water cost)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add refill speed/amount upgrade for the watering can</label></li>
+  <li class="done"><label><input type="checkbox" checked> Test all three water upgrades independently</label></li>
+</ul>
+
+<h2>Phase 13 — Objectives / Farm God Journal</h2>
+<p class="note">All objectives and chapter-progression logic are implemented. Only remaining work is content/data entry: choosing which objective goes in which chapter and setting its target value.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Design objective data structure (description, target value, current progress)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Create Journal UI panel to list objectives</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement tracking for: total coins earned</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement tracking for: tiles unlocked</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement tracking for: zones unlocked</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement tracking for: crops harvested (per type or total)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement tracking for: crops sold</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement tracking for: upgrades purchased</label></li>
+  <li class="done"><label><input type="checkbox" checked> Mark objectives as complete when target is reached</label></li>
+  <li class="done"><label><input type="checkbox" checked> Reveal next objective when current one is completed</label></li>
+  <li><label><input type="checkbox"> Choose which objective goes in each chapter and set its target value</label></li>
+</ul>
+
+<h2>Phase 14 — Win Condition</h2>
+<p class="note">Win condition is clearing Chapter 4; the check is fired from the Journal system on chapter completion.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Define final win condition (Chapter 4 cleared)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add check that triggers when Chapter 4 is completed</label></li>
+  <li class="done"><label><input type="checkbox" checked> Build end panel</label></li>
+  <li><label><input type="checkbox"> Test full playthrough from empty save to win screen</label></li>
+</ul>
+
+<h2>Phase 15 — Settings Menu</h2>
+<p class="note">Kept intentionally simple — a single settings panel, no extra polish beyond what's listed.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Create Settings panel (toggle open/closed)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add music volume slider</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add SFX volume slider</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add mute button</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add fullscreen toggle</label></li>
+  <li><label><input type="checkbox"> Add language dropdown (English/Japanese, if localization is done)</label></li>
+  <li><label><input type="checkbox"> Add a Quit Game button</label></li>
+</ul>
+
+<h2>Phase 16 — Save System</h2>
+<p class="note">Simple JSON file save/load via Unity's JsonUtility + File I/O to Application.persistentDataPath — no third-party plugin needed. Each manager owns and serializes only its own slice of state (same single-ownership principle as everything else); a dedicated SaveManager orchestrates. ScriptableObject config (CropData, ZoneData, UpgradeData) is never serialized itself — only referenced by name/ID and re-resolved against the existing asset lists on load.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Define a plain (non-MonoBehaviour, [Serializable]) SaveData class covering: per-tile state (unlocked, mature, growth timer) keyed by grid position, per-zone unlocked state, coins + per-crop-type counts, current water, per-crop lab state (researched/automated), per-upgrade bought state, per-chapter objective progress, and lifetime stats (playtime, totals)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Reference CropData/ZoneData/UpgradeData by their existing name/ID strings in SaveData, not by direct object reference (object refs can't round-trip through JSON)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add a CaptureState()/ApplyState(SaveData) pair to each owning manager (GridManager, ResourceManager, WaterManager, LaboratoryManager, UpgradeManager, JournalManager, StatsManager) that reads/writes only that manager's own fields</label></li>
+  <li class="done"><label><input type="checkbox" checked> Create SaveManager: calls each manager's CaptureState() to assemble one SaveData, serializes with JsonUtility.ToJson, writes to Application.persistentDataPath via File.WriteAllText</label></li>
+  <li class="done"><label><input type="checkbox" checked> Implement LoadGame(): reads the file (if it exists) with File.ReadAllText + JsonUtility.FromJson, then calls each manager's ApplyState() with the resolved data, resolving saved ID strings back to ScriptableObject references via the existing FarmLayout/researchableCrops/allUpgradesList lookups</label></li>
+  <li class="done"><label><input type="checkbox" checked> Hook SaveGame() to Application.quit (via OnApplicationQuit) and/or a manual Save button</label></li>
+  <li class="done"><label><input type="checkbox" checked> Hook LoadGame() to run once at startup, before GridManager builds tiles, falling back to a fresh game if no save file exists</label></li>
+  <li class="done"><label><input type="checkbox" checked> Test: play, change state across several systems, quit, relaunch, confirm every system restores correctly</label></li>
+  <li class="done"><label><input type="checkbox" checked> Test starting completely fresh (no save file present) still works correctly</label></li>
+  <li class="done"><label><input type="checkbox" checked> Fix Chapter 1 claimed state not restoring Laboratory/Upgrades buttons after load (UI reads JournalManager.IsChapter1Claimed() on Start, event only for live changes)</label></li>
+</ul>
+
+<h2>Phase 17 — Juice &amp; Small Effects</h2>
+<p class="note">Small, single-purpose visual feedback layered onto existing systems — not new mechanics. Reuse PunchAnim/WiggleAnim/FadeAnim from Phase 6 where they fit. Floating text is done; adding PunchAnim/WiggleAnim to it was tried and dropped (coroutine errors on freshly instantiated objects, purely cosmetic).</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Floating/fading text on harvest (crop gained, shows amount + crop name, e.g. "+3 RADISH")</label></li>
+  <li class="done"><label><input type="checkbox" checked> Floating/fading text on coin gain (sell) ("+5 GOLD")</label></li>
+  <li class="done"><label><input type="checkbox" checked> Floating/fading text for coins spent and water gained/spent ("-7 WATER"), via a single FloatingTextSpawner subscribed to ResourceManager/WaterManager events with anchors for coin/water HUD positions</label></li>
+  <li class="done"><label><input type="checkbox" checked> Fix floating text hidden behind the grid (Sorting Layer / Order in Layer on the world-space TMP prefab)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Particle effect on tile unlock</label></li>
+  <li class="done"><label><input type="checkbox" checked> Particle effect on upgrade purchase</label></li>
+  <li class="done"><label><input type="checkbox" checked> Particle/flourish effect on research/automation completion</label></li>
+  <li class="done"><label><input type="checkbox" checked> Side-curtain slide effect for panels opening/closing (Laboratory, Upgrades, Journal, Crops)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Test each effect doesn't block or delay the underlying interaction</label></li>
+</ul>
+
+<h2>Phase 18 — Sound Design</h2>
+<p class="note">SoundManager plus SFX for every player-facing action across all systems.</p>
+<ul>
+  <li class="done"><label><input type="checkbox" checked> Build SoundManager (single owner for SFX playback)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add tile click / unlock sound</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add harvest sound</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add sell sound</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add watering can refill sound</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add water-empty / blocked-interaction sound</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add research start / research complete sounds</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add automation start / automation complete sounds</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add upgrade purchase sound</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add panel open/close sound</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add objective/chapter completion sound</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add win screen sound/jingle</label></li>
+  <li class="done"><label><input type="checkbox" checked> Wire music volume/SFX volume to Settings panel (Phase 15; mute not wired)</label></li>
+</ul>
+
+<h2>Phase 19 — Polish &amp; Cleanup</h2>
+<ul>
+  <li><label><input type="checkbox"> Clean up unused test assets and scripts</label></li>
+  <li><label><input type="checkbox"> Check all UI text is readable and correctly updating</label></li>
+  <li><label><input type="checkbox"> Playtest full loop again from scratch</label></li>
+  <li><label><input type="checkbox"> Fix any bugs found during full playtest</label></li>
+  <li><label><input type="checkbox"> Resolution/aspect ratio handling (grid oversized at low res; deliberately deferred, window left resizable — CameraFit script is the planned fix)</label></li>
+  <li><label><input type="checkbox"> Final build/export</label></li>
+</ul>
+
+<h2>Phase 20 — Localization (Japanese) [Optional]</h2>
+<p class="note">Deliberately last — the game must be complete, working and finished in English first. Localization only starts once everything above is done. Stretch goal, dependent on remaining time; not required for the core deliverable.</p>
+<ul id="optional-phase">
+  <li><label><input type="checkbox"> Decide localization approach (Unity Localization package vs. simple lookup table)</label></li>
+  <li><label><input type="checkbox"> Extract all in-game UI text into a translatable source (strings table)</label></li>
+  <li><label><input type="checkbox"> Translate extracted text to Japanese</label></li>
+  <li><label><input type="checkbox"> Add a language toggle (English/Japanese)</label></li>
+  <li><label><input type="checkbox"> Verify TMP fonts render Japanese characters correctly</label></li>
+  <li><label><input type="checkbox"> Test UI layout doesn't break with longer/shorter Japanese strings</label></li>
+</ul>
+
+<script>
+  function getTrackedCheckboxes() {
+    return Array.from(document.querySelectorAll('input[type="checkbox"]'))
+      .filter(function(box) { return !box.closest('#optional-phase'); });
+  }
+
+  function updateProgress() {
+    const boxes = getTrackedCheckboxes();
+    const total = boxes.length;
+    const done = boxes.filter(function(box) { return box.checked; }).length;
+    const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = done + ' / ' + total + ' (' + pct + '%)';
+  }
+
+  document.querySelectorAll('input[type="checkbox"]').forEach(function(box) {
+    box.addEventListener('change', function() {
+      if (box.checked) {
+        box.parentElement.classList.add('done');
+      } else {
+        box.parentElement.classList.remove('done');
+      }
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+</script>
+
+</body>
+</html>

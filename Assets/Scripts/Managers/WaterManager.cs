@@ -120,15 +120,22 @@ public class WaterManager : MonoBehaviour
     public void BuyWater()
     {
         if (resourceManager.Coins < WaterPrice)
+        {
+            SoundManager.Instance.PlaySFX("Blocked");
             return;
+        }
 
         if (Water >= MaxWater)
+        {
+            SoundManager.Instance.PlaySFX("Blocked");
             return;
+        }
 
         resourceManager.TrySpendCoins(WaterPrice);
 
         AddWater(waterPerClick);
         OnWaterRefilled?.Invoke(waterPerClick);
+        SoundManager.Instance.PlaySFX("WaterRefill", UnityEngine.Random.Range(0.85f, 1.15f));
     }
 
     private void HandleUpgradeUnlocked(UpgradeData upgrade)

@@ -140,7 +140,8 @@ public class QuestRowUI : MonoBehaviour
             journalManager.IsObjectiveComplete(objectiveData))
         {
             journalManager.ClaimObjective(objectiveData);
-
+            SoundManager.Instance.PlaySFX("ObjectiveClaimed");
+            
             objectiveCompleteButton.interactable = false;
             objectiveCompletePanel.SetActive(false);
             objectiveClaimedPanel.SetActive(true);

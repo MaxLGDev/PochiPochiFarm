@@ -8,6 +8,7 @@ public class SellCrops : MonoBehaviour
 
     public void Open(CropData crop)
     {
+        SoundManager.Instance.PlaySFX("TogglePanel");
         cropData = crop;
         gameObject.SetActive(true);
 
@@ -16,18 +17,21 @@ public class SellCrops : MonoBehaviour
 
     public void Open()
     {
+        SoundManager.Instance.PlaySFX("TogglePanel");
         gameObject.SetActive(true);
         typewriter.ShowText($"Are you sure you want to sell <color=orange> all your crops??</color>?");
     }
 
     public void Close()
     {
+        SoundManager.Instance.PlaySFX("TogglePanel");
         gameObject.SetActive(false);
         cropData = null;
     }
 
     public void Sell()
     {
+        SoundManager.Instance.PlaySFX("SellCrop");
         if(cropData == null)
             resourceManager.SellAllCrops();
         else

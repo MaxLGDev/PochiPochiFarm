@@ -222,6 +222,7 @@ public class LaboratoryManager : MonoBehaviour
         {
             state.FlagCropAsResearched();
             OnRequestedCropResearched?.Invoke(currentResearchingCrop);
+            SoundManager.Instance.PlaySFX("LabComplete");
             currentResearchingCrop = null;
         }
     }
@@ -303,7 +304,7 @@ public class LaboratoryManager : MonoBehaviour
 
             OnCropAutomated?.Invoke(currentAutomatingCrop);
             OnRequestedCropAutomated?.Invoke(currentAutomatingCrop);
-
+            SoundManager.Instance.PlaySFX("LabComplete");
             currentAutomatingCrop = null;
         }
     }
