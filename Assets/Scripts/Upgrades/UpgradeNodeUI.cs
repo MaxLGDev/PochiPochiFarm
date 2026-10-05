@@ -17,10 +17,15 @@ public class UpgradeNodeUI : MonoBehaviour
     [SerializeField] private Image nodeBackground;
     [SerializeField] private Image nodeOverlay;
     [SerializeField] private TMP_Text upgradeNameText;
+    [SerializeField] private TMP_Text upgradeCostText;
+    [SerializeField] private TMP_Text upgradeEffectText;
 
     [SerializeField] private Color lockedColor;
     [SerializeField] private Color availableColor;
     [SerializeField] private Color boughtColor;
+
+    [SerializeField] private Color affordableColor;
+    [SerializeField] private Color unaffordableColor;
     
     public RectTransform RectTransform => (RectTransform)transform;
 
@@ -28,7 +33,7 @@ public class UpgradeNodeUI : MonoBehaviour
 
     public void TryUnlockNode() => OnNodeClicked?.Invoke(upgradeDataSo);
 
-    public void Refresh(UpgradeState state)
+    public void Refresh(UpgradeState state, bool isAffordable)
     {
         switch (state)
         {
@@ -42,6 +47,8 @@ public class UpgradeNodeUI : MonoBehaviour
                 SetVisualState(true, true, false, 1f, boughtColor);
                 break;
         }
+
+        upgradeCostText.color = isAffordable ? affordableColor : unaffordableColor;
     }
 
     private void SetVisualState(bool buttonInteractable, bool boughtOutlineEnabled, bool overlayEnabled, float alpha, Color textColor)
@@ -56,6 +63,9 @@ public class UpgradeNodeUI : MonoBehaviour
 
         upgradeNameText.color = textColor;
         upgradeNameText.text = upgradeDataSo.UpgradeName;
+        upgradeCostText.text = upgradeDataSo.UnlockCost.ToString();
+        
+        upgradeEffectText.text = $"{upgradeDataSo.UpgradeEffect} +{upgradeDataSo.EffectAmount}";
     }
 
     private static void SetColorOf(Image image, float alpha)

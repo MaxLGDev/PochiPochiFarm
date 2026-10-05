@@ -33,6 +33,7 @@ public class UpgradeData : ScriptableObject
     public RequiredCropState CropState;
     public CropData TargetCrop;
 
+    public string UpgradeEffect;
     public EffectType EffectType;
     public int EffectAmount;
 }
