@@ -204,7 +204,7 @@
   <li class="done"><label><input type="checkbox" checked> Swap button label between action/complete state (RESEARCH/RESEARCHED, AUTOMATE/AUTOMATED)</label></li>
   <li class="done"><label><input type="checkbox" checked> Play a one-shot fade-in + rainbow color highlight when research/automation completes</label></li>
   <li class="done"><label><input type="checkbox" checked> Fix rainbow text leaving a stray color on the very first frame before being disabled (reset to white explicitly alongside disabling)</label></li>
-  <li><label><input type="checkbox"> Fill in real ResearchCost/ResearchDuration/AutomationCost/AutomationDuration values for every researchable crop (only Radish has test values so far)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Fill in real ResearchCost/ResearchDuration/AutomationCost/AutomationDuration values for every researchable crop (only Radish has test values so far)</label></li>
   <li class="done"><label><input type="checkbox" checked> Block tile interaction until a crop is researched, even if the tile is unlocked</label></li>
   <li class="done"><label><input type="checkbox" checked> On mature + automated: auto-collect into crop count, auto-reset timer, no click needed, still respecting water limits</label></li>
   <li class="done"><label><input type="checkbox" checked> Test full loop: research a crop, confirm it unlocks interaction, automate it, confirm it runs on its own</label></li>
@@ -216,7 +216,7 @@
 
 <h2>Phase 10 — Upgrades UI</h2>
 <p class="note">General Upgrades panel for global upgrades (multipliers, click power, water tank) — separate from the Laboratory, which only handles per-crop research/automation.</p>
-<p class="flag">Data + logic layer fully built (UpgradeData SO with PreviousUpgrade prerequisite chain, UpgradeState enum, UpgradeManager with GetUpgradeState/AreRequirementsMet/UnlockUpgrade, OnUpgradeUnlocked event) and UI scripts written (UpgradeNodeUI, UpgradesUI, ConnectorUI w/ midpoint-distance-Atan2 line math). Node placement, category group labels, and connectors are now in — the scrolling UV animation on ConnectorLine remains abandoned (Unity masking overrides runtime materials).</p>
+<p class="flag">Data + logic layer fully built (UpgradeData SO with PreviousUpgrade prerequisite chain, UpgradeState enum, UpgradeManager with GetUpgradeState/AreRequirementsMet/UnlockUpgrade, OnUpgradeUnlocked event) and UI scripts written (UpgradeNodeUI, UpgradesUI, ConnectorUI w/ midpoint-distance-Atan2 line math). Node placement, category group labels, and connectors are now in — the scrolling UV animation on ConnectorLine remains abandoned (Unity masking overrides runtime materials). A tooltip was considered and dropped in favour of plain text under each node (effect + cost) — simpler and enough.</p>
 <ul>
   <li class="done"><label><input type="checkbox" checked> Create Upgrades panel (basic UI, can toggle open/closed)</label></li>
   <li class="done"><label><input type="checkbox" checked> Create upgrade data structure (name, cost, effect type, purchased state)</label></li>
@@ -226,15 +226,18 @@
   <li class="done"><label><input type="checkbox" checked> Disable/gray out upgrades player can't afford yet</label></li>
   <li class="done"><label><input type="checkbox" checked> Prevent buying the same upgrade twice</label></li>
   <li class="done"><label><input type="checkbox" checked> Link live "Upgrades %" stat text to StatsUI (subscribed to OnUpgradeUnlocked, via UpgradeManager.GetTotalUpgradesProgress)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Show effect text and cost under each upgrade node (UpgradeData.UpgradeEffect label + EffectAmount, UnlockCost)</label></li>
+  <li class="done"><label><input type="checkbox" checked> Color the cost green/red depending on whether the player can afford it (UpgradesUI computes isAffordable in RefreshAll and passes it to UpgradeNodeUI.Refresh)</label></li>
 </ul>
 
 <h2>Phase 11 — Upgrades: Income &amp; Click Power</h2>
-<p class="note">Revised scope: the +20%/+30% income multiplier upgrades were never built and are not planned — replaced by the max coin storage cap upgrade below.</p>
+<p class="note">Revised scope: the +20%/+30% income multiplier upgrades were never built and are not planned — replaced by the max coin storage cap upgrade below. Max coins starts at 20 and AddCoins clamps to it, so any coin price above the current cap is unreachable until enough max-coin upgrades exist — the game can't be completed until the chain below is in.</p>
 <ul>
   <li class="done"><label><input type="checkbox" checked> Add max coin storage cap upgrade (+50)</label></li>
   <li class="done"><label><input type="checkbox" checked> Add click power variable (+1 upgrade)</label></li>
   <li class="done"><label><input type="checkbox" checked> Apply click power where relevant (e.g. Dirt, if it gives coins directly)</label></li>
   <li class="done"><label><input type="checkbox" checked> Add automated yield power upgrade</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add more max coin storage upgrades so every coin price in the game is reachable (6 coin nodes in total; each upgrade's cost ≤ the cap before buying it; final cap ≥ the highest coin price, 5,700 for Chapter 4). Each new upgrade: unique SO name, added to UpgradeManager.allUpgradesList, node added to UpgradesUI.upgradeNodes (+ connector), UpgradeEffect text filled in</label></li>
 </ul>
 
 <h2>Phase 12 — Upgrades: Water Tank</h2>
@@ -244,10 +247,12 @@
   <li class="done"><label><input type="checkbox" checked> Add water efficiency upgrade (chance to skip water cost)</label></li>
   <li class="done"><label><input type="checkbox" checked> Add refill speed/amount upgrade for the watering can</label></li>
   <li class="done"><label><input type="checkbox" checked> Test all three water upgrades independently</label></li>
+  <li class="done"><label><input type="checkbox" checked> Expand max water capacity to a 4-upgrade chain (tank 10 → 20 → 40 → 80 → 160), costs paced against the coin cap chain</label></li>
+  <li class="done"><label><input type="checkbox" checked> Tidy the Upgrades panel hierarchy into Labels / Connectors / Nodes groups (full-stretch group parents so ConnectorLine's anchoredPosition math still lines up) and fix connectors escaping the scroll viewport mask</label></li>
 </ul>
 
 <h2>Phase 13 — Objectives / Farm God Journal</h2>
-<p class="note">All objectives and chapter-progression logic are implemented. Only remaining work is content/data entry: choosing which objective goes in which chapter and setting its target value.</p>
+<p class="note">All objectives and chapter-progression logic are implemented, and every chapter is now filled in: Chapter 1 has 5 tutorial objectives, Chapters 2 and 3 have 10 each, and Chapter 4 has 4 cumulative-only objectives (full list in claude/journal-objectives.md). Targets are first-pass values, to be tuned during the full playthrough test (Phase 14). Chapter 1 also serves as the tutorial (Phase 19), so its objectives are ordered to teach the basics: click Dirt, earn coins, buy water, unlock Radish, unlock Carrot.</p>
 <ul>
   <li class="done"><label><input type="checkbox" checked> Design objective data structure (description, target value, current progress)</label></li>
   <li class="done"><label><input type="checkbox" checked> Create Journal UI panel to list objectives</label></li>
@@ -259,7 +264,7 @@
   <li class="done"><label><input type="checkbox" checked> Implement tracking for: upgrades purchased</label></li>
   <li class="done"><label><input type="checkbox" checked> Mark objectives as complete when target is reached</label></li>
   <li class="done"><label><input type="checkbox" checked> Reveal next objective when current one is completed</label></li>
-  <li><label><input type="checkbox"> Choose which objective goes in each chapter and set its target value</label></li>
+  <li class="done"><label><input type="checkbox" checked> Choose which objective goes in each chapter and set its target value</label></li>
 </ul>
 
 <h2>Phase 14 — Win Condition</h2>
@@ -280,7 +285,7 @@
   <li class="done"><label><input type="checkbox" checked> Add mute button</label></li>
   <li class="done"><label><input type="checkbox" checked> Add fullscreen toggle</label></li>
   <li><label><input type="checkbox"> Add language dropdown (English/Japanese, if localization is done)</label></li>
-  <li><label><input type="checkbox"> Add a Quit Game button</label></li>
+  <li class="done"><label><input type="checkbox" checked> Add a Quit Game button</label></li>
 </ul>
 
 <h2>Phase 16 — Save System</h2>
@@ -310,6 +315,7 @@
   <li class="done"><label><input type="checkbox" checked> Particle/flourish effect on research/automation completion</label></li>
   <li class="done"><label><input type="checkbox" checked> Side-curtain slide effect for panels opening/closing (Laboratory, Upgrades, Journal, Crops)</label></li>
   <li class="done"><label><input type="checkbox" checked> Test each effect doesn't block or delay the underlying interaction</label></li>
+  <li><label><input type="checkbox"> Show a tip text when research/automation completes: "Tip: You can now gather this crop." (researched) / "Tip: This crop will now gather itself as long as you have enough water!" (automated)</label></li>
 </ul>
 
 <h2>Phase 18 — Sound Design</h2>
@@ -330,7 +336,21 @@
   <li class="done"><label><input type="checkbox" checked> Wire music volume/SFX volume to Settings panel (Phase 15; mute not wired)</label></li>
 </ul>
 
-<h2>Phase 19 — Polish &amp; Cleanup</h2>
+<h2>Phase 19 — Tutorial (Chapter 1)</h2>
+<p class="note">Chapter 1 doubles as the tutorial: a short, simple guided sequence (a few minutes) that darkens the screen except for the element the player should click, with a line of text saying what to do. The tutorial is finished once Chapter 1 is claimed. Kept deliberately easy — no skip system, no branching, no extra mechanics. Placed before Polish &amp; Cleanup so the final playtest and build include it. Tutorial progress is derived from existing state (JournalManager.IsChapter1Claimed / chapter 1 objective progress) rather than stored separately, so no new save data.</p>
+<ul>
+  <li><label><input type="checkbox"> Decide the tutorial steps, matched one-to-one to the Chapter 1 objectives (Phase 13: choose Chapter 1's objectives with the tutorial in mind)</label></li>
+  <li><label><input type="checkbox"> Build the dark overlay: a full-screen dimmed panel with a clear highlight "hole" over the target element (UI element or tile)</label></li>
+  <li><label><input type="checkbox"> Add an instruction text box (and optional arrow) positioned next to the highlighted element</label></li>
+  <li><label><input type="checkbox"> Create TutorialManager: owns the current step, steps defined as data (target, text, completion condition), advances by subscribing to existing events (harvest, sell, unlock, refill, objective completed/claimed) — named Action handlers, subscribed in OnEnable/OnDisable</label></li>
+  <li><label><input type="checkbox"> Block clicks outside the highlighted element during a step, without blocking the highlighted element itself</label></li>
+  <li><label><input type="checkbox"> Make sure no step can soft-lock the player (e.g. out of water or coins mid-tutorial)</label></li>
+  <li><label><input type="checkbox"> End the tutorial when Chapter 1 is claimed (JournalManager.OnChapter1Claimed) and never show it again</label></li>
+  <li><label><input type="checkbox"> Handle loading a save mid-tutorial (resume at the right step) and a save with Chapter 1 already claimed (no tutorial)</label></li>
+  <li><label><input type="checkbox"> Test the full tutorial from an empty save through claiming Chapter 1</label></li>
+</ul>
+
+<h2>Phase 20 — Polish &amp; Cleanup</h2>
 <ul>
   <li><label><input type="checkbox"> Clean up unused test assets and scripts</label></li>
   <li><label><input type="checkbox"> Check all UI text is readable and correctly updating</label></li>
@@ -340,11 +360,11 @@
   <li><label><input type="checkbox"> Final build/export</label></li>
 </ul>
 
-<h2>Phase 20 — Localization (Japanese) [Optional]</h2>
+<h2>Phase 21 — Localization (Japanese) [Optional]</h2>
 <p class="note">Deliberately last — the game must be complete, working and finished in English first. Localization only starts once everything above is done. Stretch goal, dependent on remaining time; not required for the core deliverable.</p>
 <ul id="optional-phase">
   <li><label><input type="checkbox"> Decide localization approach (Unity Localization package vs. simple lookup table)</label></li>
-  <li><label><input type="checkbox"> Extract all in-game UI text into a translatable source (strings table)</label></li>
+  <li><label><input type="checkbox"> Extract all in-game UI text (including the tutorial and tip texts) into a translatable source (strings table)</label></li>
   <li><label><input type="checkbox"> Translate extracted text to Japanese</label></li>
   <li><label><input type="checkbox"> Add a language toggle (English/Japanese)</label></li>
   <li><label><input type="checkbox"> Verify TMP fonts render Japanese characters correctly</label></li>

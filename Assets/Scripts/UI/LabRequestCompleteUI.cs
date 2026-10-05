@@ -17,6 +17,7 @@ public class LabRequestCompleteUI : MonoBehaviour
     {
         public CropData crop;
         public string title;
+        public string tip;
     }
 
     private readonly Queue<PopupRequest> requests = new();
@@ -35,6 +36,7 @@ public class LabRequestCompleteUI : MonoBehaviour
     [SerializeField] private TMP_Text cropTitleText;
     [SerializeField] private Image cropImage;
     [SerializeField] private TMP_Text closePanelText;
+    [SerializeField] private TMP_Text tipText;
 
     [SerializeField] private FadeAnim panelFade;
     [SerializeField] private float lockDuration = 3f;
@@ -44,8 +46,8 @@ public class LabRequestCompleteUI : MonoBehaviour
 
     private void Awake()
     {
-        onResearchedHandler = crop => Enqueue(crop, "RESEARCHED!!");
-        onAutomatedHandler = crop => Enqueue(crop, "AUTOMATED!!");
+        onResearchedHandler = crop => Enqueue(crop, "RESEARCHED!!", $"Tip: You can now manually gather {crop.CropName} by clicking on it!");
+        onAutomatedHandler = crop => Enqueue(crop, "AUTOMATED!!", $"Tip: {crop.CropName} will now harvest itself as long as you have enough water!");
     }
 
     private void Start()
@@ -65,9 +67,9 @@ public class LabRequestCompleteUI : MonoBehaviour
         labManager.OnRequestedCropAutomated -= onAutomatedHandler;
     }
 
-    private void Enqueue(CropData crop, string title)
+    private void Enqueue(CropData crop, string title, string tip)
     {
-        requests.Enqueue(new PopupRequest { crop = crop, title = title });
+        requests.Enqueue(new PopupRequest { crop = crop, title = title, tip = tip});
 
         // If a popup is already open, this request waits its turn
         if (!isShowing)
@@ -92,12 +94,14 @@ public class LabRequestCompleteUI : MonoBehaviour
 
         cropImage.sprite = request.crop.GrowthSprites[^1];
         cropTitleText.text = request.title;
+        tipText.text = request.tip;
         closePanelText.gameObject.SetActive(false);
 
         // Start invisible, then activate and fade in.
         panelFade.SetInstant(false);
         popupPanel.SetActive(true);
         panelFade.Fade(true);
+        tipText.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(lockDuration);
 
