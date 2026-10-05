@@ -3586,13 +3586,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_113
+      name: Bling1
       rect:
         serializedVersion: 2
-        x: 544
-        y: 192
-        width: 32
-        height: 32
+        x: 552
+        y: 196
+        width: 20
+        height: 23
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3630,13 +3630,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_115
+      name: Water1
       rect:
         serializedVersion: 2
-        x: 608
-        y: 192
-        width: 32
-        height: 32
+        x: 621
+        y: 197
+        width: 8
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4290,13 +4290,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_145
+      name: Bling2
       rect:
         serializedVersion: 2
-        x: 544
-        y: 160
-        width: 32
-        height: 32
+        x: 552
+        y: 162
+        width: 20
+        height: 23
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4972,7 +4972,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coin1
+      name: Ingot1
       rect:
         serializedVersion: 2
         x: 520
@@ -4994,13 +4994,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_177
+      name: Bling3
       rect:
         serializedVersion: 2
-        x: 544
-        y: 128
-        width: 32
-        height: 32
+        x: 552
+        y: 130
+        width: 20
+        height: 23
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5676,7 +5676,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coin2
+      name: Ingot2
       rect:
         serializedVersion: 2
         x: 520
@@ -5698,13 +5698,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_209
+      name: Bling4
       rect:
         serializedVersion: 2
-        x: 544
-        y: 96
-        width: 32
-        height: 32
+        x: 552
+        y: 99
+        width: 20
+        height: 23
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5764,13 +5764,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_212
+      name: Water2
       rect:
         serializedVersion: 2
-        x: 640
-        y: 96
-        width: 32
-        height: 32
+        x: 651
+        y: 105
+        width: 14
+        height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -6380,7 +6380,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coin3
+      name: Ingot3
       rect:
         serializedVersion: 2
         x: 519
@@ -6402,13 +6402,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_241
+      name: Bling5
       rect:
         serializedVersion: 2
-        x: 544
-        y: 64
-        width: 32
-        height: 32
+        x: 552
+        y: 66
+        width: 20
+        height: 23
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7084,7 +7084,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coin4
+      name: Ingot4
       rect:
         serializedVersion: 2
         x: 519
@@ -7106,13 +7106,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_273
+      name: Bling6
       rect:
         serializedVersion: 2
-        x: 544
-        y: 32
-        width: 32
-        height: 32
+        x: 552
+        y: 35
+        width: 20
+        height: 23
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7788,7 +7788,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coin5
+      name: Ingot5
       rect:
         serializedVersion: 2
         x: 519
@@ -7832,13 +7832,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_306
+      name: Water3
       rect:
         serializedVersion: 2
-        x: 576
-        y: 0
-        width: 32
-        height: 32
+        x: 586
+        y: 9
+        width: 14
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7964,13 +7964,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_312
+      name: Water4
       rect:
         serializedVersion: 2
-        x: 768
-        y: 0
-        width: 32
-        height: 32
+        x: 779
+        y: 5
+        width: 13
+        height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -8155,11 +8155,17 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Coin1: 8456631680037038857
-      Coin2: -6382769204775830393
-      Coin3: 4400744405091807009
-      Coin4: -5746181896277534280
-      Coin5: -2801299934667553735
+      Bling1: -495745374339953076
+      Bling2: -1383483550299112465
+      Bling3: -991786704126144435
+      Bling4: 3973109733453801652
+      Bling5: 60823772365939468
+      Bling6: 1936531935067537392
+      Ingot1: 8456631680037038857
+      Ingot2: -6382769204775830393
+      Ingot3: 4400744405091807009
+      Ingot4: -5746181896277534280
+      Ingot5: -2801299934667553735
       Sprites_0: 4773600122041589604
       Sprites_1: -4789670105439411607
       Sprites_10: 7010537895803775351
@@ -8177,9 +8183,7 @@ TextureImporter:
       Sprites_110: -5484285858367479508
       Sprites_111: 2729933713309865600
       Sprites_112: 2173472577460292377
-      Sprites_113: -495745374339953076
       Sprites_114: -5602715393925420907
-      Sprites_115: 212255533636315664
       Sprites_116: 7327367632806418437
       Sprites_117: 3727473801666743661
       Sprites_118: 5285566890697322425
@@ -8212,7 +8216,6 @@ TextureImporter:
       Sprites_142: -5273897116894102833
       Sprites_143: 7236269436232840835
       Sprites_144: -2791236442371767580
-      Sprites_145: -1383483550299112465
       Sprites_146: 8336791864171012298
       Sprites_147: 3988136484045470756
       Sprites_148: 3141856377071538874
@@ -8246,7 +8249,6 @@ TextureImporter:
       Sprites_173: -7869804056105895804
       Sprites_174: 4081449656612380775
       Sprites_175: -8703314734634023958
-      Sprites_177: -991786704126144435
       Sprites_178: 6121777643510600390
       Sprites_179: -5626702103768547294
       Sprites_18: -263089634459758618
@@ -8281,11 +8283,9 @@ TextureImporter:
       Sprites_205: 5464106594446400095
       Sprites_206: 8987983182032867407
       Sprites_207: 3575588799237549549
-      Sprites_209: 3973109733453801652
       Sprites_21: -1059341289296395630
       Sprites_210: 1500032535865691917
       Sprites_211: -5950899433978443780
-      Sprites_212: 1126870915265817487
       Sprites_213: -2426887433316003189
       Sprites_214: 2181393236301819757
       Sprites_215: -3801191410794713741
@@ -8316,7 +8316,6 @@ TextureImporter:
       Sprites_238: 3835281786414591491
       Sprites_239: -7243796452768154502
       Sprites_24: 1571997993387287584
-      Sprites_241: 60823772365939468
       Sprites_242: 1454497684156371843
       Sprites_243: 977546429108128051
       Sprites_244: -8568761403411533093
@@ -8350,7 +8349,6 @@ TextureImporter:
       Sprites_27: 2881394300597005124
       Sprites_270: 1675028656779493114
       Sprites_271: 5491366042218314101
-      Sprites_273: 1936531935067537392
       Sprites_274: 4371230757220335503
       Sprites_275: 1369708141678630189
       Sprites_276: -6698831121590721801
@@ -8386,14 +8384,12 @@ TextureImporter:
       Sprites_302: -7595845154959337294
       Sprites_303: 1795479083988347893
       Sprites_305: 5480007771390284698
-      Sprites_306: -281341524663830203
       Sprites_307: -3727115090085143609
       Sprites_308: 521843456013829542
       Sprites_309: -3847037609692612494
       Sprites_31: 2530064579156712857
       Sprites_310: 1111490908028860542
       Sprites_311: -6086965222660934681
-      Sprites_312: -6153931807541496760
       Sprites_313: 9115344706375938059
       Sprites_314: 1090824304778294936
       Sprites_315: 4918004194389827741
@@ -8475,6 +8471,10 @@ TextureImporter:
       Sprites_97: 2650261428310491641
       Sprites_98: 3977026575575614054
       Sprites_99: -7078671903867404345
+      Water1: 212255533636315664
+      Water2: 1126870915265817487
+      Water3: -281341524663830203
+      Water4: -6153931807541496760
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
