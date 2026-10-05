@@ -8,12 +8,10 @@ public class UpgradeNodeUI : MonoBehaviour
 {
     public event Action<UpgradeData> OnNodeClicked;
     
-    private UpgradeState upgradeState;
     [SerializeField] private UpgradeData upgradeDataSo;
     [SerializeField] private Button upgradeNodeButton;
     [FormerlySerializedAs("upgradeIcon")] [SerializeField] private Image nodeIcon;
     [SerializeField] private Image boughtOutline;
-    [SerializeField] private Image nodeBorder;
     [SerializeField] private Image nodeBackground;
     [SerializeField] private Image nodeOverlay;
     [SerializeField] private TMP_Text upgradeNameText;
@@ -65,7 +63,7 @@ public class UpgradeNodeUI : MonoBehaviour
         upgradeNameText.text = upgradeDataSo.UpgradeName;
         upgradeCostText.text = upgradeDataSo.UnlockCost.ToString();
         
-        upgradeEffectText.text = $"{upgradeDataSo.UpgradeEffect} +{upgradeDataSo.EffectAmount}";
+        RefreshEffectText();
     }
 
     private static void SetColorOf(Image image, float alpha)
@@ -75,4 +73,30 @@ public class UpgradeNodeUI : MonoBehaviour
         image.color = c;
     }
 
+    private void RefreshEffectText()
+    {
+        upgradeEffectText.text = upgradeDataSo.EffectType switch
+        {
+            EffectType.MaxCoins or EffectType.MaxWater or EffectType.WaterRegenPower or EffectType.ClickMultiplier
+                or EffectType.YieldMultiplier => $"{upgradeDataSo.UpgradeEffect} +{upgradeDataSo.EffectAmount}",
+            
+            EffectType.AutomationSpeed or EffectType.ResearchSpeed =>
+                $"{upgradeDataSo.UpgradeEffect} x{1 + upgradeDataSo.EffectAmount}",
+            
+            EffectType.SkipWaterChance => $"{upgradeDataSo.UpgradeEffect} +{upgradeDataSo.EffectAmount}%",
+            
+            EffectType.WaterRegenSpeed => $"{upgradeDataSo.UpgradeEffect} -{upgradeDataSo.EffectAmount}s",
+            
+            EffectType.None => "No effect",
+            
+            _ => ReportUnhandledEffect()
+        };
+    }
+
+    private string ReportUnhandledEffect()
+    {
+        Debug.LogWarning($"Unhandled effect for {upgradeDataSo.UpgradeName}");
+
+        return string.Empty;
+    }
 }
