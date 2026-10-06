@@ -65,17 +65,6 @@ public class LaboratoryUI : MonoBehaviour
         [NonSerialized] public bool CompleteFadePlayed;
 
         public RainbowCyclingColor rainbowText;
-
-        /// <summary>
-        /// Crops currently listed in the dropdown (same order as its options).
-        /// </summary>
-        [NonSerialized] public List<CropData> ListedCrops;
-
-        /// <summary>
-        /// Original dropdown options from the scene, in the same order as
-        /// LaboratoryManager.ResearchableCrops. Used to rebuild the list.
-        /// </summary>
-        [NonSerialized] public List<TMP_Dropdown.OptionData> AllOptions;
     }
 
     [Serializable]
@@ -112,28 +101,20 @@ public class LaboratoryUI : MonoBehaviour
 
     [SerializeField] private float fadeWait = 0.2f;
 
-    private bool laboratoryUnlocked;
+    private bool laboratoryUnlocked = false;
     private bool researchLoopPlaying;
     private bool automationLoopPlaying;
-
-    // Reused every frame to avoid allocating while checking the dropdowns.
-    private readonly List<CropData> wantedCrops = new();
 
     private void Start()
     {
         labPanel.SetActive(false);
         SetLaboratoryUnlocked(journalManager.IsChapter1Claimed());
 
-        researchUI.ListedCrops = new List<CropData>();
-        researchUI.AllOptions = new List<TMP_Dropdown.OptionData>(researchUI.dropdown.options);
-        automationUI.ListedCrops = new List<CropData>();
-        automationUI.AllOptions = new List<TMP_Dropdown.OptionData>(automationUI.dropdown.options);
-
         researchUI.dropdown.onValueChanged.AddListener(OnResearchCropSelected);
         automationUI.dropdown.onValueChanged.AddListener(OnAutomationCropSelected);
 
-        RefreshDropdown(researchUI, labManager.IsCropResearched);
-        RefreshDropdown(automationUI, labManager.IsCropAutomated);
+        OnResearchCropSelected(researchUI.dropdown.value);
+        OnAutomationCropSelected(automationUI.dropdown.value);
     }
 
     private void HandleJournalChapter1Claimed()
@@ -206,7 +187,7 @@ public class LaboratoryUI : MonoBehaviour
     /// </summary>
     public void OnResearchCropSelected(int index)
     {
-        SelectListedCrop(researchUI, index);
+        researchUI.SelectedCrop = labManager.GetCropAt(index);
     }
 
     /// <summary>
@@ -214,109 +195,7 @@ public class LaboratoryUI : MonoBehaviour
     /// </summary>
     public void OnAutomationCropSelected(int index)
     {
-        SelectListedCrop(automationUI, index);
-    }
-
-    private static void SelectListedCrop(ActionUI ui, int index)
-    {
-        ui.SelectedCrop = index >= 0 && index < ui.ListedCrops.Count ? ui.ListedCrops[index] : null;
-    }
-
-    /// <summary>
-    /// Keeps the dropdown limited to crops that are not done yet
-    /// (not researched for research, not automated for automation).
-    /// Rebuilds the options only when that set changes, so it also covers
-    /// completions, loading a save and crops that start researched.
-    /// </summary>
-    private void RefreshDropdown(ActionUI ui, Func<CropData, bool> isDone)
-    {
-        IReadOnlyList<CropData> allCrops = labManager.ResearchableCrops;
-
-        wantedCrops.Clear();
-        for (int i = 0; i < allCrops.Count; i++)
-        {
-            if (!isDone(allCrops[i]))
-                wantedCrops.Add(allCrops[i]);
-        }
-
-        if (SameCrops(wantedCrops, ui.ListedCrops) && ui.dropdown.options.Count == wantedCrops.Count)
-            return;
-
-        CropData previous = ui.SelectedCrop;
-
-        ui.ListedCrops.Clear();
-        ui.ListedCrops.AddRange(wantedCrops);
-
-        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
-        int selected = 0;
-
-        for (int i = 0; i < ui.ListedCrops.Count; i++)
-        {
-            CropData crop = ui.ListedCrops[i];
-
-            if (crop == previous)
-                selected = i;
-
-            int sourceIndex = IndexOfCrop(allCrops, crop);
-            options.Add(sourceIndex < ui.AllOptions.Count
-                ? ui.AllOptions[sourceIndex]
-                : new TMP_Dropdown.OptionData(crop.CropName));
-        }
-
-        ui.dropdown.options = options;
-        ui.dropdown.SetValueWithoutNotify(selected);
-        ui.dropdown.RefreshShownValue();
-
-        SelectListedCrop(ui, selected);
-
-        // Nothing left to pick: show a label instead of an empty caption.
-        if (ui.ListedCrops.Count == 0)
-            ui.dropdown.captionText.text = "All done";
-    }
-
-    private static bool SameCrops(List<CropData> a, List<CropData> b)
-    {
-        if (a.Count != b.Count)
-            return false;
-
-        for (int i = 0; i < a.Count; i++)
-        {
-            if (a[i] != b[i])
-                return false;
-        }
-
-        return true;
-    }
-
-    private static int IndexOfCrop(IReadOnlyList<CropData> crops, CropData crop)
-    {
-        for (int i = 0; i < crops.Count; i++)
-        {
-            if (crops[i] == crop)
-                return i;
-        }
-
-        return -1;
-    }
-
-    /// <summary>
-    /// Shown when every crop in the dropdown has been completed.
-    /// </summary>
-    private void ShowAllDone(ActionUI ui, List<CostSlotUI> costSlots, string label)
-    {
-        for (int i = 0; i < costSlots.Count; i++)
-            costSlots[i].slotRoot.SetActive(false);
-
-        ui.slider.gameObject.SetActive(false);
-        ui.button.gameObject.SetActive(true);
-        ui.buttonFade.SetInstant(true);
-        ui.button.interactable = false;
-        ui.dropdown.interactable = false;
-        ui.rainbowText.enabled = true;
-        ui.buttonText.text = label;
-
-        if (ui.warningText != null)
-            ui.warningText.SetActive(false);
+        automationUI.SelectedCrop = labManager.GetCropAt(index);
     }
 
     /// <summary>
@@ -389,14 +268,9 @@ public class LaboratoryUI : MonoBehaviour
     {
         ActionUI ui = researchUI;
 
-        RefreshDropdown(ui, labManager.IsCropResearched);
-
-        // Every crop is researched.
+        // No crop selected yet.
         if (ui.SelectedCrop == null)
-        {
-            ShowAllDone(ui, researchCostSlots, "ALL RESEARCHED");
             return;
-        }
 
         List<CostEntry> costs = ui.SelectedCrop.ResearchCost;
         bool canAfford = resourceManager.CanAfford(costs);
@@ -486,14 +360,8 @@ public class LaboratoryUI : MonoBehaviour
     {
         ActionUI ui = automationUI;
 
-        RefreshDropdown(ui, labManager.IsCropAutomated);
-
-        // Every crop is automated.
         if (ui.SelectedCrop == null)
-        {
-            ShowAllDone(ui, automationCostSlots, "ALL AUTOMATED");
             return;
-        }
 
         List<CostEntry> costs = ui.SelectedCrop.AutomationCost;
         bool canAfford = resourceManager.CanAfford(costs);
@@ -513,7 +381,7 @@ public class LaboratoryUI : MonoBehaviour
                 CostSlotUI slot = automationCostSlots[i];
 
                 slot.slotRoot.SetActive(true);
-                slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[^1];
+                slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[entry.crop.GrowthSprites.Length - 1];
 
                 bool entryAffordable = resourceManager.HasEnough(entry);
                 string color = entryAffordable ? "green" : "red";
