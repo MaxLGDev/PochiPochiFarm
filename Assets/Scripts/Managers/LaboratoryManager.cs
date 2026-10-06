@@ -183,6 +183,11 @@ public class LaboratoryManager : MonoBehaviour
         return researchableCrops[index];
     }
 
+    /// <summary>
+    /// Every crop that can appear in the laboratory dropdowns, in scene order.
+    /// </summary>
+    public IReadOnlyList<CropData> ResearchableCrops => researchableCrops;
+
 
     // ==============================
     // Research
@@ -401,4 +406,4 @@ public class LaboratoryManager : MonoBehaviour
     {
         return cropsResearch.Keys.FirstOrDefault(crop => crop.name == cropName);
     }
-}
+}

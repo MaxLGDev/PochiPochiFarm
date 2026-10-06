@@ -5,20 +5,25 @@ public class SellCrops : MonoBehaviour
     private CropData cropData;
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private Typewriter typewriter;
+    [SerializeField] private GameObject sellHalfButton;
 
     public void Open(CropData crop)
     {
         SoundManager.Instance.PlaySFX("TogglePanel");
         cropData = crop;
+        sellHalfButton.SetActive(true);
         gameObject.SetActive(true);
 
-        typewriter.ShowText($"Are you sure you want to sell all your <color=orange>{crop.CropName}</color>?");
+        typewriter.ShowText($"Are you sure you want to sell <color=orange>{crop.CropName}</color>?");
     }
 
     public void Open()
     {
         SoundManager.Instance.PlaySFX("TogglePanel");
+        cropData = null;
+        sellHalfButton.SetActive(false);
         gameObject.SetActive(true);
+        
         typewriter.ShowText($"Are you sure you want to sell <color=orange> all your crops??</color>?");
     }
 
@@ -32,13 +37,26 @@ public class SellCrops : MonoBehaviour
     public void Sell()
     {
         SoundManager.Instance.PlaySFX("SellCrop");
-        if(cropData == null)
+        if (cropData == null)
             resourceManager.SellAllCrops();
         else
-        {
             resourceManager.TrySellCrops(cropData, resourceManager.GetCropCount(cropData));
-            cropData = null;
-        }
+        
+        Close();
+    }
+
+    public void SellHalf()
+    {
+        if (cropData == null)
+            return;
+
+        int count = resourceManager.GetCropCount(cropData);
+        if (count <= 0)
+            return;
+        
+        SoundManager.Instance.PlaySFX("SellCrop");
+
+        resourceManager.TrySellCrops(cropData, (count + 1) / 2);
 
         Close();
     }
