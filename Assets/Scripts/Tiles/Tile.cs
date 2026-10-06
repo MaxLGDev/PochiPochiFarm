@@ -206,18 +206,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         IsAutomated = false;
 
         if (cropData.GrowthTime <= 0f)
-        {
-            Debug.LogWarning(
-                $"Crop {cropData.name} has a growth time of {cropData.GrowthTime}. " +
-                "It will be considered mature immediately."
-            );
-
             IsMature = true;
-        }
         else
-        {
             IsMature = false;
-        }
 
         soilRenderer.sprite = groundSprite;
 

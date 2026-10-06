@@ -105,7 +105,6 @@ public class JournalUI : MonoBehaviour
 
     public void ShowChapter(Chapter chapter)
     {
-        Debug.Log($"SHOWING CHAPTER: {chapter.chapterName}");
         foreach (var row in currentRows)
             Destroy(row.gameObject);
 
