@@ -108,6 +108,7 @@ public class LaboratoryManager : MonoBehaviour
     [SerializeField] private ResourceManager resourceManager;
     [SerializeField] private UpgradeManager upgradeManager;
     [SerializeField] private FarmLayout farmLayout;
+    [SerializeField] private JournalManager journalManager;
 
     // --- Research Data ---
     [SerializeField] private List<CropData> researchableCrops;

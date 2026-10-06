@@ -6,16 +6,20 @@ using System.Collections.Generic;
 using System.Collections;
 
 /// <summary>
-/// Shows a full-screen "RESEARCHED!" / "AUTOMATED!" popup when the laboratory
-/// finishes a crop. Only listens and displays, owns no game state.
-/// Popups are queued so two completions at once don't overwrite each other.
+/// Shows a full-screen popup when the laboratory finishes a crop
+/// ("RESEARCHED!" / "AUTOMATED!") and when Chapter 1 is claimed
+/// (Laboratory and Upgrades unlocked).
+/// Only listens and displays, owns no game state.
+/// Popups are queued so two requests at once don't overwrite each other.
 /// </summary>
 public class LabRequestCompleteUI : MonoBehaviour
 {
+    private Action onChapter1ClaimedHandler;
+    
     // --- State ---
     private struct PopupRequest
     {
-        public CropData crop;
+        public Sprite sprite; // Optional: null means no image is shown
         public string title;
         public string tip;
     }
@@ -29,6 +33,7 @@ public class LabRequestCompleteUI : MonoBehaviour
 
     // --- References ---
     [SerializeField] private LaboratoryManager labManager;
+    [SerializeField] private JournalManager journalManager;
 
     // The panel to show/hide. Must be a child of the object this script is on,
     // otherwise deactivating it would also disable the event subscriptions.
@@ -38,6 +43,9 @@ public class LabRequestCompleteUI : MonoBehaviour
     [SerializeField] private TMP_Text closePanelText;
     [SerializeField] private TMP_Text tipText;
 
+    // Image shown when chapter 1 is complete
+    [SerializeField] private Sprite tabsUnlockedSprite;
+
     [SerializeField] private FadeAnim panelFade;
     [SerializeField] private float lockDuration = 3f;
     [SerializeField] private float fadeOutWait = 0.15f;
@@ -46,8 +54,9 @@ public class LabRequestCompleteUI : MonoBehaviour
 
     private void Awake()
     {
-        onResearchedHandler = crop => Enqueue(crop, "RESEARCHED!!", $"Tip: You can now manually gather {crop.CropName} by clicking on it!");
-        onAutomatedHandler = crop => Enqueue(crop, "AUTOMATED!!", $"Tip: {crop.CropName} will now harvest itself as long as you have enough water!");
+        onResearchedHandler = crop => Enqueue(crop.GrowthSprites[^1], "RESEARCHED!!", $"Tip: You can now manually gather {crop.CropName} by clicking on it!");
+        onAutomatedHandler = crop => Enqueue(crop.GrowthSprites[^1], "AUTOMATED!!", $"Tip: {crop.CropName} will now harvest itself as long as you have enough water!");
+        onChapter1ClaimedHandler = HandleChapter1Claimed;
     }
 
     private void Start()
@@ -59,17 +68,24 @@ public class LabRequestCompleteUI : MonoBehaviour
     {
         labManager.OnRequestedCropResearched += onResearchedHandler;
         labManager.OnRequestedCropAutomated += onAutomatedHandler;
+        journalManager.OnChapter1Claimed += onChapter1ClaimedHandler;
     }
 
     private void OnDisable()
     {
         labManager.OnRequestedCropResearched -= onResearchedHandler;
         labManager.OnRequestedCropAutomated -= onAutomatedHandler;
+        journalManager.OnChapter1Claimed -= onChapter1ClaimedHandler;
     }
 
-    private void Enqueue(CropData crop, string title, string tip)
+    private void HandleChapter1Claimed()
     {
-        requests.Enqueue(new PopupRequest { crop = crop, title = title, tip = tip});
+        Enqueue(tabsUnlockedSprite, "NEW TABS!!", "Laboratory and Upgrades tabs have been unlocked!");   
+    }
+    
+    private void Enqueue(Sprite sprite, string title, string tip)
+    {
+        requests.Enqueue(new PopupRequest { sprite = sprite, title = title, tip = tip});
 
         // If a popup is already open, this request waits its turn
         if (!isShowing)
@@ -92,7 +108,9 @@ public class LabRequestCompleteUI : MonoBehaviour
     {
         canClose = false;
 
-        cropImage.sprite = request.crop.GrowthSprites[^1];
+        cropImage.gameObject.SetActive(request.sprite != null);
+        cropImage.sprite = request.sprite;
+        
         cropTitleText.text = request.title;
         tipText.text = request.tip;
         closePanelText.gameObject.SetActive(false);

@@ -134,8 +134,8 @@ public class WaterManager : MonoBehaviour
         resourceManager.TrySpendCoins(WaterPrice);
 
         int amount = waterPerClick + waterRefillPower;
-        AddWater(waterPerClick);
-        OnWaterRefilled?.Invoke(waterPerClick);
+        AddWater(amount);
+        OnWaterRefilled?.Invoke(amount);
         SoundManager.Instance.PlaySFX("WaterRefill", UnityEngine.Random.Range(0.85f, 1.15f));
     }
 

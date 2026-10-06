@@ -754,6 +754,7 @@ MonoBehaviour:
   resourceManager: {fileID: 1980694396}
   upgradeManager: {fileID: 740059652}
   farmLayout: {fileID: 11400000, guid: 53b4c79d3d9856b4586838a1bf20e790, type: 2}
+  journalManager: {fileID: 0}
   researchableCrops:
   - {fileID: 11400000, guid: a030d01fa35972548851d1f39bcd4daa, type: 2}
   - {fileID: 11400000, guid: 3cf4983683dccd44fac3befe0ab9246f, type: 2}
@@ -23932,11 +23933,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LabRequestCompleteUI
   labManager: {fileID: 27744354}
+  journalManager: {fileID: 2014554203}
   popupPanel: {fileID: 882439442}
   cropTitleText: {fileID: 593074133}
   cropImage: {fileID: 618029084}
   closePanelText: {fileID: 1413694839}
   tipText: {fileID: 337373659}
+  tabsUnlockedSprite: {fileID: 1208040086343421634, guid: d9ea0e1154b3bdc468595dc598caca88, type: 3}
   panelFade: {fileID: 882439448}
   lockDuration: 3
   fadeOutWait: 0.15
@@ -25180,7 +25183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &885689039
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43913,7 +43916,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1777272074
 MonoBehaviour:
   m_ObjectHideFlags: 0
