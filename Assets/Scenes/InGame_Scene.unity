@@ -41823,8 +41823,9 @@ MonoBehaviour:
   farmBox: {fileID: 952425182}
   sellButton: {fileID: 1556139570}
   sellCropButton: {fileID: 6660618919176534337}
+  refillWaterButton: {fileID: 328262260}
   goldsDisplay: {fileID: 1019556347}
-  waterDisplay: {fileID: 328262260}
+  waterDisplay: {fileID: 957836278}
   labRect: {fileID: 1116376550}
   upgradeRect: {fileID: 731264975}
   statsHeader: {fileID: 2035317522}
@@ -51419,7 +51420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2118344362
 RectTransform:
   m_ObjectHideFlags: 0

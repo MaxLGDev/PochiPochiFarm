@@ -28,6 +28,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private RectTransform farmBox;
     [SerializeField] private RectTransform sellButton;
     [SerializeField] private RectTransform sellCropButton;
+    [SerializeField] private RectTransform refillWaterButton;
     [SerializeField] private RectTransform goldsDisplay;
     [SerializeField] private RectTransform waterDisplay;
 
@@ -113,7 +114,12 @@ public class TutorialManager : MonoBehaviour
 
     private void Step2SellSpecificCrop()
     {
-        Show(sellCropButton, "Or you can choose to sell \na specific crop by clicking on its box.", Step2Gold, 10f, -15f);
+        Show(sellCropButton, "Or you can choose to sell \na specific crop by clicking on its box.", Step2RefillWater, 10f, -15f);
+    }
+
+    private void Step2RefillWater()
+    {
+        Show(refillWaterButton, "You can buy water by clicking this button.", Step2Gold, -10f, -20f);
     }
 
     private void Step2Gold()
@@ -124,7 +130,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Step2Water()
     {
-        Show(waterDisplay, "This is your current water, \nwhich you will need to grow crops.", Step2TileUnlock, -10f, -20f);
+        Show(waterDisplay, "This is your current water, \nwhich you will need to grow crops.", Step2TileUnlock, -10f, 20f);
     }
 
     private void Step2TileUnlock()
