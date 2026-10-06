@@ -60,11 +60,13 @@ public class GridManager : MonoBehaviour
     private void OnEnable()
     {
         labManager.OnCropAutomated += HandleCropAutomated;
+        waterManager.OnWaterGained += HandleWaterGained;
     }
 
     private void OnDisable()
     {
         labManager.OnCropAutomated -= HandleCropAutomated;
+        waterManager.OnWaterGained -= HandleWaterGained;
     }
 
 
@@ -324,7 +326,12 @@ public class GridManager : MonoBehaviour
             waterManager.SpendWater(tile.CropData.RequiredWater);
         }
 
-        resourceManager.HandleHarvest(tile, isManual ? resourceManager.ClickPower : resourceManager.YieldPower);
+        int power = isManual ? resourceManager.ClickPower : resourceManager.YieldPower;
+
+        if (tile.CropData.CropType == CropType.Dirt)
+            power = 1;
+
+        resourceManager.HandleHarvest(tile, power);
         tile.ResetGrowth();
 
         if(tile.CropData.CropType != CropType.Dirt)
@@ -355,6 +362,20 @@ public class GridManager : MonoBehaviour
                 continue;
 
             if (!tile.IsMature)
+                continue;
+
+            HandleHarvestRequested(tile, false);
+        }
+    }
+
+    private void HandleWaterGained(int amount)
+    {
+        foreach (Tile tile in grid)
+        {
+            if (!tile.IsMature)
+                continue;
+
+            if (!labManager.IsCropAutomated(tile.CropData))
                 continue;
 
             HandleHarvestRequested(tile, false);
