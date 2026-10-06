@@ -150,7 +150,9 @@ public class LaboratoryUI : MonoBehaviour
             SoundManager.Instance.StopLoop("Research");
             SoundManager.Instance.StopLoop("Automation");
         }
-        
+
+        researchLoopPlaying = automationLoopPlaying = false;
+
     }
     
     /// <summary>
@@ -311,9 +313,12 @@ public class LaboratoryUI : MonoBehaviour
             {
                 ui.slider.gameObject.SetActive(false);
                 ui.button.gameObject.SetActive(true);
+                
+                if (!isDone)
+                    ui.buttonFade.SetInstant(true);
             }
 
-            ui.dropdown.interactable = true;
+            ui.dropdown.interactable = ui.ActiveCoroutine == null;
 
             if (isDone)
             {
@@ -399,9 +404,12 @@ public class LaboratoryUI : MonoBehaviour
             {
                 ui.slider.gameObject.SetActive(false);
                 ui.button.gameObject.SetActive(true);
+
+                if (!isDone)
+                    ui.buttonFade.SetInstant(true);
             }
 
-            ui.dropdown.interactable = true;
+            ui.dropdown.interactable = ui.ActiveCoroutine == null;
 
             if (isDone)
             {
@@ -430,6 +438,7 @@ public class LaboratoryUI : MonoBehaviour
         {
             // Active automation state.
             ui.rainbowText.enabled = false;
+            ui.CompleteFadePlayed = false;
             ui.dropdown.interactable = false;
             ui.button.gameObject.SetActive(false);
             ui.slider.gameObject.SetActive(true);

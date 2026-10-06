@@ -17,6 +17,8 @@ public class UpgradeNodeUI : MonoBehaviour
     [SerializeField] private TMP_Text upgradeNameText;
     [SerializeField] private TMP_Text upgradeCostText;
     [SerializeField] private TMP_Text upgradeEffectText;
+    [SerializeField] private TMP_Text upgradePurchasedText;
+    [SerializeField] private Image goldIcon;
 
     [SerializeField] private Color lockedColor;
     [SerializeField] private Color availableColor;
@@ -46,7 +48,7 @@ public class UpgradeNodeUI : MonoBehaviour
                 break;
         }
 
-        upgradeCostText.color = isAffordable ? affordableColor : unaffordableColor;
+        RefreshCostDisplay(state, isAffordable);
     }
 
     private void SetVisualState(bool buttonInteractable, bool boughtOutlineEnabled, bool overlayEnabled, float alpha, Color textColor)
@@ -58,10 +60,9 @@ public class UpgradeNodeUI : MonoBehaviour
         SetColorOf(nodeBackground, alpha);
 
         nodeIcon.sprite = upgradeDataSo.Sprite;
-
+        
         upgradeNameText.color = textColor;
         upgradeNameText.text = upgradeDataSo.UpgradeName;
-        upgradeCostText.text = upgradeDataSo.UnlockCost.ToString();
         
         RefreshEffectText();
     }
@@ -71,6 +72,19 @@ public class UpgradeNodeUI : MonoBehaviour
         var c = image.color;
         c.a = alpha;
         image.color = c;
+    }
+
+    private void RefreshCostDisplay(UpgradeState state, bool isAffordable)
+    {
+        bool isBought = state == UpgradeState.Bought;
+        upgradeCostText.text = upgradeDataSo.UnlockCost.ToString();
+        
+        upgradeCostText.color = isAffordable ? affordableColor : unaffordableColor;
+        upgradePurchasedText.color = boughtColor;
+
+        upgradeCostText.gameObject.SetActive(!isBought);
+        upgradePurchasedText.gameObject.SetActive(isBought);
+        goldIcon.gameObject.SetActive(!isBought);
     }
 
     private void RefreshEffectText()

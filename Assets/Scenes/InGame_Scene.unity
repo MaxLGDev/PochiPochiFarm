@@ -48885,7 +48885,6 @@ MonoBehaviour:
     objectives:
     - {fileID: 11400000, guid: 1987f58acbbe12948b9183a68ed745f7, type: 2}
     - {fileID: 11400000, guid: a85ee77d2a0688545a41208052e077e8, type: 2}
-    - {fileID: 11400000, guid: 7d0cc1d29cda6a045bf82f51fc42c8d3, type: 2}
     - {fileID: 11400000, guid: ce57e6ba6990b2c45b048d83799e42ff, type: 2}
     - {fileID: 11400000, guid: 1aac39784c860ef4e92fadc1c7223427, type: 2}
     - {fileID: 11400000, guid: 5045a027b163822499e24754ff78c367, type: 2}
