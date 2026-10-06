@@ -327,6 +327,7 @@ public class GridManager : MonoBehaviour
         resourceManager.HandleHarvest(tile, isManual ? resourceManager.ClickPower : resourceManager.YieldPower);
         tile.ResetGrowth();
 
+        if(tile.CropData.CropType != CropType.Dirt)
         OnCropGathered?.Invoke();
 
         if (isManual)
