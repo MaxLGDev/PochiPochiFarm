@@ -10,6 +10,7 @@ using System;
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] private TutorialOverlay overlay;
+    [SerializeField] private Typewriter typewriter;
     
     [Header("Tutorial UI")] 
     [SerializeField] private GameObject holeFrame;
@@ -26,6 +27,7 @@ public class TutorialManager : MonoBehaviour
     [Header("Step 2 - Farm Overview")] 
     [SerializeField] private RectTransform farmBox;
     [SerializeField] private RectTransform sellButton;
+    [SerializeField] private RectTransform sellCropButton;
     [SerializeField] private RectTransform goldsDisplay;
     [SerializeField] private RectTransform waterDisplay;
 
@@ -34,7 +36,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private RectTransform upgradeRect;
     [SerializeField] private RectTransform statsHeader;
     
-    private bool hasDoneTutorial;
+    private bool tutorialCompleted;
 
     private void Awake()
     {
@@ -43,7 +45,8 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        StartTutorial();
+        if(!tutorialCompleted)
+            StartTutorial();
     }
 
     public void StartTutorial()
@@ -56,6 +59,7 @@ public class TutorialManager : MonoBehaviour
     {
         holeButton.onClick.RemoveAllListeners();
         holeFrame.SetActive(false);
+        tutorialCompleted = true;
     }
     
     // ------------------------------------------------------------------
@@ -64,30 +68,31 @@ public class TutorialManager : MonoBehaviour
 
     private void Step1Journal()
     {
-        Show(journalButton, "You will find what to do in the journal. Try clicking on it.", Step1JournalPresentation,
+        Show(journalButton, "You will find what to do in the journal. \nTry clicking on it.", Step1JournalPresentation, 15f,
             pressTarget: true);
     }
 
     private void Step1JournalPresentation()
     {
-        Show(journalPresentation, "Here is the full journal, with all chapters you will have to clear.", Step1Chapter);
+        Show(journalPresentation, "Here is the full journal, with all chapters you will have to clear.", Step1Chapter, 25f);
     }
 
     private void Step1Chapter()
     {
-        Show(chapter1Button, "Each chapter groups a set of goals. Open Chapter 1.", Step1Objective,
+        Show(chapter1Button, "Each chapter groups a set of goals. \nOpen Chapter 1.", Step1Objective, 10f, -20f,
             pressTarget: true);
     }
 
     private void Step1Objective()
     {
-        Show(objective1Pos, "Those are the current chapter objectives. Come back here regularly to see if you completed one.",
-            Step1Close);
+        Show(objective1Pos,
+            "Those are the current chapter objectives. \nCome back here regularly to see if you completed one.",
+            Step1Close, 20f, 10f);
     }
 
     private void Step1Close()
     {
-        Show(journalCloseButton, "Close the journal and let's take a look at the farm.", Step2Dirt,
+        Show(journalCloseButton, "Close the journal, \nand let's take a look at the farm.", Step2Dirt, -10f, -20f,
             pressTarget: true);
     }
     
@@ -97,30 +102,36 @@ public class TutorialManager : MonoBehaviour
 
     private void Step2Dirt()
     {
-        Show(farmBox, "This is your farm. Everything starts from the dirt, in the bottom left position. Gather some and let's sell it.", Step2Sell,
+        Show(farmBox, "This is your farm. Everything starts from the dirt, in the bottom left position. \nGather some to sell it later.", Step2Sell, -30f,
             pressTarget: true);
     }
 
     private void Step2Sell()
     {
-        Show(sellButton, "Press sell to turn your harvest into golds.", Step2Gold);
+        Show(sellButton, "Press sell to turn your harvest into golds.", Step2SellSpecificCrop, 10f, -15f);
+    }
+
+    private void Step2SellSpecificCrop()
+    {
+        Show(sellCropButton, "Or you can choose to sell \na specific crop by clicking on its box.", Step2Gold, 10f, -15f);
     }
 
     private void Step2Gold()
     {
-        Show(goldsDisplay, "This is your current golds, which will be used for almost everything.", Step2Water);
+        Show(goldsDisplay, "This is your current golds, \nwhich will be used for almost everything.", Step2Water, 10f,
+            20f);
     }
 
     private void Step2Water()
     {
-        Show(waterDisplay, "This is your current water, which you will need to grow crops.", Step2TileUnlock);
+        Show(waterDisplay, "This is your current water, \nwhich you will need to grow crops.", Step2TileUnlock, -10f, -20f);
     }
 
     private void Step2TileUnlock()
     {
         Show(farmBox,
-            "With golds, and the necessary chapters unlocked, you will be able to unlock tiles by clicking on it. Then the farming can start!",
-            Step3Lab);
+            "With golds, and the necessary chapters unlocked, \nyou will be able to unlock tiles by clicking on it. \nThen the farming can start!",
+            Step3Lab, -29f);
     }
     
     // ------------------------------------------------------------------
@@ -129,21 +140,21 @@ public class TutorialManager : MonoBehaviour
 
     private void Step3Lab()
     {
-        Show(labRect, "After claiming chapter 1, you will unlock the laboratory. It allows you to research and automate crops. It's very important!", Step3Upgrade);
+        Show(labRect, "After claiming chapter 1, you will unlock the laboratory. \nIt allows you to research and automate crops. It's very important!", Step3Upgrade, -10f);
     }
 
     private void Step3Upgrade()
     {
         Show(upgradeRect,
-            "You can also buy upgrades to make your life easier, check it out sometimes! This also requires chapter 1 to be claimed.",
-            Step3Final);
+            "You can also buy upgrades to make your life easier, check it out sometimes! \nThis also requires chapter 1 to be claimed.",
+            Step3Final, -10f);
     }
 
     private void Step3Final()
     {
-        Show(statsHeader, "This concludes the tutorial. Get all the upgrades, research and automate everything, " +
-                          "and once the chapter 4 of the journal is claimed, you will have finished the game! " +
-                          "PochiPochi is watching you, so good luck!", EndTutorial);
+        Show(statsHeader, "This concludes the tutorial. \nGet all the upgrades, research and automate everything, " +
+                          "\nand once the chapter 4 of the journal is claimed, \nyou will have finished the game! " +
+                          "\nPochiPochi is watching you, so good luck!", EndTutorial, 20f, 45f);
     }
 
     // ------------------------------------------------------------------
@@ -155,27 +166,36 @@ public class TutorialManager : MonoBehaviour
     /// If pressTarget is true, the target's real Button is also triggered
     /// (so clicking the highlighted journal button really opens the journal).
     /// </summary>
-    private void Show(RectTransform target, string text, Action next, bool pressTarget = false)
+    private void Show(RectTransform target, string text, Action next, float textYOffset = 0f, float textXOffset = 0f, bool pressTarget = false)
     {
-        Debug.Log($"[Tuto] Show -> target={target.name}, next={next.Method.Name}");
-
         holeButton.onClick.RemoveAllListeners();
         holeFrame.transform.SetAsLastSibling();
-        holeText.text = text;
+        typewriter.ShowText(text);
         overlay.Highlight(target);
+
+        holeText.transform.position = holeButton.transform.position + new Vector3(textXOffset, textYOffset, 0f);
 
         holeButton.onClick.AddListener(() =>
         {
-            Debug.Log($"[Tuto] holeButton CLICKED (target={target.name}, pressTarget={pressTarget})");
-
             if (pressTarget && target.TryGetComponent(out Button realButton))
-            {
-                Debug.Log("[Tuto] invoking real button");
                 realButton.onClick.Invoke();
-            }
-
-            Debug.Log($"[Tuto] calling next: {next.Method.Name}");
+            
             next?.Invoke();
         });
+    }
+
+    public TutorialSaveData CaptureState()
+    {
+        TutorialSaveData data = new TutorialSaveData();
+        data.hasDoneTutorial = tutorialCompleted;
+        return data;
+    }
+
+    public void ApplyState(TutorialSaveData data)
+    {
+        if (data == null)
+            return;
+        
+        tutorialCompleted = data.hasDoneTutorial;
     }
 }

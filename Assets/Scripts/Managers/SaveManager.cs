@@ -19,6 +19,7 @@ public class ManagerSaveData
     public ZonesSaveData zones;
     public JournalSaveData journal;
     public StatsSaveData stats;
+    public TutorialSaveData tutorial;
 }
 
 // ============================================
@@ -39,6 +40,7 @@ public class SaveManager : MonoBehaviour
     [SerializeField] private GridManager gridManager;
     [SerializeField] private JournalManager journalManager;
     [SerializeField] private StatsManager statsManager;
+    [SerializeField] private TutorialManager tutorialManager;
 
     private const string FileName = "save.json";
 
@@ -74,7 +76,8 @@ public class SaveManager : MonoBehaviour
             tiles = gridManager.CaptureTiles(),
             zones = gridManager.CaptureZones(),
             journal = journalManager.CaptureState(),
-            stats = statsManager.CaptureState()
+            stats = statsManager.CaptureState(),
+            tutorial = tutorialManager.CaptureState()
         };
 
         File.WriteAllText(SavePath, JsonUtility.ToJson(data, true));
@@ -109,6 +112,7 @@ public class SaveManager : MonoBehaviour
             gridManager.ApplyZones(data.zones);
             journalManager.ApplyState(data.journal);
             statsManager.ApplyState(data.stats);
+            tutorialManager.ApplyState(data.tutorial);
 
             Debug.Log("Game loaded");
         }

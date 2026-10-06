@@ -41776,6 +41776,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1651061868}
   - component: {fileID: 1651061867}
+  - component: {fileID: 1651061869}
   m_Layer: 0
   m_Name: '- Tutorial Manager -'
   m_TagString: Untagged
@@ -41796,11 +41797,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
   overlay: {fileID: 2118344363}
+  typewriter: {fileID: 1651061869}
   holeFrame: {fileID: 847840204}
   holeButton: {fileID: 847840206}
   holeText: {fileID: 530254619}
   journalButton: {fileID: 1325540283}
-  journalPresentation: {fileID: 201822767}
+  journalPresentation: {fileID: 371370142}
   chapter1Button: {fileID: 87988906}
   objective1Pos: {fileID: 2043856519}
   journalCloseButton: {fileID: 347887752}
@@ -41826,6 +41828,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1651061869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651061866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289d8820c5835f1499f8e6a73434b82a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Typewriter
+  text: {fileID: 530254619}
+  charactersPerSecond: 50
 --- !u!1 &1654915043
 GameObject:
   m_ObjectHideFlags: 0
@@ -48026,7 +48042,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 504427ac7a6063d4595aff45c3f3249d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceManager
-  allCrops: []
+  allCrops:
+  - {fileID: 11400000, guid: 3db3a4051b4f53a429b85eec820baa73, type: 2}
+  - {fileID: 11400000, guid: a030d01fa35972548851d1f39bcd4daa, type: 2}
+  - {fileID: 11400000, guid: 3cf4983683dccd44fac3befe0ab9246f, type: 2}
+  - {fileID: 11400000, guid: 462b6651dad504247a8a7d8e3f59e795, type: 2}
+  - {fileID: 11400000, guid: 0b5c307b72023d14fa4bf281d18dd408, type: 2}
+  - {fileID: 11400000, guid: 1ab89c6efe651b8479f25842b747c9ee, type: 2}
+  - {fileID: 11400000, guid: 37dc83b1021fdb4409175ce924215ce6, type: 2}
+  - {fileID: 11400000, guid: 9e596a15fb8aa8a4ca103441eef6bf97, type: 2}
+  - {fileID: 11400000, guid: 018bc9c2d74385846b9698e6bbfea106, type: 2}
+  - {fileID: 11400000, guid: a6a90261d4991034a860522502d16f54, type: 2}
+  - {fileID: 11400000, guid: 12dbbe9a01463e04b83363b82e169cfa, type: 2}
+  - {fileID: 11400000, guid: b79ddca6ce685f941b3a5903aafa5788, type: 2}
+  - {fileID: 11400000, guid: d9e54918e6ed8f04f9fab471cfb3716f, type: 2}
   maxCoins: 20
   upgradeManager: {fileID: 740059652}
 --- !u!4 &1980694397
@@ -49911,6 +49940,7 @@ MonoBehaviour:
   gridManager: {fileID: 1968964538}
   journalManager: {fileID: 2014554203}
   statsManager: {fileID: 678332764}
+  tutorialManager: {fileID: 1651061867}
 --- !u!4 &2042914995
 Transform:
   m_ObjectHideFlags: 0
