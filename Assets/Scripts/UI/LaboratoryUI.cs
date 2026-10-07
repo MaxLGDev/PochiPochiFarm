@@ -111,6 +111,9 @@ public class LaboratoryUI : MonoBehaviour
 
     private void Start()
     {
+        CaptureOriginalIcons(researchUI.dropdown);
+        CaptureOriginalIcons(automationUI.dropdown);
+        
         labPanel.SetActive(false);
         SetLaboratoryUnlocked(journalManager.IsChapter1Claimed());
 
@@ -119,9 +122,6 @@ public class LaboratoryUI : MonoBehaviour
 
         OnResearchCropSelected(researchUI.dropdown.value);
         OnAutomationCropSelected(automationUI.dropdown.value);
-        
-        CaptureOriginalIcons(researchUI.dropdown);
-        CaptureOriginalIcons(automationUI.dropdown);
         
         RefreshDropdownLabels(researchUI, labManager.IsCropResearched);
         RefreshDropdownLabels(automationUI, labManager.IsCropAutomated);
