@@ -57,8 +57,8 @@ public class SoundManager : MonoBehaviour
         float music = PlayerPrefs.GetFloat(MUSIC_PREF, 0.5f);
         float sfx = PlayerPrefs.GetFloat(SFX_PREF, 0.5f);
 
-        SetMusicVolume(music);
-        SetSFXVolume(sfx);
+        musicSlider.SetValueWithoutNotify(music);
+        sfxSlider.SetValueWithoutNotify(sfx);
     }
 
     // 共通再生処理
@@ -94,6 +94,10 @@ public class SoundManager : MonoBehaviour
             Debug.LogError("Music Source is missing");
             return;
         }
+
+        Sound sound = Array.Find(musicSounds, s => s.soundName == name);
+        if (sound != null && musicSource.isPlaying && musicSource.clip == sound.audioClip)
+            return;
         
         if (musicSource.isPlaying)
             musicSource.Stop();

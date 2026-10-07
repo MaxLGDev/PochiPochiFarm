@@ -14,6 +14,9 @@ public class SettingsUI : MonoBehaviour
         SoundManager.Instance.PlaySFX("TogglePanel");
     }
 
+    public void OnMusicSliderChanged(float value) => SoundManager.Instance.SetMusicVolume(value);
+    public void OnSFXSliderChanged(float value) => SoundManager.Instance.SetSFXVolume(value);
+
     private void Start()
     {
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
