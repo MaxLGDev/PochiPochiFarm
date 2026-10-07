@@ -260,7 +260,6 @@ public class LaboratoryManager : MonoBehaviour
         return cropsResearch[crop].IsResearched;
     }
 
-
     // ==============================
     // Automation
     // ==============================

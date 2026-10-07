@@ -86,6 +86,8 @@ public class LaboratoryUI : MonoBehaviour
     [SerializeField] private List<CostSlotUI> researchCostSlots;
     [SerializeField] private List<CostSlotUI> automationCostSlots;
 
+    [SerializeField] private Sprite doneMarkSprite;
+
     [SerializeField] private Button laboratoryButton;
 
     [SerializeField] private GameObject labPanel;
@@ -105,6 +107,8 @@ public class LaboratoryUI : MonoBehaviour
     private bool researchLoopPlaying;
     private bool automationLoopPlaying;
 
+    private readonly Dictionary<TMP_Dropdown, Sprite[]> originalIcons = new();
+
     private void Start()
     {
         labPanel.SetActive(false);
@@ -115,11 +119,29 @@ public class LaboratoryUI : MonoBehaviour
 
         OnResearchCropSelected(researchUI.dropdown.value);
         OnAutomationCropSelected(automationUI.dropdown.value);
+        
+        CaptureOriginalIcons(researchUI.dropdown);
+        CaptureOriginalIcons(automationUI.dropdown);
+        
+        RefreshDropdownLabels(researchUI, labManager.IsCropResearched);
+        RefreshDropdownLabels(automationUI, labManager.IsCropAutomated);
     }
 
     private void HandleJournalChapter1Claimed()
     {
         SetLaboratoryUnlocked(true);
+    }
+
+    private void HandleResearchCompleted(CropData crop)
+    {
+        RefreshDropdownLabels(researchUI, labManager.IsCropResearched);
+        RefreshDropdownLabels(automationUI, labManager.IsCropResearched);
+    }
+
+    private void HandleAutomationCompleted(CropData crop)
+    {
+        RefreshDropdownLabels(researchUI, labManager.IsCropResearched);
+        RefreshDropdownLabels(automationUI, labManager.IsCropResearched);
     }
 
     private void SetLaboratoryUnlocked(bool unlocked)
@@ -139,11 +161,15 @@ public class LaboratoryUI : MonoBehaviour
     private void OnEnable()
     {
         journalManager.OnChapter1Claimed += HandleJournalChapter1Claimed;
+        labManager.OnRequestedCropResearched += HandleResearchCompleted;
+        labManager.OnRequestedCropAutomated += HandleAutomationCompleted;
     }
 
     private void OnDisable()
     {
         journalManager.OnChapter1Claimed -= HandleJournalChapter1Claimed;
+        labManager.OnRequestedCropResearched -= HandleResearchCompleted;
+        labManager.OnRequestedCropAutomated -= HandleAutomationCompleted;
 
         if (SoundManager.Instance != null)
         {
@@ -153,6 +179,34 @@ public class LaboratoryUI : MonoBehaviour
 
         researchLoopPlaying = automationLoopPlaying = false;
 
+    }
+
+    private void RefreshDropdownLabels(ActionUI ui, Func<CropData, bool> isDone)
+    {
+        for (int i = 0; i < ui.dropdown.options.Count; i++)
+        {
+            CropData crop = labManager.GetCropAt(i);
+
+            ui.dropdown.options[i].text = isDone(crop)
+                ? $"<s>{crop.CropName}</s>"
+                : crop.CropName;
+
+            ui.dropdown.options[i].image = isDone(crop)
+                ? doneMarkSprite
+                : originalIcons[ui.dropdown][i];
+        }
+        
+        ui.dropdown.RefreshShownValue();
+    }
+
+    private void CaptureOriginalIcons(TMP_Dropdown dropdown)
+    {
+        Sprite[] icons = new Sprite[dropdown.options.Count];
+
+        for (int i = 0; i < icons.Length; i++)
+            icons[i] = dropdown.options[i].image;
+
+        originalIcons[dropdown] = icons;
     }
     
     /// <summary>

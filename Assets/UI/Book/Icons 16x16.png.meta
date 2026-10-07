@@ -1301,13 +1301,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons 16x16_45
+      name: CompleteLab
       rect:
         serializedVersion: 2
-        x: 64
-        y: 16
-        width: 15
-        height: 16
+        x: 65
+        y: 17
+        width: 13
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1798,6 +1798,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      CompleteLab: -7141770162071478575
       Icons 16x16_0: 1709490493465296872
       Icons 16x16_1: -253175278140360613
       Icons 16x16_10: -6480404579648374608
@@ -1838,7 +1839,6 @@ TextureImporter:
       Icons 16x16_42: -7919259703975661653
       Icons 16x16_43: 7565530222214337598
       Icons 16x16_44: 3449971810111878766
-      Icons 16x16_45: -7141770162071478575
       Icons 16x16_46: -5097966292618167706
       Icons 16x16_47: -5637947995914828816
       Icons 16x16_48: 859380509996270848
