@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
 /// <summary>
 /// Manages the farm grid, including tile creation,
 /// harvesting, and unlocking.
@@ -28,10 +27,12 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int width = 10;
     [SerializeField] private int height = 10;
     [SerializeField] private float cellSize = 1f;
+    [SerializeField] private float tileCostGrowth = 0.06f;
 
     // --- Runtime Data ---
     private Tile[,] grid;
     private List<ZoneRuntime> zones;
+    
 
 
     // ==============================
@@ -92,16 +93,17 @@ public class GridManager : MonoBehaviour
             tile.FogBlockedAnimation();
             return false;
         }
+        
+        int cost = GetTileUnlockCost(tile);
 
-        if (!resourceManager.HasEnoughCoinsForTile(tile))
+        if (!resourceManager.HasEnoughCoins(cost))
         {
             Debug.Log("Not enough coins.");
             tile.FogBlockedAnimation();
             return false;
         }
 
-        resourceManager.TrySpendCoins(tile.CropData.UnlockCost);
-
+        resourceManager.TrySpendCoins(cost);
         return true;
     }
 
@@ -162,6 +164,20 @@ public class GridManager : MonoBehaviour
         Debug.Log($"No zone found for chapter {chapter.chapterName}.");
     }
 
+    private int CountPurchasedTiles()
+    {
+        int count = 0;
+        foreach(Tile tile in grid)
+            if (tile.IsUnlocked)
+                count++;
+
+        return count - 1; // Starting tile is free
+    }
+
+    public int GetTileUnlockCost(Tile tile)
+    {
+        return Mathf.RoundToInt(tile.CropData.UnlockCost * (1f + tileCostGrowth * CountPurchasedTiles()));
+    }
 
     // ==============================
     // Grid Generation
