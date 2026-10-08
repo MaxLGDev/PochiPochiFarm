@@ -19,10 +19,13 @@ public class UpgradeNodeUI : MonoBehaviour
     [SerializeField] private TMP_Text upgradeEffectText;
     [SerializeField] private TMP_Text upgradePurchasedText;
     [SerializeField] private Image goldIcon;
+    [SerializeField] private TMP_Text requirementText;
 
     [SerializeField] private Color lockedColor;
     [SerializeField] private Color availableColor;
     [SerializeField] private Color boughtColor;
+    [SerializeField] private Color requirementMetColor = Color.green;
+    [SerializeField] private Color requirementNotMetColor = Color.red;
 
     [SerializeField] private Color affordableColor;
     [SerializeField] private Color unaffordableColor;
@@ -33,7 +36,7 @@ public class UpgradeNodeUI : MonoBehaviour
 
     public void TryUnlockNode() => OnNodeClicked?.Invoke(upgradeDataSo);
 
-    public void Refresh(UpgradeState state, bool isAffordable)
+    public void Refresh(UpgradeState state, bool isAffordable, bool cropRequirementMet)
     {
         switch (state)
         {
@@ -49,6 +52,7 @@ public class UpgradeNodeUI : MonoBehaviour
         }
 
         RefreshCostDisplay(state, isAffordable);
+        RefreshRequirementDisplay(cropRequirementMet);
     }
 
     private void SetVisualState(bool buttonInteractable, bool boughtOutlineEnabled, bool overlayEnabled, float alpha, Color textColor)
@@ -85,6 +89,19 @@ public class UpgradeNodeUI : MonoBehaviour
         upgradeCostText.gameObject.SetActive(!isBought);
         upgradePurchasedText.gameObject.SetActive(isBought);
         goldIcon.gameObject.SetActive(!isBought);
+    }
+
+    private void RefreshRequirementDisplay(bool met)
+    {
+        bool hasRequirement = upgradeDataSo.TargetCrop != null && upgradeDataSo.CropState != RequiredCropState.None;
+        
+        requirementText.gameObject.SetActive(hasRequirement);
+
+        if (!hasRequirement)
+            return;
+        
+        requirementText.text = $"{upgradeDataSo.TargetCrop.CropName} {upgradeDataSo.CropState}";
+        requirementText.color = met ? requirementMetColor : requirementNotMetColor;
     }
 
     private void RefreshEffectText()

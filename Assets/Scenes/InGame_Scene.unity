@@ -50123,6 +50123,7 @@ MonoBehaviour:
   width: 10
   height: 10
   cellSize: 4.75
+  tileCostGrowth: 0.065
 --- !u!4 &1968964539
 Transform:
   m_ObjectHideFlags: 0
@@ -50517,7 +50518,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 12dbbe9a01463e04b83363b82e169cfa, type: 2}
   - {fileID: 11400000, guid: b79ddca6ce685f941b3a5903aafa5788, type: 2}
   - {fileID: 11400000, guid: d9e54918e6ed8f04f9fab471cfb3716f, type: 2}
-  maxCoins: 20
+  maxCoins: 30
   upgradeManager: {fileID: 740059652}
 --- !u!4 &1980694397
 Transform:

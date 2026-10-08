@@ -93,32 +93,24 @@ public class UpgradeManager : MonoBehaviour
 
     private bool AreRequirementsMet(UpgradeData data)
     {
-        bool cropRequirementMet = false;
-
         if (data.PreviousUpgrade != null && !allUpgrades[data.PreviousUpgrade])
             return false;
 
+        return IsCropRequirementMet(data);
+    }
+
+    public bool IsCropRequirementMet(UpgradeData data)
+    {
         if (data.TargetCrop == null)
-            cropRequirementMet = true;
+            return true;
 
-        if (data.TargetCrop != null && data.CropState != RequiredCropState.None)
+        return data.CropState switch
         {
-            cropRequirementMet = data.CropState switch
-            {
-                RequiredCropState.Unlocked =>
-                    gridManager.IsCropUnlocked(data.TargetCrop),
-
-                RequiredCropState.Researched =>
-                    laboratoryManager.IsCropResearched(data.TargetCrop),
-
-                RequiredCropState.Automated =>
-                    laboratoryManager.IsCropAutomated(data.TargetCrop),
-
-                _ => cropRequirementMet
-            };
-        }
-
-        return cropRequirementMet;
+            RequiredCropState.Unlocked => gridManager.IsCropUnlocked(data.TargetCrop),
+            RequiredCropState.Researched => laboratoryManager.IsCropResearched(data.TargetCrop),
+            RequiredCropState.Automated => laboratoryManager.IsCropAutomated(data.TargetCrop),
+            _ => false
+        };
     }
 
     public UpgradesSaveData CaptureState()
