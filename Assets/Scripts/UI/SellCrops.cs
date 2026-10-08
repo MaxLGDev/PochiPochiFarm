@@ -51,8 +51,6 @@ public class SellCrops : MonoBehaviour
             return;
 
         int count = resourceManager.GetCropCount(cropData);
-        if (count <= 0)
-            return;
         
         SoundManager.Instance.PlaySFX("SellCrop");
 
