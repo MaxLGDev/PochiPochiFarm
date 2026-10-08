@@ -1,6 +1,6 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -34,6 +34,15 @@ public class SettingsManager : MonoBehaviour
         else
             Screen.SetResolution(windowedSize.x, windowedSize.y, FullScreenMode.Windowed);
         
+    }
+
+    public void SetLanguage(int index)
+    {
+        var locales = LocalizationSettings.AvailableLocales.Locales;
+        if (index < 0 || index >= locales.Count)
+            return;
+
+        LocalizationSettings.SelectedLocale = locales[index];
     }
 
     public void CloseGame() => Application.Quit();

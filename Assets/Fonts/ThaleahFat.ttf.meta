@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e7eb4499c724bb644b970bb40289e07b
+guid: 5d6df5736a4d53b44bcce3204ea43a06
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - EnkaDotGothic24
+  - ThaleahFat
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f6ac5f132d17ed4448646ac8afcb5061
+guid: 521e34e7351fbb449bc7c226450939ff
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - x14y24pxHeadUpDaisy
+  - KH Dot Akihabara 16
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
