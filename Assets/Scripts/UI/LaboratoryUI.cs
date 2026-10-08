@@ -135,13 +135,11 @@ public class LaboratoryUI : MonoBehaviour
     private void HandleResearchCompleted(CropData crop)
     {
         RefreshDropdownLabels(researchUI, labManager.IsCropResearched);
-        RefreshDropdownLabels(automationUI, labManager.IsCropResearched);
     }
 
     private void HandleAutomationCompleted(CropData crop)
     {
-        RefreshDropdownLabels(researchUI, labManager.IsCropResearched);
-        RefreshDropdownLabels(automationUI, labManager.IsCropResearched);
+        RefreshDropdownLabels(automationUI, labManager.IsCropAutomated);
     }
 
     private void SetLaboratoryUnlocked(bool unlocked)
