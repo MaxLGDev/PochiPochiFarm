@@ -1170,7 +1170,7 @@ GameObject:
   - component: {fileID: 781343242179914059}
   - component: {fileID: 6705940151195812503}
   m_Layer: 5
-  m_Name: UpgradeName
+  m_Name: UpgradeNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1225,8 +1225,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: GOLD BAG I
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34fb0fcb9f983924584c92067c928a18, type: 2}
+  m_sharedMaterial: {fileID: 4721213420981888436, guid: 34fb0fcb9f983924584c92067c928a18, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1250,7 +1250,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.5
+  m_fontSize: 24.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
