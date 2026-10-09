@@ -121,7 +121,11 @@ public class WaterManager : MonoBehaviour
     /// </summary>
     public void BuyWater()
     {
-        if (resourceManager.Coins < WaterPrice)
+        int amount = waterPerClick + waterRefillPower;
+        amount = Mathf.Min(amount, MaxWater - Water);
+        int finalCost = amount * waterPrice;
+        
+        if (resourceManager.Coins < finalCost)
         {
             OnWaterPurchaseFailed?.Invoke();
             SoundManager.Instance.PlaySFX("Blocked");
@@ -135,10 +139,9 @@ public class WaterManager : MonoBehaviour
             return;
         }
 
-        if (!resourceManager.TrySpendCoins(WaterPrice))
+        if (!resourceManager.TrySpendCoins(finalCost))
             return;
 
-        int amount = waterPerClick + waterRefillPower;
         AddWater(amount);
         OnWaterRefilled?.Invoke(amount);
         SoundManager.Instance.PlaySFX("WaterRefill", UnityEngine.Random.Range(0.85f, 1.15f));

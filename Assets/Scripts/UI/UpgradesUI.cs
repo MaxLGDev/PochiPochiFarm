@@ -62,8 +62,10 @@ public class UpgradesUI : MonoBehaviour
         upgradesPanel.SetActive(false);
         SetUpgradesUnlocked(journalManager.IsChapter1Claimed());
         
-        foreach(var entry in connectors)
-            entry.connector.SetEndpoints(entry.sourceNode.RectTransform, entry.targetNode.RectTransform);
+        foreach (var entry in connectors)
+            entry.connector.SetEndpoints(
+                entry.sourceNode.ConnectorAnchor,
+                entry.targetNode.ConnectorAnchor);
 
         RefreshAll();
     }

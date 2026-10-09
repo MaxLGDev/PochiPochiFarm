@@ -15,4 +15,15 @@ public static class StatsFormatter
 
         return $"{hours}h{minutes}m{remainingSeconds}s";
     }
+    
+    public static string FormatNumber(int value)
+    {
+        if (value >= 1_000_000)
+            return $"{value / 1_000_000f:0.#}M";
+
+        if (value >= 1_000)
+            return $"{value / 1_000f:0.#}K";
+
+        return value.ToString();
+    }
 }

@@ -103,6 +103,7 @@ public class LaboratoryManager : MonoBehaviour
     public event Action<CropData> OnRequestedCropResearched;
     public event Action<CropData> OnRequestedCropAutomated;
     private event Action<UpgradeData> onUpgradeUnlockedHandler;
+    public event Action OnLabActionStarted;
 
     // --- References ---
     [SerializeField] private ResourceManager resourceManager;
@@ -206,6 +207,7 @@ public class LaboratoryManager : MonoBehaviour
 
         currentResearchingCrop = crop;
         state.StartResearch();
+        OnLabActionStarted?.Invoke();
     }
 
     /// <summary>
@@ -221,10 +223,12 @@ public class LaboratoryManager : MonoBehaviour
 
         if (state.ResearchTimer >= currentResearchingCrop.ResearchDuration)
         {
+            CropData finished = currentResearchingCrop;
+            
             state.FlagCropAsResearched();
+            currentResearchingCrop = null;
             OnRequestedCropResearched?.Invoke(currentResearchingCrop);
             SoundManager.Instance.PlaySFX("LabComplete");
-            currentResearchingCrop = null;
         }
     }
 
@@ -285,6 +289,7 @@ public class LaboratoryManager : MonoBehaviour
 
         currentAutomatingCrop = crop;
         state.StartAutomation();
+        OnLabActionStarted?.Invoke();
     }
 
     /// <summary>
@@ -300,8 +305,9 @@ public class LaboratoryManager : MonoBehaviour
 
         if (state.AutomationTimer >= currentAutomatingCrop.AutomationDuration)
         {
+            CropData finished = currentAutomatingCrop;
+            
             state.FlagCropAsAutomated();
-
             OnCropAutomated?.Invoke(currentAutomatingCrop);
             OnRequestedCropAutomated?.Invoke(currentAutomatingCrop);
             SoundManager.Instance.PlaySFX("LabComplete");
@@ -399,5 +405,41 @@ public class LaboratoryManager : MonoBehaviour
     private CropData FindCropByName(string cropName)
     {
         return cropsResearch.Keys.FirstOrDefault(crop => crop.name == cropName);
+    }
+
+    /// <summary>
+    /// True if the lab is idle for research or automation AND the player
+    /// can pay for at least one crop that action could start on.
+    /// </summary>
+    public bool HasAvailableAction()
+    {
+        if (!IsResearching())
+        {
+            foreach (CropData crop in researchableCrops)
+            {
+                if (!cropsResearch[crop].IsResearched &&
+                    resourceManager.CanAfford(crop.ResearchCost))
+                {
+                    return true;
+                }
+            }
+        }
+
+        if (!IsAutomating())
+        {
+            foreach (CropData crop in researchableCrops)
+            {
+                LabState state = cropsResearch[crop];
+
+                if (state.IsResearched &&
+                    !state.IsAutomated &&
+                    resourceManager.CanAfford(crop.AutomationCost))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -76,7 +76,7 @@ public class QuestRowUI : MonoBehaviour
 
         string color = isComplete ? "green" : "red";
         questObjGoalText.text =
-            $"<color={color}>{FormatNumber(progress)}/{FormatNumber(target)}</color>";
+            $"<color={color}>{StatsFormatter.FormatNumber(progress)}/{StatsFormatter.FormatNumber(target)}</color>";
 
         ToggleClaimedObjectivePanel();
         ToggleCompletedObjectivePanel();
@@ -155,14 +155,5 @@ public class QuestRowUI : MonoBehaviour
     // Formatting
     // ==============================
 
-    private string FormatNumber(int value)
-    {
-        if (value >= 1_000_000)
-            return $"{value / 1_000_000f:0.#}M";
-
-        if (value >= 1_000)
-            return $"{value / 1_000f:0.#}K";
-
-        return value.ToString();
-    }
+    
 }

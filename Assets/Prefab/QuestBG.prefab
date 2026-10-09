@@ -340,8 +340,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -92.2946, y: 0.000020503998}
-  m_SizeDelta: {x: 302.4003, y: 86.868}
+  m_AnchoredPosition: {x: -99.04787, y: 0.000020503998}
+  m_SizeDelta: {x: 288.8938, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7930551261483160824
 CanvasRenderer:
@@ -373,8 +373,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'COLLECT 500 COINS:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b57b3343cafbe784097b1c6e4ce676bf, type: 2}
-  m_sharedMaterial: {fileID: -8746955447195962384, guid: b57b3343cafbe784097b1c6e4ce676bf, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34fb0fcb9f983924584c92067c928a18, type: 2}
+  m_sharedMaterial: {fileID: 4721213420981888436, guid: 34fb0fcb9f983924584c92067c928a18, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -731,7 +731,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RainbowCyclingColor
   text: {fileID: 3078551787567604090}
-  cyclingSpeed: 1
+  icon: {fileID: 0}
+  cyclingSpeed: 0.75
 --- !u!1 &9095773622614404032
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,8 +767,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 242.43951, y: -0.000020503998}
-  m_SizeDelta: {x: 184.0021, y: 86.868}
+  m_AnchoredPosition: {x: 243.66753, y: -0.000020503998}
+  m_SizeDelta: {x: 191.5995, y: 86.868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4010760545199958761
 CanvasRenderer:
@@ -797,10 +798,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 497/500
+  m_text: 137,3K/300k
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b57b3343cafbe784097b1c6e4ce676bf, type: 2}
-  m_sharedMaterial: {fileID: -8746955447195962384, guid: b57b3343cafbe784097b1c6e4ce676bf, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34fb0fcb9f983924584c92067c928a18, type: 2}
+  m_sharedMaterial: {fileID: 4721213420981888436, guid: 34fb0fcb9f983924584c92067c928a18, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -824,8 +825,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

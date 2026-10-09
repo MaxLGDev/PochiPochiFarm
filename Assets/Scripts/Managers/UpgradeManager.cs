@@ -147,4 +147,20 @@ public class UpgradeManager : MonoBehaviour
             OnUpgradeUnlocked?.Invoke(upgrade);
 
     }
+
+    /// <summary>
+    /// True if at least one upgrade is available and the player can pay for it.
+    /// </summary>
+    public bool HasAffordableUpgrade()
+    {
+        foreach (UpgradeData upgrade in allUpgradesList)
+        {
+            if(GetUpgradeState((upgrade)) == UpgradeState.Available && resourceManager.HasEnoughCoins(upgrade.UnlockCost))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

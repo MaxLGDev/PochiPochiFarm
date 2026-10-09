@@ -86,6 +86,7 @@ public class JournalManager : MonoBehaviour
     public event Action OnChapter1Claimed;
     public event Action OnLastChapterClaimed;
     public event Action OnObjectiveClaimed;
+    
     public event Action<ObjData> OnObjectiveCompleted;
     public event Action<ObjData> OnObjectiveProgressed;
 
@@ -260,6 +261,21 @@ public class JournalManager : MonoBehaviour
         return nextIndex < chaptersList.Count
             ? chaptersList[nextIndex]
             : null;
+    }
+
+    /// <summary>
+    /// True if the player has something to claim: a completed objective,
+    /// or a fully claimed chapter waiting to be advanced.
+    /// </summary>
+    public bool HasClaimableReward()
+    {
+        foreach (ObjState state in objectivesStates.Values)
+        {
+            if (state.IsComplete && !state.IsClaimed)
+                return true;
+        }
+
+        return false;
     }
 
 

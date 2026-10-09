@@ -32,6 +32,8 @@ public class UpgradeNodeUI : MonoBehaviour
     
     public RectTransform RectTransform => (RectTransform)transform;
 
+    public RectTransform ConnectorAnchor => nodeIcon.rectTransform;
+
     public UpgradeData UpgradeDataSo => upgradeDataSo;
 
     public void TryUnlockNode() => OnNodeClicked?.Invoke(upgradeDataSo);

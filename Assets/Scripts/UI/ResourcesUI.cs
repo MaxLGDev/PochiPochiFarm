@@ -34,15 +34,15 @@ public class ResourcesUI : MonoBehaviour
     {
         if (newCoinCount == 0)
         {
-            coinsText.text = $"<color=red>{newCoinCount}/{resourceManager.MaxCoins}</color>";
+            coinsText.text = $"<color=red>{StatsFormatter.FormatNumber(newCoinCount)}/{StatsFormatter.FormatNumber(resourceManager.MaxCoins)}</color>";
         }
         else if (newCoinCount == resourceManager.MaxCoins)
         {
-            coinsText.text = $"<color=green>{newCoinCount}/{resourceManager.MaxCoins}</color>";
+            coinsText.text = $"<color=green>{StatsFormatter.FormatNumber(newCoinCount)}/{StatsFormatter.FormatNumber(resourceManager.MaxCoins)}</color>";
         }
         else
         {
-            coinsText.text = $"<color=yellow>{newCoinCount}/{resourceManager.MaxCoins}</color>";
+            coinsText.text = $"<color=yellow>{StatsFormatter.FormatNumber(newCoinCount)}/{StatsFormatter.FormatNumber(resourceManager.MaxCoins)}</color>";
         }
     }
 }
