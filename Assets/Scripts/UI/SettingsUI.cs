@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
+
+    [SerializeField] private TMP_Text versionControlText;
 
     public void ToggleSettingsPanel()
     {
@@ -28,5 +31,7 @@ public class SettingsUI : MonoBehaviour
 
         OnMusicSliderChanged(music);
         OnSFXSliderChanged(sfx);
+
+        versionControlText.text = Application.version;
     }
 }

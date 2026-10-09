@@ -54,7 +54,7 @@ public class UpgradeNodeUI : MonoBehaviour
         }
 
         RefreshCostDisplay(state, isAffordable);
-        RefreshRequirementDisplay(cropRequirementMet);
+        RefreshRequirementDisplay(state, cropRequirementMet);
     }
 
     private void SetVisualState(bool buttonInteractable, bool boughtOutlineEnabled, bool overlayEnabled, float alpha, Color textColor)
@@ -93,13 +93,14 @@ public class UpgradeNodeUI : MonoBehaviour
         goldIcon.gameObject.SetActive(!isBought);
     }
 
-    private void RefreshRequirementDisplay(bool met)
+    private void RefreshRequirementDisplay(UpgradeState state, bool met)
     {
         bool hasRequirement = upgradeDataSo.TargetCrop != null && upgradeDataSo.CropState != RequiredCropState.None;
-        
-        requirementText.gameObject.SetActive(hasRequirement);
 
-        if (!hasRequirement)
+        bool show = hasRequirement && state != UpgradeState.Bought;
+        requirementText.gameObject.SetActive(show);
+
+        if (!show)
             return;
         
         requirementText.text = $"{upgradeDataSo.TargetCrop.CropName} {upgradeDataSo.CropState}";
