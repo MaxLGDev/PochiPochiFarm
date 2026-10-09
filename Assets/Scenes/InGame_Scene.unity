@@ -27178,10 +27178,10 @@ MonoBehaviour:
     targetNode: {fileID: 1047160182}
   - connector: {fileID: 1937141788}
     sourceNode: {fileID: 1656351461}
-    targetNode: {fileID: 1327887982}
+    targetNode: {fileID: 867262302}
   - connector: {fileID: 549886463}
     sourceNode: {fileID: 867262302}
-    targetNode: {fileID: 1904140664}
+    targetNode: {fileID: 686423850}
   - connector: {fileID: 1661495945}
     sourceNode: {fileID: 686423850}
     targetNode: {fileID: 1766402954}
@@ -67642,7 +67642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2118344362
 RectTransform:
   m_ObjectHideFlags: 0
