@@ -40432,9 +40432,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaboratoryNotificationDot
   dot: {fileID: 324172643}
-  labManager: {fileID: 0}
-  resourceManager: {fileID: 0}
-  journalManager: {fileID: 0}
+  labManager: {fileID: 27744354}
+  resourceManager: {fileID: 1980694396}
+  journalManager: {fileID: 2014554203}
 --- !u!1 &1117769598
 GameObject:
   m_ObjectHideFlags: 0
