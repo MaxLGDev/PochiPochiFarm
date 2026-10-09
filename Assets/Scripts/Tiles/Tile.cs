@@ -1,6 +1,14 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
+public enum TilePriceState
+{
+    Hidden,
+    Unaffordable,
+    Affordable
+}
 
 /// <summary>
 /// Represents a single farm tile.
@@ -37,6 +45,11 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     // Prevents updating the crop sprite every frame.
     private int lastStageIndex = -1;
 
+    private TilePriceState priceState;
+    [SerializeField] private TMP_Text tileUnlockCostText;
+    [SerializeField] private SpriteRenderer goldIconSprite;
+    [SerializeField] private Color tileAffordableColor;
+    [SerializeField] private Color tileUnaffordableColor;
 
     // ==============================
     // Unity Lifecycle
@@ -60,7 +73,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         if (mature)
             cropRenderer.sprite = CropData.GrowthSprites[^1];
         
-        UpdateFogVisibility();
+        UpdateLockedVisual();
     }
 
     // ==============================
@@ -131,6 +144,22 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         cropRenderer.color = originalColor;
     }
 
+    public void SetUnlockCost(int cost, TilePriceState state)
+    {
+        tileUnlockCostText.text = cost.ToString();
+        
+        Color stateColor = state switch
+        {
+            TilePriceState.Affordable => tileAffordableColor,
+            TilePriceState.Unaffordable => tileUnaffordableColor,
+            _ => Color.clear
+        };
+
+        tileUnlockCostText.color = stateColor;
+
+        priceState = state;
+        UpdateLockedVisual();
+    }
 
     // ==============================
     // Player Interaction
@@ -216,8 +245,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         cropRenderer.sprite = CropData.GrowthSprites[
             CropData.GrowthSprites.Length - 1
         ];
-
-        UpdateFogVisibility();
+        
+        UpdateLockedVisual();
     }
 
 
@@ -228,9 +257,13 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     /// <summary>
     /// Shows or hides the locked overlay.
     /// </summary>
-    private void UpdateFogVisibility()
+    private void UpdateLockedVisual()
     {
         fogRenderer.enabled = !IsUnlocked;
+
+        bool visible = !IsUnlocked && priceState != TilePriceState.Hidden;
+        goldIconSprite.enabled = visible;
+        tileUnlockCostText.gameObject.SetActive(visible);
     }
 
     /// <summary>
@@ -245,7 +278,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         }
 
         IsUnlocked = true;
-        UpdateFogVisibility();
+        UpdateLockedVisual();
         
         if(unlockParticles != null)
             unlockParticles.Play();

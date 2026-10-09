@@ -13,14 +13,11 @@ public class FloatingTextSpawner : MonoBehaviour
     [SerializeField] private WaterManager waterManager;
     [SerializeField] private FloatingText floatingTextPrefab;
     
-    // --- Animations ---
-    [SerializeField] private PunchAnim punchAnim;
-    [SerializeField] private WiggleAnim wiggleAnim;
-    
     // --- Spawn Points ---
     // Coin and water texts appear at these transforms (e.g. next to the HUD counters)
     [SerializeField] private Transform coinAnchor;
     [SerializeField] private Transform waterAnchor;
+    [SerializeField] private Transform waterRefillAnchor;
     
     // Offset above a harvested tile so the text doesn't sit on the sprite.
     [SerializeField] private Vector3 tileOffset = new Vector3(0f, 0.5f, 0f);
@@ -38,6 +35,8 @@ public class FloatingTextSpawner : MonoBehaviour
     private Action<int> onWaterGainedHandler;
     private Action<int> onWaterSpentHandler;
     private Action<Tile, int> onCropHarvestHandler;
+    private Action onWaterPurchaseFailedHandler;
+    private Action onWaterAlreadyFulledHandler;
 
     private void Awake()
     {
@@ -45,6 +44,8 @@ public class FloatingTextSpawner : MonoBehaviour
         onCoinsSpentHandler = amount => Spawn($"-{amount} GOLD", coinSpentColor, coinAnchor.position);
         onWaterGainedHandler = amount => Spawn($"+{amount} WATER", waterGainColor, waterAnchor.position);
         onWaterSpentHandler = amount => Spawn($"-{amount} WATER", waterSpentColor, waterAnchor.position);
+        onWaterPurchaseFailedHandler = () => Spawn("NOT ENOUGH GOLD", waterSpentColor, waterRefillAnchor.position);
+        onWaterAlreadyFulledHandler = () => Spawn("WATER IS FULL", waterGainColor, waterRefillAnchor.position);
         onCropHarvestHandler = (tile, amount) => Spawn($"+{amount} {tile.CropData.CropName.ToUpper()}", cropColor, tile.transform.position + tileOffset);
     }
 
@@ -55,6 +56,8 @@ public class FloatingTextSpawner : MonoBehaviour
         resourceManager.OnCropHarvested += onCropHarvestHandler;
         waterManager.OnWaterGained += onWaterGainedHandler;
         waterManager.OnWaterSpent += onWaterSpentHandler;
+        waterManager.OnWaterPurchaseFailed += onWaterPurchaseFailedHandler;
+        waterManager.OnWaterAlreadyFull += onWaterAlreadyFulledHandler;
     }
 
     private void OnDisable()
@@ -64,6 +67,8 @@ public class FloatingTextSpawner : MonoBehaviour
         resourceManager.OnCropHarvested -= onCropHarvestHandler;
         waterManager.OnWaterGained -= onWaterGainedHandler;
         waterManager.OnWaterSpent -= onWaterSpentHandler;
+        waterManager.OnWaterPurchaseFailed -= onWaterPurchaseFailedHandler;
+        waterManager.OnWaterAlreadyFull -= onWaterAlreadyFulledHandler;
     }
 
     private void Spawn(string text, Color color, Vector3 position)

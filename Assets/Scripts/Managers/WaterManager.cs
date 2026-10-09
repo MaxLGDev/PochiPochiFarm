@@ -13,7 +13,9 @@ public class WaterManager : MonoBehaviour
     public event Action<int> OnWaterRefilled;
     public event Action<int> OnWaterGained;
     public event Action<int> OnWaterSpent;
-    private event Action<UpgradeData> onUpgradeUnlockedHandler;
+    public event Action OnWaterPurchaseFailed;
+    public event Action OnWaterAlreadyFull;
+    private Action<UpgradeData> onUpgradeUnlockedHandler;
 
     // --- References ---
     [SerializeField] private ResourceManager resourceManager;
@@ -121,17 +123,20 @@ public class WaterManager : MonoBehaviour
     {
         if (resourceManager.Coins < WaterPrice)
         {
+            OnWaterPurchaseFailed?.Invoke();
             SoundManager.Instance.PlaySFX("Blocked");
             return;
         }
 
         if (Water >= MaxWater)
         {
+            OnWaterAlreadyFull?.Invoke();
             SoundManager.Instance.PlaySFX("Blocked");
             return;
         }
 
-        resourceManager.TrySpendCoins(WaterPrice);
+        if (!resourceManager.TrySpendCoins(WaterPrice))
+            return;
 
         int amount = waterPerClick + waterRefillPower;
         AddWater(amount);

@@ -58,16 +58,23 @@ public class GridManager : MonoBehaviour
         GenerateGrid();
     }
 
+    private void Start()
+    {
+        RefreshUnlockCost();
+    }
+
     private void OnEnable()
     {
         labManager.OnCropAutomated += HandleCropAutomated;
         waterManager.OnWaterGained += HandleWaterGained;
+        resourceManager.OnCoinsChanged += HandleCoinsChanged;
     }
 
     private void OnDisable()
     {
         labManager.OnCropAutomated -= HandleCropAutomated;
         waterManager.OnWaterGained -= HandleWaterGained;
+        resourceManager.OnCoinsChanged -= HandleCoinsChanged;
     }
 
 
@@ -80,16 +87,8 @@ public class GridManager : MonoBehaviour
     /// </summary>
     private bool TryUnlockTile(Tile tile)
     {
-        if (!IsUnlockedAt(tile.GridPosition))
+        if(!CanUnlockTile(tile))
         {
-            Debug.Log("Zone not unlocked.");
-            tile.FogBlockedAnimation();
-            return false;
-        }
-
-        if (!IsAdjacentToUnlocked(tile.GridPosition))
-        {
-            Debug.Log("Not adjacent to an unlocked tile.");
             tile.FogBlockedAnimation();
             return false;
         }
@@ -107,18 +106,27 @@ public class GridManager : MonoBehaviour
         return true;
     }
 
+    private bool CanUnlockTile(Tile tile)
+    {
+        if (!IsZoneUnlockedAt(tile.GridPosition))
+            return false;
+
+        if (!IsAdjacentToUnlocked(tile.GridPosition))
+            return false;
+
+        return true;
+    }
+
     /// <summary>
     /// Returns whether the zone containing the position is unlocked.
     /// </summary>
-    private bool IsUnlockedAt(Vector2Int position)
+    private bool IsZoneUnlockedAt(Vector2Int position)
     {
         foreach (ZoneRuntime zone in zones)
         {
             if (zone.IsPositionInZone(position))
                 return zone.IsUnlocked;
         }
-
-        Debug.Log("Zone has not been unlocked yet.");
         return false;
     }
 
@@ -142,26 +150,22 @@ public class GridManager : MonoBehaviour
             if (adjacentTile != null && adjacentTile.IsUnlocked)
                 return true;
         }
-
-        Debug.Log("No adjacent unlocked tiles found.");
+        
         return false;
     }
 
     public void UnlockZone(Chapter chapter)
     {
-        Debug.Log("Zone called.");
-
         foreach (ZoneRuntime zone in zones)
         {
             if (zone.Data.unlockChapterName != chapter.chapterName)
                 continue;
 
             zone.Unlock();
-            Debug.Log($"Zone {zone.Data.zoneName} unlocked.");
+            RefreshUnlockCost();
+            
             return;
         }
-
-        Debug.Log($"No zone found for chapter {chapter.chapterName}.");
     }
 
     private int CountPurchasedTiles()
@@ -232,6 +236,32 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    private void RefreshUnlockCost()
+    {
+        foreach (Tile tile in grid)
+        {
+            TilePriceState state;
+            int cost = GetTileUnlockCost(tile);
+                
+            if (tile.IsUnlocked)
+                continue;
+            
+            if (!CanUnlockTile(tile))
+                state = TilePriceState.Hidden;
+            else if (resourceManager.HasEnoughCoins(cost))
+                state = TilePriceState.Affordable;
+            else
+                state = TilePriceState.Unaffordable;
+            
+            tile.SetUnlockCost(cost, state);
+        }
+    }
+
+    private void HandleCoinsChanged(int amount)
+    {
+        RefreshUnlockCost();
+    }
+
 
     // ==============================
     // Grid Helpers
@@ -254,10 +284,7 @@ public class GridManager : MonoBehaviour
     private Tile GetTileAt(Vector2Int position)
     {
         if (!IsInsideBounds(position))
-        {
-            Debug.Log($"Position {position} is out of bounds.");
             return null;
-        }
 
         return grid[position.x, position.y];
     }
@@ -308,8 +335,9 @@ public class GridManager : MonoBehaviour
 
         if (success)
         {
-            OnCropUnlocked?.Invoke(tile.CropData);
             tile.UnlockTile();
+            OnCropUnlocked?.Invoke(tile.CropData);
+            RefreshUnlockCost();
             SoundManager.Instance.PlaySFX("TileUnlock");
         }
         else
@@ -433,6 +461,8 @@ public class GridManager : MonoBehaviour
             }
             tile.Restore(entry.isUnlocked, entry.isMature, entry.growthTimer);
         }
+        
+        RefreshUnlockCost();
     }
 
     public ZonesSaveData CaptureZones()
@@ -465,5 +495,6 @@ public class GridManager : MonoBehaviour
             if (entry.isUnlocked)
                 zone.Unlock();
         }
+        RefreshUnlockCost();
     }
 }
