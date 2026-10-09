@@ -231,14 +231,13 @@
 </ul>
 
 <h2>Phase 11 — Upgrades: Income &amp; Click Power</h2>
-<p class="note">Revised scope: the +20%/+30% income multiplier upgrades were never built and are not planned — replaced by the max coin storage cap upgrade below. Max coins starts at 20 and AddCoins clamps to it, so any coin price above the current cap is unreachable until enough max-coin upgrades exist — the game can't be completed until the chain below is in. Superseded by the Phase 21 balance rework: the coin chain grows to 12 steps with a final cap of 31,200 (start cap 30).</p>
+<p class="note">Revised scope: the +20%/+30% income multiplier upgrades were never built and are not planned — replaced by the max coin storage cap upgrade below. Max coins starts at 20 and AddCoins clamps to it, so any coin price above the current cap is unreachable until enough max-coin upgrades exist — the game can't be completed until the chain below is in.</p>
 <ul>
   <li class="done"><label><input type="checkbox" checked> Add max coin storage cap upgrade (+50)</label></li>
   <li class="done"><label><input type="checkbox" checked> Add click power variable (+1 upgrade)</label></li>
   <li class="done"><label><input type="checkbox" checked> Apply click power where relevant (e.g. Dirt, if it gives coins directly)</label></li>
   <li class="done"><label><input type="checkbox" checked> Add automated yield power upgrade</label></li>
   <li class="done"><label><input type="checkbox" checked> Add more max coin storage upgrades so every coin price in the game is reachable (6 coin nodes in total; each upgrade's cost ≤ the cap before buying it; final cap ≥ the highest coin price, 5,700 for Chapter 4). Each new upgrade: unique SO name, added to UpgradeManager.allUpgradesList, node added to UpgradesUI.upgradeNodes (+ connector), UpgradeEffect text filled in</label></li>
-  <li class="done"><label><input type="checkbox" checked> Set real prices on every remaining upgrade (water, click, yield, laboratory), each at or below the coin cap of the tier where it becomes affordable so nothing can soft-lock. Click Power 300 (about 3 minutes after the panel opens; needs cap 500 after Coins 3). First-pass values, to be tuned in the full playthrough</label></li>
 </ul>
 
 <h2>Phase 12 — Upgrades: Water Tank</h2>
@@ -249,7 +248,7 @@
   <li class="done"><label><input type="checkbox" checked> Add refill speed/amount upgrade for the watering can</label></li>
   <li class="done"><label><input type="checkbox" checked> Test all three water upgrades independently</label></li>
   <li class="done"><label><input type="checkbox" checked> Expand max water capacity to a 4-upgrade chain (tank 10 → 20 → 40 → 80 → 160), costs paced against the coin cap chain</label></li>
-  <li class="done"><label><input type="checkbox" checked> Tidy the Upgrades panel hierarchy into Labels / Connectors / Nodes groups (full-stretch group parents so ConnectorLine's anchoredPosition math still lines up) and fix connectors escaping the scroll viewport mask. Superseded in Phase 21 (UI / UX): ConnectorLine no longer relies on anchoredPosition, so the groups can sit anywhere</label></li>
+  <li class="done"><label><input type="checkbox" checked> Tidy the Upgrades panel hierarchy into Labels / Connectors / Nodes groups (full-stretch group parents so ConnectorLine's anchoredPosition math still lines up) and fix connectors escaping the scroll viewport mask</label></li>
 </ul>
 
 <h2>Phase 13 — Objectives / Farm God Journal</h2>
@@ -274,7 +273,7 @@
   <li class="done"><label><input type="checkbox" checked> Define final win condition (Chapter 4 cleared)</label></li>
   <li class="done"><label><input type="checkbox" checked> Add check that triggers when Chapter 4 is completed</label></li>
   <li class="done"><label><input type="checkbox" checked> Build end panel</label></li>
-  <li class="done"><label><input type="checkbox" checked> Test full playthrough from empty save to win screen</label></li>
+  <li><label><input type="checkbox"> Test full playthrough from empty save to win screen</label></li>
 </ul>
 
 <h2>Phase 15 — Settings Menu</h2>
@@ -285,7 +284,7 @@
   <li class="done"><label><input type="checkbox" checked> Add SFX volume slider</label></li>
   <li class="done"><label><input type="checkbox" checked> Add mute button</label></li>
   <li class="done"><label><input type="checkbox" checked> Add fullscreen toggle</label></li>
-  <li class="done"><label><input type="checkbox" checked> Add language dropdown (English/Japanese — UI is in place; the languages themselves are set up in Phase 22)</label></li>
+  <li><label><input type="checkbox"> Add language dropdown (English/Japanese, if localization is done)</label></li>
   <li class="done"><label><input type="checkbox" checked> Add a Quit Game button</label></li>
 </ul>
 
@@ -340,99 +339,34 @@
 <h2>Phase 19 — Tutorial (Chapter 1)</h2>
 <p class="note">Chapter 1 doubles as the tutorial: a short, simple guided sequence (a few minutes) that darkens the screen except for the element the player should click, with a line of text saying what to do. The tutorial is finished once Chapter 1 is claimed. Kept deliberately easy — no skip system, no branching, no extra mechanics. Placed before Polish &amp; Cleanup so the final playtest and build include it. Tutorial progress is derived from existing state (JournalManager.IsChapter1Claimed / chapter 1 objective progress) rather than stored separately, so no new save data.</p>
 <ul>
-  <li class="done"><label><input type="checkbox" checked> Decide the tutorial steps, matched one-to-one to the Chapter 1 objectives (Phase 13: choose Chapter 1's objectives with the tutorial in mind)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Build the dark overlay: a full-screen dimmed panel with a clear highlight "hole" over the target element (UI element or tile)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Add an instruction text box (and optional arrow) positioned next to the highlighted element</label></li>
-  <li class="done"><label><input type="checkbox" checked> Create TutorialManager: owns the current step, steps defined as data (target, text, completion condition), advances by subscribing to existing events (harvest, sell, unlock, refill, objective completed/claimed) — named Action handlers, subscribed in OnEnable/OnDisable</label></li>
-  <li class="done"><label><input type="checkbox" checked> Block clicks outside the highlighted element during a step, without blocking the highlighted element itself</label></li>
-  <li class="done"><label><input type="checkbox" checked> Make sure no step can soft-lock the player (e.g. out of water or coins mid-tutorial)</label></li>
-  <li class="done"><label><input type="checkbox" checked> End the tutorial when Chapter 1 is claimed (JournalManager.OnChapter1Claimed) and never show it again</label></li>
-  <li class="done"><label><input type="checkbox" checked> Handle loading a save mid-tutorial (resume at the right step) and a save with Chapter 1 already claimed (no tutorial)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Test the full tutorial from an empty save through claiming Chapter 1</label></li>
+  <li><label><input type="checkbox"> Decide the tutorial steps, matched one-to-one to the Chapter 1 objectives (Phase 13: choose Chapter 1's objectives with the tutorial in mind)</label></li>
+  <li><label><input type="checkbox"> Build the dark overlay: a full-screen dimmed panel with a clear highlight "hole" over the target element (UI element or tile)</label></li>
+  <li><label><input type="checkbox"> Add an instruction text box (and optional arrow) positioned next to the highlighted element</label></li>
+  <li><label><input type="checkbox"> Create TutorialManager: owns the current step, steps defined as data (target, text, completion condition), advances by subscribing to existing events (harvest, sell, unlock, refill, objective completed/claimed) — named Action handlers, subscribed in OnEnable/OnDisable</label></li>
+  <li><label><input type="checkbox"> Block clicks outside the highlighted element during a step, without blocking the highlighted element itself</label></li>
+  <li><label><input type="checkbox"> Make sure no step can soft-lock the player (e.g. out of water or coins mid-tutorial)</label></li>
+  <li><label><input type="checkbox"> End the tutorial when Chapter 1 is claimed (JournalManager.OnChapter1Claimed) and never show it again</label></li>
+  <li><label><input type="checkbox"> Handle loading a save mid-tutorial (resume at the right step) and a save with Chapter 1 already claimed (no tutorial)</label></li>
+  <li><label><input type="checkbox"> Test the full tutorial from an empty save through claiming Chapter 1</label></li>
 </ul>
 
 <h2>Phase 20 — Polish &amp; Cleanup</h2>
 <ul>
-  <li class="done"><label><input type="checkbox" checked> Clean up unused test assets and scripts (audit found no unused scripts — CameraFit was the only unreferenced one and is now in use)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Reorganize the Scripts folder: every *Manager into Managers/ (TutorialManager, AudioManager), every UI script into UI/ (TutorialOverlay, ChapterTabUI, QuestRowUI, UpgradeNodeUI); remove the emptied Tutorial/ folder. Move inside the Unity Project window so .meta files follow</label></li>
-  <li class="done"><label><input type="checkbox" checked> Check all UI text is readable and correctly updating</label></li>
-  <li class="done"><label><input type="checkbox" checked> Playtest full loop again from scratch</label></li>
-  <li class="done"><label><input type="checkbox" checked> Fix any bugs found during full playtest</label></li>
-  <li class="done"><label><input type="checkbox" checked> Resolution/aspect ratio handling — CameraFit added and verified in a build</label></li>
-  <li class="done"><label><input type="checkbox" checked> Final build/export</label></li>
+  <li><label><input type="checkbox"> Clean up unused test assets and scripts</label></li>
+  <li><label><input type="checkbox"> Check all UI text is readable and correctly updating</label></li>
+  <li><label><input type="checkbox"> Playtest full loop again from scratch</label></li>
+  <li><label><input type="checkbox"> Fix any bugs found during full playtest</label></li>
+  <li><label><input type="checkbox"> Resolution/aspect ratio handling (grid oversized at low res; deliberately deferred, window left resizable — CameraFit script is the planned fix)</label></li>
+  <li><label><input type="checkbox"> Final build/export</label></li>
 </ul>
 
-<h2>Phase 21 — Playtest Feedback: Fixes, Balance &amp; UX</h2>
-<p class="note">Collected from outside playtesters' feedback after the first build. Placed before localization so translated text isn't redone after UI changes. Deferred ideas (not scheduled): click-to-grow (clicking a growing crop adds growth time, applying to automated crops too), golden-crop bonus event, active boosts/spells. Crit and streak bonuses were rejected because they stop mattering once a crop is automated.</p>
-
-<p class="note"><b>Fixed / decided</b></p>
-<ul>
-  <li class="done"><label><input type="checkbox" checked> Automation did not restart after water ran out: GridManager now retries mature automated tiles on WaterManager.OnWaterGained (covers buying water and passive regeneration)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Dirt: excluded from Click/Yield Power (harvest power forced to 1) and from the OnCropGathered stat event; OnTileHarvested still fires for the tutorial</label></li>
-  <li class="done"><label><input type="checkbox" checked> Dirt balance: GrowthTime removed instead of adding a cooldown — Dirt always gives exactly 1 per click, which is the intended balance for now</label></li>
-  <li class="done"><label><input type="checkbox" checked> Removed the "gather crops" objective from Chapter 1 (it blocked progression now that Dirt does not count as a gathered crop)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Laboratory button disappearing: dropdown locked during the start animation, button alpha restored in the idle state (SetInstant), CompleteFadePlayed reset in the automation branch</label></li>
-  <li class="done"><label><input type="checkbox" checked> Skip-water (Lucky Water) chance lowered to a flat 8% as an interim value (reworked into small steps below)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Water Refill Power now boosts both passive regeneration and the Refill Water button</label></li>
-  <li class="done"><label><input type="checkbox" checked> Decided: no delay between a crop maturing and automation collecting it</label></li>
-  <li class="done"><label><input type="checkbox" checked> Decided: plant sell values stay as they are; plant income grows through new Click Power / Yield Power upgrades instead (revised by the V2 balance below: sell values go up 25–70% and the power upgrades grow to 8 steps each)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Upgrade effect text now shows on every node (it was a missing description, not a design problem)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Fullscreen toggle: resolution set explicitly (native size in fullscreen, previous windowed size restored)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Run In Background enabled in Player Settings</label></li>
-  <li class="done"><label><input type="checkbox" checked> Optional cleanups: Laboratory sound-loop flags reset in OnDisable; automation cost-slot loop matches the research one</label></li>
-  <li class="done"><label><input type="checkbox" checked> Chapter 1 claim popup: LabRequestCompleteUI also listens to JournalManager.OnChapter1Claimed and shows "NEW TABS!!" with one grouped image (Laboratory + Upgrades). PopupRequest carries an optional Sprite instead of a CropData; no popup on loading a save that already has Chapter 1 claimed (event only fires live)</label></li>
-</ul>
-
-<p class="note"><b>Balance &amp; design (V2 rework)</b> — Simulating the old numbers showed every upgrade owned by about minute 43 (matches the "owns everything by Zucchini" feedback), after which the coin cap (6,150) fills and nothing is left to buy. Gold is only earned while there is room under the cap, so the Chapter 4 "Earn 50,000" objective could never be reached. The fix is the V2 rework: pricier crops and tiles, +6% tile price per tile already bought, and 58 small crop-gated upgrades instead of 17. Every number, table and the expected timeline are in claude/balance-v2.md. Done by hand, in the order below; each step can be tested on its own.</p>
-<ul>
-  <li class="done"><label><input type="checkbox" checked> Decide the target curve — done, see claude/balance-v2.md (simulated: Chapter 2 at about 18 min, Chapter 3 at about 68, Chapter 4 at about 94; plan for 110–140 min with real players)</label></li>
-  <li class="done"><label><input type="checkbox" checked> List every current upgrade and split the big ones into small steps — done, 17 → 58 upgrades (tables in claude/balance-v2.md, section 5)</label></li>
-  <li class="done"><label><input type="checkbox" checked> <b>Start here.</b> Set the start max coins to 30 on ResourceManager. Needed first: with tile price escalation a start cap of 20 can soft-lock Chapter 1 (the third Carrot tile would cost more than the cap)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Crops: set the new CoinYield, tile UnlockCost, and the coin part of ResearchCost / AutomationCost on all 12 crops (claude/balance-v2.md, section 3). Radish research (35) stays above the start cap on purpose: it needs the first coin upgrade</label></li>
-  <li class="done"><label><input type="checkbox" checked> Tile price escalation in GridManager: [SerializeField] tileCostGrowth = 0.06f, CountPurchasedTiles() (unlocked tiles minus the free starting tile, derived so nothing new is saved), GetTileUnlockCost(tile) = round(base × (1 + growth × purchased)); TryUnlockTile uses it for both the HasEnoughCoins check and TrySpendCoins. Keep growth ≤ 0.065 so the last Blackberry tile stays below the final cap of 31,200</label></li>
-  <li class="done"><label><input type="checkbox" checked> Test Chapter 1 worst case: buy 9 Radish tiles and 2 Carrot tiles first, the third Carrot tile must still be affordable at a cap of 30</label></li>
-  <li class="done"><label><input type="checkbox" checked> Coin chain: grow it from 6 to 12 BLING steps (final cap 31,200). Each step's cost must be ≤ the cap before buying it</label></li>
-  <li><label><input type="checkbox"> Water lines: THIRSTY 4 → 8 steps (same +150 total), FAST BUCKET 1 → 5 steps (−1s each), BIG BUCKET 1 → 5 steps (+1 each), LUCKY WATER 1 → 4 steps (+2% each, total stays 8%) — set the SO name, list entry, node, connector and crop gate in the same pass as each upgrade, as done for the other lines</label></li>
-  <li class="done"><label><input type="checkbox" checked> Harvest lines: Click Power 2 → 8 steps and Yield Power 2 → 8 steps (+1 each)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Laboratory lines: Research Speed 1 → 4 steps and Automation Speed 1 → 4 steps (+1 each)</label></li>
-  <li class="done"><label><input type="checkbox" checked> For every new upgrade (41 in total): unique SO name, entry in UpgradeManager.allUpgradesList, node + connector placed in UpgradesUI, effect label filled in, and the cost at or below the coin cap of the tier where it becomes available</label></li>
-  <li class="done"><label><input type="checkbox" checked> Crop gates: set TargetCrop + CropState on every upgrade as listed in claude/balance-v2.md, section 5 (always set both, otherwise the upgrade stays locked forever; stacks with PreviousUpgrade). The coin chain is gated too (each BLING step after the first needs the previous crop researched) — this replaces the old "do not gate the coin chain" rule. The last step of every line needs Blackberry automated, so Chapter 4 still has things to buy — except the two lab speed lines: a speed upgrade must never require the last thing it speeds up, so Research Efficiency IV needs Strawberry researched and Automation Efficiency IV needs Strawberry automated (balance-v2.md, section 5)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Upgrade nodes: show the required crop and state as text, e.g. "Radish Researched", red while not met and green once met; hidden when the node has no TargetCrop (requirementText TMP_Text in the node prefab, UpgradeManager.IsCropRequirementMet(data), node.Refresh(state, cropRequirementMet)). With 50+ gated upgrades players need to see why a node is locked</label></li>
-  <li><label><input type="checkbox"> Journal targets: Earn Coins to 6,000 (Chapter 2), 350,000 (Chapter 3) and 250,000 (Chapter 4). Re-check the CropGathered targets (Chapter 2: 500, Chapter 3: 1,800, Chapter 4: 3,000, kept on purpose: the last ~12 minutes are an automated grind with nothing to buy) — Dirt no longer counts and the event counts harvests, not crops per harvest</label></li>
-  <li><label><input type="checkbox"> Replay from an empty save with the new tree and check the pace through to the win screen against the expected timeline, including that income keeps growing through the Tomato stretch. If it feels off, the knobs are tileCostGrowth (max 0.065), the cost of each line's last step, and the Chapter 4 gather target</label></li>
-</ul>
-
-<p class="note"><b>UI / UX</b></p>
-<ul>
-  <li class="done"><label><input type="checkbox" checked> Make the Laboratory easier to notice (hint, highlight, or a mention in the tutorial/Journal) — players can get far without ever opening it. Done via the "NEW TABS!!" popup on claiming Chapter 1</label></li>
-  <li class="done"><label><input type="checkbox" checked> Laboratory dropdowns: completed items are marked so players can see what is not done yet (research dropdown: researched crops; automation dropdown: automated crops). Chose a mark over making them non-clickable: a done item's seed icon is swapped for a done-mark sprite, the original icons are captured once in Start so they can be restored, and labels refresh on Start and on LaboratoryManager.OnRequestedCropResearched / OnRequestedCropAutomated. Done items stay selectable. Still undecided: how it looks when everything is done</label></li>
-  <li class="done"><label><input type="checkbox" checked> Laboratory dropdowns: scrollbar added to the dropdown template as the cue that the list can be scrolled. Dropped: defaulting the selection to the first not-done crop, and opening the list at the current selection (the scrollbar is enough)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Sell UI: add a "sell half" button next to "sell all"</label></li>
-  <li class="done"><label><input type="checkbox" checked> Upgrade UI: show "Purchased" on bought upgrades instead of the price</label></li>
-  <li class="done"><label><input type="checkbox" checked> Laboratory upgrade nodes: the two labels were swapped (ResearchSpeed said "Auto. Speed", AutomationSpeed said "Res. Speed") — fixed</label></li>
-  <li><label><input type="checkbox"> Laboratory upgrade nodes: UpgradeNodeUI prints "x{1 + amount}" so every step would read "x2" — make the text per step (e.g. "+100%"). Not confirmed done yet, check it in the Upgrades panel</label></li>
-  <li class="done"><label><input type="checkbox" checked> Show the tile unlock price: a simple, small text above each locked tile, reading GridManager.GetTileUnlockCost(tile). It changes with every tile bought, so refresh all locked tiles after each unlock (and hide the text once the tile is unlocked)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Journal: the "4 - Crop Gathered" objective has the description "Water Refilled", fix the text</label></li>
-  <li class="done"><label><input type="checkbox" checked> Gold amounts now reach 6 digits: add a K/M number formatter for coins and costs</label></li>
-  <li class="done"><label><input type="checkbox" checked> Red notification dots, event-driven (no polling): abstract NotificationDot base (dot GameObject, abstract ShouldShow(), virtual IsUnlocked(), Refresh() only touches the dot when the state changes). Put the script on the button, not on the dot itself (an inactive object never gets OnEnable/Start). Each button gets a small subclass that only lists the events to watch (named Action handlers, subscribed in OnEnable/OnDisable) and the manager query to ask. Journal dot: JournalManager.HasClaimableReward() (a completed, unclaimed objective), refreshed on OnObjectiveCompleted / OnObjectiveClaimed. Still undecided: whether the Journal dot also covers a fully claimed chapter waiting for UnlockNextChapter (would need a new OnChapterClaimed event fired after the state change)</label></li>
-  <li class="done"><label><input type="checkbox" checked> Upgrades dot: UpgradeManager.HasAffordableUpgrade() (state Available and enough coins, reuses GetUpgradeState so the dot and the panel agree), refreshed on OnCoinsChanged, OnUpgradeUnlocked, OnCropUnlocked, OnRequestedCropResearched / OnRequestedCropAutomated. Hidden until Chapter 1 is claimed: IsUnlocked() reads JournalManager.IsChapter1Claimed() and the dot refreshes on OnChapter1Claimed. The unlock rule now lives in two places (UpgradesUI and the dot) on purpose: reading upgradesButton.interactable would depend on which script handles the event first</label></li>
-  <li class="done"><label><input type="checkbox" checked> Laboratory dot: LaboratoryNotificationDot + LaboratoryManager.HasAvailableAction() (research slot idle and an unresearched crop is affordable, or automation slot idle and a researched, not automated crop is affordable; loops researchableCrops, same list as the dropdowns). Same Chapter 1 gate. Subscribes to OnCoinsChanged, OnCropChanged (costs can be crops), OnRequestedCropResearched / OnRequestedCropAutomated, OnChapter1Claimed. Two timing rules so the dot reads the final state: (1) in UpdateResearchProgress / UpdateAutomationProgress clear currentResearchingCrop / currentAutomatingCrop BEFORE invoking the finish events (use a local copy of the crop for the event), otherwise the dot sees a busy lab and never comes back on; (2) on start, the lab must already be marked busy when the coin event fires — either a new OnLabActionStarted event fired after the start (robust, also works if a cost is ever free) or reordering StartResearching / StartAutomating so the current crop is set before SpendResources (smaller, but relies on spending firing a coin event). Done and working</label></li>
-  <li><label><input type="checkbox"> Refresh the dots after loading a save: JournalManager and LaboratoryManager ApplyState fire no events (ResourceManager and UpgradeManager do), so a dot can start stale. Test by loading a save with a completed, unclaimed objective; if it is stale, call a refresh from SaveManager after all ApplyState calls</label></li>
-  <li class="done"><label><input type="checkbox" checked> Fix the upgrade connectors after nodes and connectors were regrouped under separate parent objects: ConnectorLine.SetEndpoints used anchoredPosition, which is only valid when nodes and connector share a parent. It now converts each node's world position into the connector parent's space (parent.InverseTransformPoint(node.TransformPoint(node.rect.center))) and sets localPosition / sizeDelta / localRotation from that. UpgradeNodeUI.ConnectorAnchor (the node icon's RectTransform) is passed from UpgradesUI.Start so the line meets the icon, not the middle of the whole node (the name and cost text made the rect center sit too low). Connectors still only show once their source upgrade is Bought. Rule of thumb: compare positions of objects with different parents in one shared space</label></li>
-</ul>
-
-<h3>Full code review (after the balance and UI work, before localization)</h3>
-<ul>
-  <li><label><input type="checkbox"> Review the whole project together and fix the weak points. Known so far: UpgradeManager and LaboratoryManager reference each other (tight coupling); UpgradeNodeUI.Refresh and SetVisualState take growing lists of positional flags (a small view-model would be cleaner); saves identify upgrades by asset name, so renaming an asset breaks old saves; node lists, connectors and allUpgradesList are filled in by hand (an OnValidate or context-menu helper would remove that)</label></li>
-</ul>
-
-<h2>Phase 22 — Localization (Japanese) [Optional]</h2>
+<h2>Phase 21 — Localization (Japanese) [Optional]</h2>
 <p class="note">Deliberately last — the game must be complete, working and finished in English first. Localization only starts once everything above is done. Stretch goal, dependent on remaining time; not required for the core deliverable.</p>
 <ul id="optional-phase">
-  <li class="done"><label><input type="checkbox" checked> Decide localization approach (Unity Localization package vs. simple lookup table) — decided: Unity Localization package</label></li>
+  <li><label><input type="checkbox"> Decide localization approach (Unity Localization package vs. simple lookup table)</label></li>
   <li><label><input type="checkbox"> Extract all in-game UI text (including the tutorial and tip texts) into a translatable source (strings table)</label></li>
   <li><label><input type="checkbox"> Translate extracted text to Japanese</label></li>
-  <li class="done"><label><input type="checkbox" checked> Add a language toggle (English/Japanese)</label></li>
+  <li><label><input type="checkbox"> Add a language toggle (English/Japanese)</label></li>
   <li><label><input type="checkbox"> Verify TMP fonts render Japanese characters correctly</label></li>
   <li><label><input type="checkbox"> Test UI layout doesn't break with longer/shorter Japanese strings</label></li>
 </ul>

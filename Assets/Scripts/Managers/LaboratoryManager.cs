@@ -227,7 +227,7 @@ public class LaboratoryManager : MonoBehaviour
             
             state.FlagCropAsResearched();
             currentResearchingCrop = null;
-            OnRequestedCropResearched?.Invoke(currentResearchingCrop);
+            OnRequestedCropResearched?.Invoke(finished);
             SoundManager.Instance.PlaySFX("LabComplete");
         }
     }
@@ -308,10 +308,10 @@ public class LaboratoryManager : MonoBehaviour
             CropData finished = currentAutomatingCrop;
             
             state.FlagCropAsAutomated();
-            OnCropAutomated?.Invoke(currentAutomatingCrop);
-            OnRequestedCropAutomated?.Invoke(currentAutomatingCrop);
-            SoundManager.Instance.PlaySFX("LabComplete");
             currentAutomatingCrop = null;
+            OnCropAutomated?.Invoke(finished);
+            OnRequestedCropAutomated?.Invoke(finished);
+            SoundManager.Instance.PlaySFX("LabComplete");
         }
     }
 
