@@ -24,8 +24,8 @@ public class LaboratoryNotificationDot : NotificationDot
     {
         resourceManager.OnCoinsChanged += onCoinsChangedHandler;
         resourceManager.OnCropChanged += onCropInventoryChangedHandler;
-        labManager.OnRequestedCropResearched += onCropStateChangedHandler;
-        labManager.OnRequestedCropAutomated += onCropStateChangedHandler;
+        labManager.OnCropResearched += onCropStateChangedHandler;
+        labManager.OnCropAutomated += onCropStateChangedHandler;
         labManager.OnLabActionStarted += onLabChangedHandler;
         journalManager.OnChapter1Claimed += onLabChangedHandler;
     }
@@ -34,8 +34,8 @@ public class LaboratoryNotificationDot : NotificationDot
     {
         resourceManager.OnCoinsChanged -= onCoinsChangedHandler;
         resourceManager.OnCropChanged -= onCropInventoryChangedHandler;
-        labManager.OnRequestedCropResearched -= onCropStateChangedHandler;
-        labManager.OnRequestedCropAutomated -= onCropStateChangedHandler;
+        labManager.OnCropResearched -= onCropStateChangedHandler;
+        labManager.OnCropAutomated -= onCropStateChangedHandler;
         labManager.OnLabActionStarted -= onLabChangedHandler;
         journalManager.OnChapter1Claimed -= onLabChangedHandler;
     }

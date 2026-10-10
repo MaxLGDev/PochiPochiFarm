@@ -9,6 +9,12 @@ public enum UpgradeState
     Bought
 }
 
+// ## Known and accepted coupling
+// UpgradeManager is the hub for upgrade effects. ResourceManager and LaboratoryManager
+//     reference it (to subscribe to OnUpgradeUnlocked) and it references them back
+//     (to spend coins / read crop state). Intentional: each manager applies its own effects.
+//     Do not "fix" this without a real bug, it would need an interface or mediator.
+
 public class UpgradeManager : MonoBehaviour
 {
     // --- Events ---

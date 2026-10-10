@@ -99,10 +99,9 @@ public class LabState
 public class LaboratoryManager : MonoBehaviour
 {
     // --- Events ---
+    public event Action<CropData> OnCropResearched;
     public event Action<CropData> OnCropAutomated;
-    public event Action<CropData> OnRequestedCropResearched;
-    public event Action<CropData> OnRequestedCropAutomated;
-    private event Action<UpgradeData> onUpgradeUnlockedHandler;
+    private Action<UpgradeData> onUpgradeUnlockedHandler;
     public event Action OnLabActionStarted;
 
     // --- References ---
@@ -139,7 +138,7 @@ public class LaboratoryManager : MonoBehaviour
         {
             LabState state = new LabState();
 
-            if (crop.startsResearched)
+            if (crop.StartsResearched)
                 state.FlagCropAsResearched();
 
             cropsResearch[crop] = state;
@@ -227,7 +226,7 @@ public class LaboratoryManager : MonoBehaviour
             
             state.FlagCropAsResearched();
             currentResearchingCrop = null;
-            OnRequestedCropResearched?.Invoke(finished);
+            OnCropResearched?.Invoke(finished);
             SoundManager.Instance.PlaySFX("LabComplete");
         }
     }
@@ -310,7 +309,6 @@ public class LaboratoryManager : MonoBehaviour
             state.FlagCropAsAutomated();
             currentAutomatingCrop = null;
             OnCropAutomated?.Invoke(finished);
-            OnRequestedCropAutomated?.Invoke(finished);
             SoundManager.Instance.PlaySFX("LabComplete");
         }
     }

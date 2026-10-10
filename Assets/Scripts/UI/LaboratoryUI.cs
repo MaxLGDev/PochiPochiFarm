@@ -159,15 +159,15 @@ public class LaboratoryUI : MonoBehaviour
     private void OnEnable()
     {
         journalManager.OnChapter1Claimed += HandleJournalChapter1Claimed;
-        labManager.OnRequestedCropResearched += HandleResearchCompleted;
-        labManager.OnRequestedCropAutomated += HandleAutomationCompleted;
+        labManager.OnCropResearched += HandleResearchCompleted;
+        labManager.OnCropAutomated += HandleAutomationCompleted;
     }
 
     private void OnDisable()
     {
         journalManager.OnChapter1Claimed -= HandleJournalChapter1Claimed;
-        labManager.OnRequestedCropResearched -= HandleResearchCompleted;
-        labManager.OnRequestedCropAutomated -= HandleAutomationCompleted;
+        labManager.OnCropResearched -= HandleResearchCompleted;
+        labManager.OnCropAutomated -= HandleAutomationCompleted;
 
         if (SoundManager.Instance != null)
         {

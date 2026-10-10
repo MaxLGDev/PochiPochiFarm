@@ -168,8 +168,8 @@ public class JournalManager : MonoBehaviour
         waterManager.OnWaterRefilled += onWaterRefilledHandler;
         gridManager.OnCropGathered += onCropGatheredHandler;
         gridManager.OnCropUnlocked += onRequestedCropUnlockedHandler;
-        labManager.OnRequestedCropResearched += onRequestedCropResearchedHandler;
-        labManager.OnRequestedCropAutomated += onRequestedCropAutomatedHandler;
+        labManager.OnCropResearched += onRequestedCropResearchedHandler;
+        labManager.OnCropAutomated += onRequestedCropAutomatedHandler;
     }
 
     private void OnDisable()
@@ -179,8 +179,8 @@ public class JournalManager : MonoBehaviour
         waterManager.OnWaterRefilled -= onWaterRefilledHandler;
         gridManager.OnCropGathered -= onCropGatheredHandler;
         gridManager.OnCropUnlocked -= onRequestedCropUnlockedHandler;
-        labManager.OnRequestedCropResearched -= onRequestedCropResearchedHandler;
-        labManager.OnRequestedCropAutomated -= onRequestedCropAutomatedHandler;
+        labManager.OnCropResearched -= onRequestedCropResearchedHandler;
+        labManager.OnCropAutomated -= onRequestedCropAutomatedHandler;
     }
 
 

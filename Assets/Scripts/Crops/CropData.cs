@@ -66,7 +66,10 @@ public class CropData : ScriptableObject
     // --- Identity ---
     public string CropName;
     public CropType CropType;
-    public bool startsResearched;
+    public bool StartsResearched;
+    
+    // Dirt: always gives 1 per click and doesn't count as a gathered crop.
+    public bool IgnoresHarvestBonuses;
 
 
     // --- Research & Automation ---

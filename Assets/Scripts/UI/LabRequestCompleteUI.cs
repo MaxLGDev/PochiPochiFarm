@@ -66,15 +66,15 @@ public class LabRequestCompleteUI : MonoBehaviour
 
     private void OnEnable()
     {
-        labManager.OnRequestedCropResearched += onResearchedHandler;
-        labManager.OnRequestedCropAutomated += onAutomatedHandler;
+        labManager.OnCropResearched += onResearchedHandler;
+        labManager.OnCropAutomated += onAutomatedHandler;
         journalManager.OnChapter1Claimed += onChapter1ClaimedHandler;
     }
 
     private void OnDisable()
     {
-        labManager.OnRequestedCropResearched -= onResearchedHandler;
-        labManager.OnRequestedCropAutomated -= onAutomatedHandler;
+        labManager.OnCropResearched -= onResearchedHandler;
+        labManager.OnCropAutomated -= onAutomatedHandler;
         journalManager.OnChapter1Claimed -= onChapter1ClaimedHandler;
     }
 

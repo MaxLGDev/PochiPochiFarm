@@ -180,7 +180,12 @@ public class GridManager : MonoBehaviour
 
     public int GetTileUnlockCost(Tile tile)
     {
-        return Mathf.RoundToInt(tile.CropData.UnlockCost * (1f + tileCostGrowth * CountPurchasedTiles()));
+        return CalculateTileCost(tile, CountPurchasedTiles());
+    }
+
+    private int CalculateTileCost(Tile tile, int purchasedcount)
+    {
+        return Mathf.RoundToInt(tile.CropData.UnlockCost * (1 + tileCostGrowth * purchasedcount));
     }
 
     // ==============================
@@ -220,8 +225,7 @@ public class GridManager : MonoBehaviour
 
                 bool startUnlocked = x == 0 && y == 0;
 
-                newTile.OnHarvestRequested +=
-                    tile => HandleHarvestRequested(tile, true);
+                newTile.OnHarvestRequested += HandleManualHarvestRequested;
 
                 newTile.OnUnlockRequested += HandleUnlockRequested;
                 newTile.OnCropMatured += HandleCropMatured;
@@ -238,13 +242,15 @@ public class GridManager : MonoBehaviour
 
     private void RefreshUnlockCost()
     {
+        int purchased = CountPurchasedTiles();
+        
         foreach (Tile tile in grid)
         {
-            TilePriceState state;
-            int cost = GetTileUnlockCost(tile);
-                
             if (tile.IsUnlocked)
                 continue;
+
+            int cost = CalculateTileCost(tile, purchased);
+            TilePriceState state;
             
             if (!CanUnlockTile(tile))
                 state = TilePriceState.Hidden;
@@ -372,14 +378,14 @@ public class GridManager : MonoBehaviour
 
         int power = isManual ? resourceManager.ClickPower : resourceManager.YieldPower;
 
-        if (tile.CropData.CropType == CropType.Dirt)
+        if (tile.CropData.IgnoresHarvestBonuses)
             power = 1;
 
         resourceManager.HandleHarvest(tile, power);
         tile.ResetGrowth();
 
-        if(tile.CropData.CropType != CropType.Dirt)
-        OnCropGathered?.Invoke();
+        if(tile.CropData.IgnoresHarvestBonuses)
+            OnCropGathered?.Invoke();
 
         if (isManual)
         {
@@ -389,6 +395,11 @@ public class GridManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void HandleManualHarvestRequested(Tile tile)
+    {
+        HandleHarvestRequested(tile, true);
     }
 
     private void HandleCropMatured(Tile tile) {

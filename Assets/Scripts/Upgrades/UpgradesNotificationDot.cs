@@ -27,8 +27,8 @@ public class UpgradesNotificationDot : NotificationDot
         resourceManager.OnCoinsChanged += onCoinsChangedHandler;
         upgradeManager.OnUpgradeUnlocked += onUpgradeUnlockedHandler;
         gridManager.OnCropUnlocked += onCropStateChangedHandler;
-        labManager.OnRequestedCropResearched += onCropStateChangedHandler;
-        labManager.OnRequestedCropAutomated += onCropStateChangedHandler;
+        labManager.OnCropResearched += onCropStateChangedHandler;
+        labManager.OnCropAutomated += onCropStateChangedHandler;
         journalManager.OnChapter1Claimed += onChapter1ClaimedHandler;
     }
 
@@ -37,8 +37,8 @@ public class UpgradesNotificationDot : NotificationDot
         resourceManager.OnCoinsChanged -= onCoinsChangedHandler;
         upgradeManager.OnUpgradeUnlocked -= onUpgradeUnlockedHandler;
         gridManager.OnCropUnlocked -= onCropStateChangedHandler;
-        labManager.OnRequestedCropResearched -= onCropStateChangedHandler;
-        labManager.OnRequestedCropAutomated -= onCropStateChangedHandler;
+        labManager.OnCropResearched -= onCropStateChangedHandler;
+        labManager.OnCropAutomated -= onCropStateChangedHandler;
         journalManager.OnChapter1Claimed -= onChapter1ClaimedHandler;
     }
 

@@ -157,11 +157,9 @@ public class WaterManager : MonoBehaviour
                 break;
             case EffectType.WaterRegenPower:
                 waterRefillPower += upgrade.EffectAmount;
-                OnWaterRefilled?.Invoke(waterRefillPower);
                 break;
             case EffectType.WaterRegenSpeed:
                 waterRefillSpeed = Mathf.Max(0.1f, waterRefillSpeed - upgrade.EffectAmount);
-                OnWaterRefilled?.Invoke(waterRefillPower);
                 break;
             case EffectType.SkipWaterChance:
                 skipRate += upgrade.EffectAmount;

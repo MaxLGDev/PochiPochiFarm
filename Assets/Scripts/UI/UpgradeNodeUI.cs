@@ -115,7 +115,7 @@ public class UpgradeNodeUI : MonoBehaviour
                 or EffectType.YieldMultiplier => $"{upgradeDataSo.UpgradeEffect} +{upgradeDataSo.EffectAmount}",
             
             EffectType.AutomationSpeed or EffectType.ResearchSpeed =>
-                $"{upgradeDataSo.UpgradeEffect} x{1 + upgradeDataSo.EffectAmount}",
+                $"{upgradeDataSo.UpgradeEffect} +{100 * upgradeDataSo.EffectAmount}%",
             
             EffectType.SkipWaterChance => $"{upgradeDataSo.UpgradeEffect} +{upgradeDataSo.EffectAmount}%",
             

@@ -77,8 +77,8 @@ public class UpgradesUI : MonoBehaviour
         
         journalManager.OnChapter1Claimed += HandleJournalChapter1Claimed;
         gridManager.OnCropUnlocked += onRequestedCropUnlockedHandler;
-        laboratoryManager.OnRequestedCropResearched += onRequestedCropResearchedHandler;
-        laboratoryManager.OnRequestedCropAutomated += onRequestedCropAutomatedHandler;
+        laboratoryManager.OnCropResearched += onRequestedCropResearchedHandler;
+        laboratoryManager.OnCropAutomated += onRequestedCropAutomatedHandler;
         resourceManager.OnCoinsChanged += onCoinsChangedHandler;
         upgradeManager.OnUpgradeUnlocked += onUpgradeUnlockedHandler;
     }
@@ -90,8 +90,8 @@ public class UpgradesUI : MonoBehaviour
         
         journalManager.OnChapter1Claimed -= HandleJournalChapter1Claimed;
         gridManager.OnCropUnlocked -= onRequestedCropUnlockedHandler;
-        laboratoryManager.OnRequestedCropResearched -= onRequestedCropResearchedHandler;
-        laboratoryManager.OnRequestedCropAutomated -= onRequestedCropAutomatedHandler;
+        laboratoryManager.OnCropResearched -= onRequestedCropResearchedHandler;
+        laboratoryManager.OnCropAutomated -= onRequestedCropAutomatedHandler;
         resourceManager.OnCoinsChanged -= onCoinsChangedHandler;
         upgradeManager.OnUpgradeUnlocked -= onUpgradeUnlockedHandler;
     }
