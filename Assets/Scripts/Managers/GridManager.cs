@@ -378,7 +378,7 @@ public class GridManager : MonoBehaviour
 
         int power = isManual ? resourceManager.ClickPower : resourceManager.YieldPower;
 
-        if (tile.CropData.IgnoresHarvestBonuses)
+        if (!tile.CropData.IgnoresHarvestBonuses)
             power = 1;
 
         resourceManager.HandleHarvest(tile, power);

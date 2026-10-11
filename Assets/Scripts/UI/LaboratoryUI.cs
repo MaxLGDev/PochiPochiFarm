@@ -321,7 +321,7 @@ public class LaboratoryUI : MonoBehaviour
         ActionUI ui = researchUI;
 
         // No crop selected yet.
-        if (ui.SelectedCrop == null)
+        if (!ui.SelectedCrop)
             return;
 
         List<CostEntry> costs = ui.SelectedCrop.ResearchCost;
@@ -342,11 +342,11 @@ public class LaboratoryUI : MonoBehaviour
                 CostSlotUI slot = researchCostSlots[i];
 
                 slot.slotRoot.SetActive(true);
-                slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[entry.crop.GrowthSprites.Length - 1];
+                slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[^1];
 
                 bool entryAffordable = resourceManager.HasEnough(entry);
                 string color = entryAffordable ? "green" : "red";
-                int currentAmount = entry.type == ResourceType.Coin ? resourceManager.Coins : resourceManager.GetCropCount(entry.crop);
+                string currentAmount = StatsFormatter.FormatNumber(entry.type == ResourceType.Coin ? resourceManager.Coins : resourceManager.GetCropCount(entry.crop));
                 slot.slotText.text = $"<color={color}>{currentAmount}</color>/{entry.amount}";
             }
         }
@@ -412,7 +412,7 @@ public class LaboratoryUI : MonoBehaviour
     {
         ActionUI ui = automationUI;
 
-        if (ui.SelectedCrop == null)
+        if (!ui.SelectedCrop)
             return;
 
         List<CostEntry> costs = ui.SelectedCrop.AutomationCost;
@@ -433,12 +433,12 @@ public class LaboratoryUI : MonoBehaviour
                 CostSlotUI slot = automationCostSlots[i];
 
                 slot.slotRoot.SetActive(true);
-                slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[entry.crop.GrowthSprites.Length - 1];
+                slot.slotIcon.sprite = entry.type == ResourceType.Coin ? coinIcon : entry.crop.GrowthSprites[^1];
 
                 bool entryAffordable = resourceManager.HasEnough(entry);
                 string color = entryAffordable ? "green" : "red";
-                int currentAmount = entry.type == ResourceType.Coin ? resourceManager.Coins : resourceManager.GetCropCount(entry.crop);
-                slot.slotText.text = $"<color={color}>{currentAmount}</color>/{entry.amount}";
+                string currentAmount = StatsFormatter.FormatNumber(entry.type == ResourceType.Coin ? resourceManager.Coins : resourceManager.GetCropCount(entry.crop));
+                slot.slotText.text = $"<color={color}>{currentAmount}</color>/{StatsFormatter.FormatNumber(entry.amount)}";
             }
         }
 

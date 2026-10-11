@@ -116,11 +116,12 @@ public class JournalManager : MonoBehaviour
     // The last chapter has no "next chapter" to infer its claimed state from.
     private bool lastChapterClaimed;
 
-
     // ==============================
     // Unity Lifecycle
     // ==============================
 
+    // ReSharper disable Unity.PerformanceAnalysis
+    // ReSharper disable Unity.PerformanceAnalysis
     private void Awake()
     {
         // Create event handlers so they can be subscribed and unsubscribed reliably.

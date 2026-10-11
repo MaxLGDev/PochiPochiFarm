@@ -34,6 +34,7 @@ public class JournalUI : MonoBehaviour
 
     private readonly List<QuestRowUI> currentRows = new();
     private Chapter currentChapter;
+    private int lastViewedChapter = -1;
 
     private void Awake()
     {
@@ -85,6 +86,7 @@ public class JournalUI : MonoBehaviour
         if (currentChapterIndex != -1)
             PlayPageFlip(0, currentChapterIndex + 1);
 
+        lastViewedChapter = -1;
         currentChapterIndex = 0;
         SetActiveTab(0);
         contentsChapters.SetActive(false);
@@ -109,11 +111,12 @@ public class JournalUI : MonoBehaviour
             Destroy(row.gameObject);
 
         currentRows.Clear();
-        
-        var claimed = journalManager.IsChapterClaimed(chapter);
 
-        claimRewardsButton.interactable = !claimed;
-        claimButtonText.text = claimed ? "CLAIMED" : "CLAIM";
+        var claimed = journalManager.IsChapterClaimed(chapter);
+        var (completed, total) = journalManager.GetChapterProgress(chapter.objectives[0]);
+
+        claimRewardsButton.interactable = !claimed && completed >= total;
+            claimButtonText.text = claimed ? "CLAIMED" : "CLAIM";
 
         foreach (var obj in chapter.objectives)
         {
@@ -127,7 +130,8 @@ public class JournalUI : MonoBehaviour
     public void SelectChapter(Chapter chapter, int chapterIndex)
     {
         currentChapter = chapter;
-
+        lastViewedChapter = chapterIndex;
+        
         if(currentChapterIndex != -1)
             PlayPageFlip(chapterIndex + 1, currentChapterIndex + 1);
 
@@ -164,23 +168,28 @@ public class JournalUI : MonoBehaviour
 
             if(opening)
             {
-                muteFlipSound = true;
                 RefreshTabLocks();
                 currentChapterIndex = -1;
                 PlayPageFlip(0, 0);
-                currentChapterIndex = 0;
+                muteFlipSound = true;
 
-                SetActiveTab(0);
-                contentsChapters.SetActive(false);
-                introChapter.SetActive(false);
-                ShowIntro();
-
+                if (lastViewedChapter >= 0)
+                {
+                    introChapter.SetActive(false);
+                    contentsChapters.SetActive(true);
+                    SelectChapter(journalManager.GetChapter(lastViewedChapter), lastViewedChapter);
+                }
+                else
+                {
+                    currentChapterIndex = 0;
+                    SetActiveTab(0);
+                    contentsChapters.SetActive(false);
+                    introChapter.SetActive(false);
+                    ShowIntro();
+                }
                 muteFlipSound = false;
             }
         }
-
-        if (currentChapter != null)
-            ShowChapter(currentChapter);
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
