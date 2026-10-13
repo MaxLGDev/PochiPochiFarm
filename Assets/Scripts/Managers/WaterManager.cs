@@ -128,14 +128,14 @@ public class WaterManager : MonoBehaviour
         if (resourceManager.Coins < finalCost)
         {
             OnWaterPurchaseFailed?.Invoke();
-            SoundManager.Instance.PlaySFX("Blocked");
+            SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
             return;
         }
 
         if (Water >= MaxWater)
         {
             OnWaterAlreadyFull?.Invoke();
-            SoundManager.Instance.PlaySFX("Blocked");
+            SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
             return;
         }
 

@@ -68,12 +68,21 @@ public class UpgradeManager : MonoBehaviour
 
     public void UnlockUpgrade(UpgradeData upgradeData)
     {
-        if (GetUpgradeState(upgradeData) != UpgradeState.Available)
+        var state = GetUpgradeState(upgradeData);
+
+        if (state == UpgradeState.Bought)
             return;
+
+        if (state == UpgradeState.Locked)
+        {
+            SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
+            return;
+        }
 
         if (!resourceManager.TrySpendCoins(upgradeData.UnlockCost))
         {
             Debug.Log("Not enough coins");
+            SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
             return;
         }
 

@@ -6361,10 +6361,10 @@ TextureImporter:
       name: Sprites_239
       rect:
         serializedVersion: 2
-        x: 480
-        y: 64
-        width: 32
-        height: 32
+        x: 488
+        y: 72
+        width: 19
+        height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7062,13 +7062,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_271
+      name: Zoom
       rect:
         serializedVersion: 2
-        x: 480
-        y: 32
-        width: 32
-        height: 32
+        x: 488
+        y: 39
+        width: 18
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -8074,13 +8074,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_317
+      name: ZoomFruit
       rect:
         serializedVersion: 2
-        x: 928
-        y: 0
-        width: 32
-        height: 32
+        x: 934
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -8348,7 +8348,6 @@ TextureImporter:
       Sprites_269: 807107965194322386
       Sprites_27: 2881394300597005124
       Sprites_270: 1675028656779493114
-      Sprites_271: 5491366042218314101
       Sprites_274: 4371230757220335503
       Sprites_275: 1369708141678630189
       Sprites_276: -6698831121590721801
@@ -8394,7 +8393,6 @@ TextureImporter:
       Sprites_314: 1090824304778294936
       Sprites_315: 4918004194389827741
       Sprites_316: -2827335095472487448
-      Sprites_317: 1202883642130021556
       Sprites_318: 1804400571995438925
       Sprites_319: 2694637979054223785
       Sprites_32: 4276025015923719601
@@ -8475,6 +8473,8 @@ TextureImporter:
       Water2: 1126870915265817487
       Water3: -281341524663830203
       Water4: -6153931807541496760
+      Zoom: 5491366042218314101
+      ZoomFruit: 1202883642130021556
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

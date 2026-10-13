@@ -90,6 +90,7 @@ public class GridManager : MonoBehaviour
         if(!CanUnlockTile(tile))
         {
             tile.FogBlockedAnimation();
+            SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
             return false;
         }
         
@@ -99,6 +100,7 @@ public class GridManager : MonoBehaviour
         {
             Debug.Log("Not enough coins.");
             tile.FogBlockedAnimation();
+            SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
             return false;
         }
 
@@ -369,7 +371,7 @@ public class GridManager : MonoBehaviour
             {
                 Debug.Log("Not enough water to harvest.");
                 if (isManual)
-                    SoundManager.Instance.PlaySFX("Blocked");
+                    SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
                 return false;
             }
 
