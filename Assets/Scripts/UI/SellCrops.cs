@@ -24,7 +24,7 @@ public class SellCrops : MonoBehaviour
         sellHalfButton.SetActive(false);
         gameObject.SetActive(true);
         
-        typewriter.ShowText($"Are you sure you want to sell <color=orange> all your crops??</color>?");
+        typewriter.ShowText("Are you sure you want to sell <color=orange> all your crops</color>?");
     }
 
     public void Close()

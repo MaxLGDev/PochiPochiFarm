@@ -81,7 +81,6 @@ public class UpgradeManager : MonoBehaviour
 
         if (!resourceManager.TrySpendCoins(upgradeData.UnlockCost))
         {
-            Debug.Log("Not enough coins");
             SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
             return;
         }
@@ -149,10 +148,7 @@ public class UpgradeManager : MonoBehaviour
         {
             UpgradeData upgrade = allUpgradesList.Find(u => u.name == id);
             if (upgrade == null)
-            {
-                Debug.LogWarning($"Save refers to unknown upgrade '{id}'");
                 continue;
-            }
 
             allUpgrades[upgrade] = true;
             restored.Add(upgrade);

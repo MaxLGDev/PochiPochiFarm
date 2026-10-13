@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class LaboratoryNotificationDot : NotificationDot
+public class LabNotificationDot : NotificationDot
 {
     [SerializeField] private LaboratoryManager labManager;
     [SerializeField] private ResourceManager resourceManager;

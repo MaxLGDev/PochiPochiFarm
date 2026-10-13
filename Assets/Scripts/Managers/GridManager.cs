@@ -42,10 +42,7 @@ public class GridManager : MonoBehaviour
     private void Awake()
     {
         if (farmLayout == null)
-        {
-            Debug.LogError("FarmLayout is not assigned.");
             return;
-        }
 
         grid = new Tile[width, height];
 
@@ -98,7 +95,6 @@ public class GridManager : MonoBehaviour
 
         if (!resourceManager.HasEnoughCoins(cost))
         {
-            Debug.Log("Not enough coins.");
             tile.FogBlockedAnimation();
             SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
             return false;
@@ -303,18 +299,14 @@ public class GridManager : MonoBehaviour
     private FarmInfo GetFarmInfoAt(Vector2Int position)
     {
         if (!IsInsideBounds(position))
-        {
-            Debug.Log("Position is out of bounds.");
             return null;
-        }
 
         foreach (FarmInfo info in farmLayout.tiles)
         {
             if (info.position == position)
                 return info;
         }
-
-        Debug.LogError($"No CropData found at {position}.");
+        
         return null;
     }
 
@@ -348,10 +340,6 @@ public class GridManager : MonoBehaviour
             RefreshUnlockCost();
             SoundManager.Instance.PlaySFX("TileUnlock");
         }
-        else
-        {
-            Debug.Log("Cannot unlock tile.");
-        }
     }
 
     /// <summary>
@@ -369,7 +357,6 @@ public class GridManager : MonoBehaviour
         {
             if (waterManager.Water < tile.CropData.RequiredWater)
             {
-                Debug.Log("Not enough water to harvest.");
                 if (isManual)
                     SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
                 return false;
@@ -468,10 +455,8 @@ public class GridManager : MonoBehaviour
         {
             Tile tile = GetTileAt(new Vector2Int(entry.x, entry.y));
             if (tile == null)
-            {
-                Debug.LogWarning($"Save refers to an unknown tile ({entry.x},{entry.y})");
                 continue;
-            }
+            
             tile.Restore(entry.isUnlocked, entry.isMature, entry.growthTimer);
         }
         
@@ -500,10 +485,7 @@ public class GridManager : MonoBehaviour
         {
             ZoneRuntime zone = zones.Find(z => z.Data.name == entry.zoneId);
             if (zone == null)
-            {
-                Debug.LogWarning($"Save refers to an unknown zone ({entry.zoneId})");
                 continue;
-            }
 
             if (entry.isUnlocked)
                 zone.Unlock();

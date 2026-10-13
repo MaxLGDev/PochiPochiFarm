@@ -66,14 +66,6 @@ public class ResourceManager : MonoBehaviour
     // ==============================
 
     /// <summary>
-    /// Returns whether the player has enough coins to unlock the tile.
-    /// </summary>
-    public bool HasEnoughCoinsForTile(Tile tile)
-    {
-        return HasEnoughCoins(tile.CropData.UnlockCost);
-    }
-
-    /// <summary>
     /// Returns whether the player has enough coins for the requested amount.
     /// </summary>
     public bool HasEnoughCoins(int amount)
@@ -185,14 +177,6 @@ public class ResourceManager : MonoBehaviour
 
             cropInventory[crop] = newCount;
             OnCropChanged?.Invoke(crop, newCount);
-
-            Debug.Log(
-                $"Removed {amount} {crop.name}(s). Total {crop.name}s: {newCount}"
-            );
-        }
-        else
-        {
-            Debug.Log($"No {crop.name}s to remove.");
         }
     }
 
@@ -234,11 +218,8 @@ public class ResourceManager : MonoBehaviour
     public bool TrySpendCoins(int amount)
     {
         if (amount > Coins)
-        {
-            Debug.Log("Not enough coins to perform this action");
             return false;
-        }
-
+        
         Coins -= amount;
         
         OnCoinsSpent?.Invoke(amount);
@@ -284,13 +265,7 @@ public class ResourceManager : MonoBehaviour
             OnCoinsFull?.Invoke();
 
         if (crop.CoinYield <= 0)
-        {
-            Debug.Log(
-                $"Cannot sell {crop.name}s because its coin yield is zero or negative."
-            );
-
             return 0;
-        }
 
         int maxCropsToSell = Mathf.CeilToInt(
             (float)coinRoom / crop.CoinYield
@@ -303,14 +278,8 @@ public class ResourceManager : MonoBehaviour
         );
 
         if (maxCropsSold <= 0)
-        {
-            Debug.Log(
-                $"Cannot sell any {crop.name}s. Either the coin storage is full or no crops are available."
-            );
-
             return 0;
-        }
-
+        
         RemoveCrop(crop, maxCropsSold);
         AddCoins(crop.CoinYield * maxCropsSold);
 
@@ -367,10 +336,7 @@ public class ResourceManager : MonoBehaviour
         {
             CropData crop = allCrops.Find(c => c.name == entry.cropName);
             if (crop == null)
-            {
-                Debug.LogWarning($"Save refers to unknown crop '{entry.cropName}'");
                 continue;
-            }
 
             cropInventory[crop] = entry.count;
             OnCropChanged?.Invoke(crop, entry.count);

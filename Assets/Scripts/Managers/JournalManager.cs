@@ -265,8 +265,7 @@ public class JournalManager : MonoBehaviour
     }
 
     /// <summary>
-    /// True if the player has something to claim: a completed objective,
-    /// or a fully claimed chapter waiting to be advanced.
+    /// True if the player has an objective waiting to be claimed.
     /// </summary>
     public bool HasClaimableReward()
     {

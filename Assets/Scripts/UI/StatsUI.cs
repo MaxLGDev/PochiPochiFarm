@@ -16,6 +16,8 @@ public class StatsUI : MonoBehaviour
     [Header("Playtime")]
     [SerializeField] private TMP_Text gameTotalPlaytimeText;
 
+    private int lastShownSeconds = -1;
+
     private void Start()
     {
         HandleJournalProgression();
@@ -24,13 +26,21 @@ public class StatsUI : MonoBehaviour
 
     private void Update()
     {
-        UpdateTotalPlaytime();
+        float playtime = statsManager.GetTotalPlaytime();
+        int seconds = (int)playtime;
+
+        if (seconds == lastShownSeconds)
+            return;
+
+        lastShownSeconds = seconds;
+        gameTotalPlaytimeText.text = StatsFormatter.FormatPlaytime(playtime);
     }
 
     private void OnEnable()
     {
         journalManager.OnObjectiveClaimed += HandleJournalProgression;
         upgradeManager.OnUpgradeUnlocked += HandleUpgradesProgression;
+        lastShownSeconds = -1;
     }
 
     private void OnDisable()
@@ -52,6 +62,4 @@ public class StatsUI : MonoBehaviour
         float percent = total > 0 ? (float)completed / total * 100f : 0f;
         upgradesProgressionText.text = $"{completed}/{total} ({percent:F0}%)";
     }
-
-    private void UpdateTotalPlaytime() => gameTotalPlaytimeText.text = StatsFormatter.FormatPlaytime(statsManager.GetTotalPlaytime());
 }
