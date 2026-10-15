@@ -44974,9 +44974,9 @@ MonoBehaviour:
     m_LocalVariables: []
   cropNotResearchedtext:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:efe2d4ce0c3960e48bfd9557add1f7df
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 2841710466703360
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
