@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 // ============================================
 // Enums
@@ -63,6 +64,9 @@ public class CostEntry
 [CreateAssetMenu(fileName = "New Crop Data", menuName = "Crops/Crop")]
 public class CropData : ScriptableObject
 {
+    [SerializeField] private LocalizedString localizedName;
+
+    public LocalizedString LocalizedName => localizedName;
     // --- Identity ---
     public string CropName;
     public CropType CropType;

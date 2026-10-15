@@ -20,19 +20,20 @@ public class CropBox : MonoBehaviour
     {
         // Initialize the UI with the current crop data.
         UpdateCropUI(resourceManager.GetCropCount(cropData));
-        cropsName.text = cropData.CropName;
     }
 
     private void OnEnable()
     {
         // Subscribe to crop count changes while this box is active.
         resourceManager.OnCropChanged += HandleCropChanged;
+        cropData.LocalizedName.StringChanged += HandleCropNameLocalized;
     }
 
     private void OnDisable()
     {
         // Always unsubscribe to prevent stale event subscriptions.
         resourceManager.OnCropChanged -= HandleCropChanged;
+        cropData.LocalizedName.StringChanged -= HandleCropNameLocalized;
     }
 
 
@@ -74,5 +75,10 @@ public class CropBox : MonoBehaviour
     private void UpdateCropUI(int count)
     {
         cropsCount.text = count.ToString();
+    }
+
+    private void HandleCropNameLocalized(string localizedName)
+    {
+        cropsName.text = localizedName;
     }
 }

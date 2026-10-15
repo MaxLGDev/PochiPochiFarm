@@ -1,19 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-[Serializable]
-public class SaveData
-{
-    public TutorialSaveData tutorial = new TutorialSaveData();
-    public TilesSaveData tiles = new TilesSaveData();
-    public ZonesSaveData zones = new ZonesSaveData();
-    public ResourcesSaveData resources = new ResourcesSaveData();
-    public WaterSaveData water = new WaterSaveData();
-    public LabSaveData lab = new LabSaveData();
-    public UpgradesSaveData upgrades = new UpgradesSaveData();
-    public JournalSaveData journal = new JournalSaveData();
-    public StatsSaveData stats = new StatsSaveData();
-}
 
 // ---------- Tutorial ----------
 [Serializable]

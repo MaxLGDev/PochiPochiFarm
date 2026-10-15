@@ -9,6 +9,13 @@ public enum UpgradeState
     Bought
 }
 
+public struct UpgradeNodeInfo
+{
+    public UpgradeState State;
+    public bool IsAffordable;
+    public bool RequirementMet;
+}
+
 // ## Known and accepted coupling
 // UpgradeManager is the hub for upgrade effects. ResourceManager and LaboratoryManager
 //     reference it (to subscribe to OnUpgradeUnlocked) and it references them back
@@ -105,6 +112,18 @@ public class UpgradeManager : MonoBehaviour
     // Requirement Checks
     // ==============================
 
+    public UpgradeNodeInfo GetNodeInfo(UpgradeData data)
+    {
+        UpgradeState state = GetUpgradeState(data);
+
+        return new UpgradeNodeInfo
+        {
+            State = state,
+            IsAffordable = resourceManager.HasEnoughCoins(data.UnlockCost),
+            RequirementMet = IsCropRequirementMet(data)
+        };
+    }
+
     private bool AreRequirementsMet(UpgradeData data)
     {
         if (data.PreviousUpgrade != null && !allUpgrades[data.PreviousUpgrade])
@@ -166,10 +185,10 @@ public class UpgradeManager : MonoBehaviour
     {
         foreach (UpgradeData upgrade in allUpgradesList)
         {
-            if(GetUpgradeState((upgrade)) == UpgradeState.Available && resourceManager.HasEnoughCoins(upgrade.UnlockCost))
-            {
+            UpgradeNodeInfo info = GetNodeInfo(upgrade);
+
+            if (info.State == UpgradeState.Available && info.IsAffordable)
                 return true;
-            }
         }
 
         return false;

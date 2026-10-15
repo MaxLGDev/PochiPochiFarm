@@ -13,6 +13,8 @@ public class GridManager : MonoBehaviour
     public event Action OnTileHarvested;
     public event Action OnCropGathered;
     public event Action<CropData> OnCropUnlocked;
+    public Action OnNotEnoughWater;
+    public event Action<Tile> OnCropNotResearched;
 
     // --- References ---
     [SerializeField] private ResourceManager resourceManager;
@@ -350,6 +352,7 @@ public class GridManager : MonoBehaviour
         if (!labManager.IsCropResearched(tile.CropData))
         {
             tile.CropBlockAnimation();
+            OnCropNotResearched?.Invoke(tile);
             return false;
         }
 
@@ -359,6 +362,7 @@ public class GridManager : MonoBehaviour
             {
                 if (isManual)
                     SoundManager.Instance.PlaySFX("Blocked", UnityEngine.Random.Range(0.9f, 1.1f));
+                OnNotEnoughWater?.Invoke();
                 return false;
             }
 
@@ -367,7 +371,7 @@ public class GridManager : MonoBehaviour
 
         int power = isManual ? resourceManager.ClickPower : resourceManager.YieldPower;
 
-        if (!tile.CropData.IgnoresHarvestBonuses)
+        if (tile.CropData.IgnoresHarvestBonuses)
             power = 1;
 
         resourceManager.HandleHarvest(tile, power);

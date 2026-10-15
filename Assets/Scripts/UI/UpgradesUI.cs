@@ -120,11 +120,7 @@ public class UpgradesUI : MonoBehaviour
     private void RefreshAll()
     {
         foreach (var node in upgradeNodes)
-        {
-            UpgradeData data = node.UpgradeDataSo;
-            bool isAffordable = resourceManager.Coins >= node.UpgradeDataSo.UnlockCost;
-            node.Refresh(upgradeManager.GetUpgradeState(data), isAffordable, upgradeManager.IsCropRequirementMet(data));
-        }
+            node.Refresh(upgradeManager.GetNodeInfo(node.UpgradeDataSo));
 
         foreach (var entry in connectors)
         {

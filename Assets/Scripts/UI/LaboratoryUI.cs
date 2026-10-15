@@ -6,6 +6,8 @@ using TMPro;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization;
 
 /// <summary>
 /// Controls the Laboratory user interface.
@@ -37,6 +39,7 @@ public class LaboratoryUI : MonoBehaviour
         // Starts the action.
         public Button button;
 
+        // Crop name.
         public TMP_Text buttonText;
 
         // Fade animation for the button.
@@ -55,6 +58,13 @@ public class LaboratoryUI : MonoBehaviour
 
         // Crop selection dropdown.
         public TMP_Dropdown dropdown;
+
+        public LocalizedString actionLabel;
+
+        public LocalizedString doneLabel;
+        
+        [NonSerialized] public string ActionText;
+        [NonSerialized] public string DoneText;
 
         /// <summary>
         /// Reference to the currently running UI animation coroutine.
@@ -103,7 +113,10 @@ public class LaboratoryUI : MonoBehaviour
 
     [SerializeField] private float fadeWait = 0.2f;
 
-    private bool laboratoryUnlocked = false;
+    private string[] cropNames;
+    
+
+    private bool laboratoryUnlocked;
     private bool researchLoopPlaying;
     private bool automationLoopPlaying;
 
@@ -123,8 +136,9 @@ public class LaboratoryUI : MonoBehaviour
         OnResearchCropSelected(researchUI.dropdown.value);
         OnAutomationCropSelected(automationUI.dropdown.value);
         
-        RefreshDropdownLabels(researchUI, labManager.IsCropResearched);
-        RefreshDropdownLabels(automationUI, labManager.IsCropAutomated);
+        RefreshCropNames();
+        LoadButtonTexts(researchUI);
+        LoadButtonTexts(automationUI);
     }
 
     private void HandleJournalChapter1Claimed()
@@ -161,6 +175,7 @@ public class LaboratoryUI : MonoBehaviour
         journalManager.OnChapter1Claimed += HandleJournalChapter1Claimed;
         labManager.OnCropResearched += HandleResearchCompleted;
         labManager.OnCropAutomated += HandleAutomationCompleted;
+        LocalizationSettings.SelectedLocaleChanged += HandleLocaleChanged;
     }
 
     private void OnDisable()
@@ -168,6 +183,7 @@ public class LaboratoryUI : MonoBehaviour
         journalManager.OnChapter1Claimed -= HandleJournalChapter1Claimed;
         labManager.OnCropResearched -= HandleResearchCompleted;
         labManager.OnCropAutomated -= HandleAutomationCompleted;
+        LocalizationSettings.SelectedLocaleChanged -= HandleLocaleChanged;
 
         if (SoundManager.Instance != null)
         {
@@ -185,9 +201,9 @@ public class LaboratoryUI : MonoBehaviour
         {
             CropData crop = labManager.GetCropAt(i);
 
-            ui.dropdown.options[i].text = isDone(crop)
-                ? $"<s>{crop.CropName}</s>"
-                : crop.CropName;
+            string newName = cropNames[i] ?? crop.CropName; // falls back to normal name if issue arises
+
+            ui.dropdown.options[i].text = isDone(crop) ? $"<s>{newName}</s>" : newName;
 
             ui.dropdown.options[i].image = isDone(crop)
                 ? doneMarkSprite
@@ -205,6 +221,44 @@ public class LaboratoryUI : MonoBehaviour
             icons[i] = dropdown.options[i].image;
 
         originalIcons[dropdown] = icons;
+    }
+
+    private void RefreshCropNames()
+    {
+        int count = researchUI.dropdown.options.Count;
+        cropNames = new string[count];
+        int pending = count;
+        
+        Debug.Log($"research: {researchUI.dropdown.options.Count}, automation: {automationUI.dropdown.options.Count}");
+        
+        for(int i = 0; i < count; i++)
+        {
+            int index = i;
+            labManager.GetCropAt(i).LocalizedName.GetLocalizedStringAsync().Completed += handle =>
+            {
+                cropNames[index] = handle.Result;
+                pending--;
+
+                if (pending == 0)
+                {
+                    RefreshDropdownLabels(researchUI, labManager.IsCropResearched);
+                    RefreshDropdownLabels(automationUI, labManager.IsCropAutomated);
+                }
+            };
+        }
+    }
+
+    private void HandleLocaleChanged(Locale locale)
+    {
+        RefreshCropNames();
+        LoadButtonTexts(researchUI);
+        LoadButtonTexts(automationUI);
+    }
+
+    private void LoadButtonTexts(ActionUI ui)
+    {
+        ui.actionLabel.GetLocalizedStringAsync().Completed += handle => ui.ActionText = handle.Result;
+        ui.doneLabel.GetLocalizedStringAsync().Completed += handle => ui.DoneText = handle.Result;
     }
     
     /// <summary>
@@ -383,13 +437,14 @@ public class LaboratoryUI : MonoBehaviour
                         ui.buttonFade.SetInstant(true);
                     ui.CompleteFadePlayed = true;
                 }
-                ui.buttonText.text = "RESEARCHED";
+
+                ui.buttonText.text = ui.DoneText ?? "RESEARCHED";
             }
             else
             {
                 ui.rainbowText.enabled = false;
                 ui.buttonText.color = Color.white;
-                ui.buttonText.text = "RESEARCH";
+                ui.buttonText.text = ui.ActionText ?? "RESEARCH";
             }
         }
         else
@@ -476,14 +531,14 @@ public class LaboratoryUI : MonoBehaviour
                     ui.CompleteFadePlayed = true;
                 }
                 ui.warningText.SetActive(false);
-                ui.buttonText.text = "AUTOMATED";
+                ui.buttonText.text = ui.DoneText ?? "AUTOMATED";
             }
             else
             {
                 ui.warningText.SetActive(true);
                 ui.rainbowText.enabled = false;
                 ui.buttonText.color = Color.white;
-                ui.buttonText.text = "AUTOMATE";
+                ui.buttonText.text = ui.ActionText ?? "AUTOMATE";
             }
         }
         else

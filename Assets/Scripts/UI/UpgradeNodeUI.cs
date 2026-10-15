@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using UnityEngine.Serialization;
 
 public class UpgradeNodeUI : MonoBehaviour
 {
@@ -10,7 +9,7 @@ public class UpgradeNodeUI : MonoBehaviour
     
     [SerializeField] private UpgradeData upgradeDataSo;
     [SerializeField] private Button upgradeNodeButton;
-    [FormerlySerializedAs("upgradeIcon")] [SerializeField] private Image nodeIcon;
+    [SerializeField] private Image nodeIcon;
     [SerializeField] private Image boughtOutline;
     [SerializeField] private Image nodeBackground;
     [SerializeField] private Image nodeOverlay;
@@ -36,41 +35,65 @@ public class UpgradeNodeUI : MonoBehaviour
 
     public UpgradeData UpgradeDataSo => upgradeDataSo;
 
+    private void Start()
+    {
+        nodeIcon.sprite = upgradeDataSo.Sprite;
+        upgradeNameText.text =  upgradeDataSo.UpgradeName;
+        RefreshEffectText();
+    }
+
     public void TryUnlockNode() => OnNodeClicked?.Invoke(upgradeDataSo);
 
-    public void Refresh(UpgradeState state, bool isAffordable, bool cropRequirementMet)
+    public void Refresh(UpgradeNodeInfo info)
     {
-        switch (state)
+        switch (info.State)
         {
-            case UpgradeState.Locked:
-                SetVisualState(false, false, true,0.4f, lockedColor);
+            case UpgradeState.Locked: 
+                ShowLocked();
                 break;
-            case UpgradeState.Available:
-                SetVisualState(true, false, true, 1f, availableColor);
+            case UpgradeState.Available: 
+                ShowAvailable();
                 break;
             case UpgradeState.Bought:
-                SetVisualState(true, true, false, 1f, boughtColor);
+                ShowBought();
                 break;
         }
 
-        RefreshCostDisplay(state, isAffordable);
-        RefreshRequirementDisplay(state, cropRequirementMet);
+        RefreshCostDisplay(info.State, info.IsAffordable);
+        RefreshRequirementDisplay(info.State, info.RequirementMet);
     }
 
-    private void SetVisualState(bool buttonInteractable, bool boughtOutlineEnabled, bool overlayEnabled, float alpha, Color textColor)
+    private void ShowLocked()
     {
-        upgradeNodeButton.interactable = buttonInteractable;
-        boughtOutline.enabled = boughtOutlineEnabled;
-        nodeOverlay.enabled = overlayEnabled;
+        upgradeNodeButton.interactable = false;
+        boughtOutline.enabled = false;
+        nodeOverlay.enabled = true;
+        SetAlpha(0.4f);
+        upgradeNameText.color = lockedColor;
+    }
+
+    private void ShowAvailable()
+    {
+        upgradeNodeButton.interactable = true;
+        boughtOutline.enabled = false;
+        nodeOverlay.enabled = true;
+        SetAlpha(1f);
+        upgradeNameText.color = availableColor;
+    }
+
+    private void ShowBought()
+    {
+        upgradeNodeButton.interactable = true;
+        boughtOutline.enabled = true;
+        nodeOverlay.enabled = false;
+        SetAlpha(1f);
+        upgradeNameText.color = boughtColor;
+    }
+
+    private void SetAlpha(float alpha)
+    {
         SetColorOf(nodeIcon, alpha);
         SetColorOf(nodeBackground, alpha);
-
-        nodeIcon.sprite = upgradeDataSo.Sprite;
-        
-        upgradeNameText.color = textColor;
-        upgradeNameText.text = upgradeDataSo.UpgradeName;
-        
-        RefreshEffectText();
     }
 
     private static void SetColorOf(Image image, float alpha)

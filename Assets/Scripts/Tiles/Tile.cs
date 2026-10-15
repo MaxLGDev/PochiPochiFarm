@@ -39,7 +39,6 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     public Vector2Int GridPosition { get; private set; }
     public float GrowthTimer { get; private set; }
     public bool IsUnlocked { get; private set; }
-    public bool IsAutomated { get; private set; }
     public bool IsMature { get; private set; }
 
     // Prevents updating the crop sprite every frame.
@@ -232,7 +231,6 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         lastStageIndex = -1;
 
         IsUnlocked = startUnlocked;
-        IsAutomated = false;
 
         if (cropData.GrowthTime <= 0f)
             IsMature = true;
