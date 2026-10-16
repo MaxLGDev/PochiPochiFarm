@@ -466,17 +466,19 @@
 
 <p class="note"><b>Check</b></p>
 <ul>
-  <li><label><input type="checkbox"> After the cleanup: no new warnings or errors in the Console, quit and reload a save, and play a few minutes through harvest, sell, lab, upgrades and journal. Then do the final full replay from an empty save (Phase 21) on this cleaned-up code</label></li>
+  <li class="done"><label><input type="checkbox" checked> After the cleanup: no new warnings or errors in the Console, quit and reload a save, and play a few minutes through harvest, sell, lab, upgrades and journal. Then do the final full replay from an empty save (Phase 21) on this cleaned-up code</label></li>
 </ul>
 
 <h2>Phase 23 — Localization (Japanese) [Optional]</h2>
 <p class="note">Deliberately last — the game must be complete, working and finished in English first. Localization only starts once everything above is done. Stretch goal, dependent on remaining time; not required for the core deliverable.</p>
 <ul id="optional-phase">
   <li class="done"><label><input type="checkbox" checked> Decide localization approach (Unity Localization package vs. simple lookup table) — decided: Unity Localization package</label></li>
-  <li><label><input type="checkbox"> Extract all in-game UI text (including the tutorial and tip texts) into a translatable source (strings table)</label></li>
-  <li><label><input type="checkbox"> Translate extracted text to Japanese</label></li>
+  <li class="done"><label><input type="checkbox" checked> Extract all in-game UI text (including the tutorial and tip texts) into a translatable source (strings table) — done: farm view, tutorial, Laboratory, GameWon, Journal, Upgrades, the Lab popup (title, tips, image, close text) and the first-launch title screen</label></li>
+  <li class="done"><label><input type="checkbox" checked> Translate extracted text to Japanese — done for every string table</label></li>
   <li class="done"><label><input type="checkbox" checked> Add a language toggle (English/Japanese)</label></li>
-  <li><label><input type="checkbox"> Verify TMP fonts render Japanese characters correctly</label></li>
+  <li class="done"><label><input type="checkbox" checked> Localized images: the Lab popup 'NEW TABS' image comes from an Asset Table (LocalizedSprite), loaded with a Completed callback</label></li>
+  <li class="done"><label><input type="checkbox" checked> First-launch title screen (logo, background, 'Click anywhere to start', language button) with a small fade — done and localized</label></li>
+  <li><label><input type="checkbox"> Verify TMP fonts render Japanese characters correctly (play through every screen in Japanese, look for empty boxes)</label></li>
   <li><label><input type="checkbox"> Test UI layout doesn't break with longer/shorter Japanese strings</label></li>
 </ul>
 
