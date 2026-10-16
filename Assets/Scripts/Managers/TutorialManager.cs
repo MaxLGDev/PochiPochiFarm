@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.Localization.Settings;
 
 /// <summary>
 /// Simple scripted tutorial: one method per highlight, chained one after another.
@@ -69,31 +70,31 @@ public class TutorialManager : MonoBehaviour
 
     private void Step1Journal()
     {
-        Show(journalButton, "You will find what to do in the journal. \nTry clicking on it.", Step1JournalPresentation, 15f,
+        Show(journalButton, "Tutorial.Step1Journal", Step1JournalPresentation, 15f,
             pressTarget: true);
     }
 
     private void Step1JournalPresentation()
     {
-        Show(journalPresentation, "Here is the full journal, with all chapters you will have to clear.", Step1Chapter, 25f);
+        Show(journalPresentation, "Tutorial.Step1JournalPresentation", Step1Chapter, 25f);
     }
 
     private void Step1Chapter()
     {
-        Show(chapter1Button, "Each chapter groups a set of goals. \nOpen Chapter 1.", Step1Objective, 10f, -20f,
+        Show(chapter1Button, "Tutorial.Step1Chapter", Step1Objective, 10f, -20f,
             pressTarget: true);
     }
 
     private void Step1Objective()
     {
         Show(objective1Pos,
-            "Those are the current chapter objectives. \nCome back here regularly to see if you completed one.",
+            "Tutorial.Step1Objective",
             Step1Close, 20f, 10f);
     }
 
     private void Step1Close()
     {
-        Show(journalCloseButton, "Close the journal, \nand let's take a look at the farm.", Step2Dirt, -10f, -20f,
+        Show(journalCloseButton, "Tutorial.Step1Close", Step2Dirt, -10f, -20f,
             pressTarget: true);
     }
     
@@ -103,40 +104,40 @@ public class TutorialManager : MonoBehaviour
 
     private void Step2Dirt()
     {
-        Show(farmBox, "This is your farm. Everything starts from the dirt, in the bottom left position. \nGather some to sell it later.", Step2Sell, -30f,
+        Show(farmBox, "Tutorial.Step2Dirt", Step2Sell, -30f,
             pressTarget: true);
     }
 
     private void Step2Sell()
     {
-        Show(sellButton, "Press sell to turn your harvest into golds.", Step2SellSpecificCrop, 10f, -15f);
+        Show(sellButton, "Tutorial.Step2Sell", Step2SellSpecificCrop, 10f, -15f);
     }
 
     private void Step2SellSpecificCrop()
     {
-        Show(sellCropButton, "Or you can choose to sell \na specific crop by clicking on its box.", Step2RefillWater, 10f, -15f);
+        Show(sellCropButton, "Tutorial.Step2SellSpecificCrop", Step2RefillWater, 10f, -15f);
     }
 
     private void Step2RefillWater()
     {
-        Show(refillWaterButton, "You can buy water by clicking this button.", Step2Gold, -10f, -20f);
+        Show(refillWaterButton, "Tutorial.Step2RefillWater", Step2Gold, -10f, -20f);
     }
 
     private void Step2Gold()
     {
-        Show(goldsDisplay, "This is your current golds, \nwhich will be used for almost everything.", Step2Water, 10f,
+        Show(goldsDisplay, "Tutorial.Step2Gold", Step2Water, 10f,
             20f);
     }
 
     private void Step2Water()
     {
-        Show(waterDisplay, "This is your current water, \nwhich you will need to grow crops.", Step2TileUnlock, -10f, 20f);
+        Show(waterDisplay, "Tutorial.Step2Water", Step2TileUnlock, -10f, 20f);
     }
 
     private void Step2TileUnlock()
     {
         Show(farmBox,
-            "With golds, and the necessary chapters unlocked, \nyou will be able to unlock tiles by clicking on it. \nThen the farming can start!",
+            "Tutorial.Step2TileUnlock",
             Step3Lab, -29f);
     }
     
@@ -146,21 +147,19 @@ public class TutorialManager : MonoBehaviour
 
     private void Step3Lab()
     {
-        Show(labRect, "After claiming chapter 1, you will unlock the laboratory. \nIt allows you to research and automate crops. It's very important!", Step3Upgrade, -10f);
+        Show(labRect, "Tutorial.Step3Lab", Step3Upgrade, -10f);
     }
 
     private void Step3Upgrade()
     {
         Show(upgradeRect,
-            "You can also buy upgrades to make your life easier, check it out sometimes! \nThis also requires chapter 1 to be claimed.",
+            "Tutorial.Step3Upgrade",
             Step3Final, -10f);
     }
 
     private void Step3Final()
     {
-        Show(statsHeader, "This concludes the tutorial. \nGet all the upgrades, research and automate everything, " +
-                          "\nand once the chapter 4 of the journal is claimed, \nyou will have finished the game! " +
-                          "\nPochiPochi is watching you, so good luck!", EndTutorial, 20f, 45f);
+        Show(statsHeader, "Tutorial.Step3Final", EndTutorial, 20f, 45f);
     }
 
     // ------------------------------------------------------------------
@@ -172,11 +171,14 @@ public class TutorialManager : MonoBehaviour
     /// If pressTarget is true, the target's real Button is also triggered
     /// (so clicking the highlighted journal button really opens the journal).
     /// </summary>
-    private void Show(RectTransform target, string text, Action next, float textYOffset = 0f, float textXOffset = 0f, bool pressTarget = false)
+    private void Show(RectTransform target, string key, Action next, float textYOffset = 0f, float textXOffset = 0f, bool pressTarget = false)
     {
         holeButton.onClick.RemoveAllListeners();
         holeFrame.transform.SetAsLastSibling();
-        typewriter.ShowText(text);
+
+        var tutorialLocalizedText = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Tutorial", key);
+        tutorialLocalizedText.Completed += handle => typewriter.ShowText(handle.Result);
+        
         overlay.Highlight(target);
 
         holeText.transform.position = holeButton.transform.position + new Vector3(textXOffset, textYOffset, 0f);

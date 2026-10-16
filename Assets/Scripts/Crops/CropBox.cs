@@ -50,7 +50,7 @@ public class CropBox : MonoBehaviour
         }
 
         sellCropsPanel.gameObject.SetActive(true);
-        sellCropsPanel.Open(cropData);
+        sellCropsPanel.Open(cropData, cropsName.text);
     }
 
 

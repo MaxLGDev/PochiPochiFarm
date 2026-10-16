@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class SellCrops : MonoBehaviour
 {
@@ -7,14 +8,20 @@ public class SellCrops : MonoBehaviour
     [SerializeField] private Typewriter typewriter;
     [SerializeField] private GameObject sellHalfButton;
 
-    public void Open(CropData crop)
+    [SerializeField] private LocalizedString sellAllPrompt;
+    [SerializeField] private LocalizedString sellCropPrompt;
+
+    public void Open(CropData crop, string localizedName)
     {
         SoundManager.Instance.PlaySFX("TogglePanel");
         cropData = crop;
         sellHalfButton.SetActive(true);
         gameObject.SetActive(true);
 
-        typewriter.ShowText($"Are you sure you want to sell <color=orange>{crop.CropName}</color>?");
+        sellCropPrompt.Arguments = new object[] { localizedName };
+        
+        sellCropPrompt.GetLocalizedStringAsync().Completed += handle =>
+            typewriter.ShowText(handle.Result);
     }
 
     public void Open()
@@ -23,8 +30,9 @@ public class SellCrops : MonoBehaviour
         cropData = null;
         sellHalfButton.SetActive(false);
         gameObject.SetActive(true);
-        
-        typewriter.ShowText("Are you sure you want to sell <color=orange> all your crops</color>?");
+
+        sellAllPrompt.GetLocalizedStringAsync().Completed +=
+            handle => typewriter.ShowText(handle.Result);
     }
 
     public void Close()
