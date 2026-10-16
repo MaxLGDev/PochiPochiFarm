@@ -2,10 +2,12 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // --- Colors ---
+    [SerializeField] private bool animateColor = true;
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color hoverColor = Color.yellow;
 
@@ -14,7 +16,7 @@ public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private float animationSpeed = 8f;
 
     // --- State ---
-    private TMP_Text text;
+    private Graphic graphic;
     private Vector3 startPosition;
     private Coroutine animationCoroutine;
 
@@ -25,10 +27,11 @@ public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private void Awake()
     {
-        text = GetComponent<TMP_Text>();
+        graphic = GetComponent<Graphic>();
         startPosition = transform.localPosition;
 
-        text.color = normalColor;
+        if (animateColor && graphic != null)
+            graphic.color = normalColor;
     }
 
     private void OnDisable()
@@ -47,15 +50,9 @@ public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerE
     // Pointer Events
     // ==============================
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        StartAnimation(true);
-    }
+    public void OnPointerEnter(PointerEventData eventData) => StartAnimation(true);
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        StartAnimation(false);
-    }
+    public void OnPointerExit(PointerEventData eventData) => StartAnimation(false);
 
 
     // ==============================
@@ -79,25 +76,25 @@ public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerE
         Color targetColor = hover ? hoverColor : normalColor;
 
         while (Vector3.Distance(transform.localPosition, targetPosition) > 0.01f ||
-               text.color != targetColor)
+               graphic.color != targetColor)
         {
             transform.localPosition = Vector3.Lerp(
                 transform.localPosition,
                 targetPosition,
-                Time.deltaTime * animationSpeed
+                Time.unscaledDeltaTime * animationSpeed
             );
 
-            text.color = Color.Lerp(
-                text.color,
+            graphic.color = Color.Lerp(
+                graphic.color,
                 targetColor,
-                Time.deltaTime * animationSpeed
+                Time.unscaledDeltaTime * animationSpeed
             );
 
             yield return null;
         }
 
         transform.localPosition = targetPosition;
-        text.color = targetColor;
+        graphic.color = targetColor;
     }
 
 
@@ -109,6 +106,6 @@ public class TextHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         // Restore the text to its default appearance.
         transform.localPosition = startPosition;
-        text.color = normalColor;
+        graphic.color = normalColor;
     }
 }

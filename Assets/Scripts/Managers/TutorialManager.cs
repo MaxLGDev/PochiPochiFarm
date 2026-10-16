@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Localization;
 
 /// <summary>
 /// Simple scripted tutorial: one method per highlight, chained one after another.
@@ -37,18 +38,42 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private RectTransform labRect;
     [SerializeField] private RectTransform upgradeRect;
     [SerializeField] private RectTransform statsHeader;
-    
+
+    private string currentKey;
+    private Action<Locale> onLocaleChanged;
     private bool tutorialCompleted;
+
+    public bool TutorialCompleted => tutorialCompleted;
 
     private void Awake()
     {
         holeFrame.SetActive(false);
+        onLocaleChanged = _ => ShowLocalizedText(currentKey);
     }
 
     private void Start()
     {
         if(!tutorialCompleted)
             StartTutorial();
+    }
+
+    private void OnEnable()
+    {
+        LocalizationSettings.SelectedLocaleChanged += onLocaleChanged;
+    }
+
+    private void OnDisable()
+    {
+        LocalizationSettings.SelectedLocaleChanged -= onLocaleChanged;
+    }
+
+    private void ShowLocalizedText(string key)
+    {
+        if (string.IsNullOrEmpty(key))
+            return;
+        
+        var tutorialLocalizedText = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Tutorial", key);
+        tutorialLocalizedText.Completed += handle => typewriter.ShowText(handle.Result);
     }
 
     public void StartTutorial()
@@ -176,8 +201,8 @@ public class TutorialManager : MonoBehaviour
         holeButton.onClick.RemoveAllListeners();
         holeFrame.transform.SetAsLastSibling();
 
-        var tutorialLocalizedText = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Tutorial", key);
-        tutorialLocalizedText.Completed += handle => typewriter.ShowText(handle.Result);
+        currentKey = key;
+        ShowLocalizedText(key);
         
         overlay.Highlight(target);
 

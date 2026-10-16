@@ -10,6 +10,8 @@ public class FadeAnim : MonoBehaviour
     [SerializeField] private float fadeDuration = 0.1f;
     [SerializeField] private CanvasGroup canvasGroup;
 
+    public float FadeDuration => fadeDuration;
+
     private Coroutine fadeCO;
 
     //==========================================================================
@@ -53,7 +55,7 @@ public class FadeAnim : MonoBehaviour
         // Fade
         while (fadeTimer < duration)
         {
-            fadeTimer += Time.deltaTime;
+            fadeTimer += Time.unscaledDeltaTime;
             float t = fadeTimer / duration;
             canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, t);
             yield return null;
