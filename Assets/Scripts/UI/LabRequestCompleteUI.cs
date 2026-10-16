@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.Localization;
 
 /// <summary>
 /// Shows a full-screen popup when the laboratory finishes a crop
@@ -20,8 +21,10 @@ public class LabRequestCompleteUI : MonoBehaviour
     private struct PopupRequest
     {
         public Sprite sprite; // Optional: null means no image is shown
-        public string title;
-        public string tip;
+        public LocalizedString title;
+        public LocalizedString tip;
+        public CropData crop;
+        public LocalizedSprite localizedSprite;
     }
 
     private readonly Queue<PopupRequest> requests = new();
@@ -43,8 +46,15 @@ public class LabRequestCompleteUI : MonoBehaviour
     [SerializeField] private TMP_Text closePanelText;
     [SerializeField] private TMP_Text tipText;
 
+    [SerializeField] private LocalizedString researchedText;
+    [SerializeField] private LocalizedString researchedTipText;
+    [SerializeField] private LocalizedString automatedText;
+    [SerializeField] private LocalizedString automatedTipText;
+    [SerializeField] private LocalizedString newTabsText;
+    [SerializeField] private LocalizedString newTabsTipText;
+
     // Image shown when chapter 1 is complete
-    [SerializeField] private Sprite tabsUnlockedSprite;
+    [SerializeField] private LocalizedSprite tabsUnlockedSprite;
 
     [SerializeField] private FadeAnim panelFade;
     [SerializeField] private float lockDuration = 3f;
@@ -54,8 +64,8 @@ public class LabRequestCompleteUI : MonoBehaviour
 
     private void Awake()
     {
-        onResearchedHandler = crop => Enqueue(crop.GrowthSprites[^1], "RESEARCHED!!", $"Tip: You can now manually gather {crop.CropName} by clicking on it!");
-        onAutomatedHandler = crop => Enqueue(crop.GrowthSprites[^1], "AUTOMATED!!", $"Tip: {crop.CropName} will now harvest itself as long as you have enough water!");
+        onResearchedHandler = crop => Enqueue(crop.GrowthSprites[^1], researchedText, researchedTipText, crop);
+        onAutomatedHandler = crop => Enqueue(crop.GrowthSprites[^1], automatedText, automatedTipText, crop);
         onChapter1ClaimedHandler = HandleChapter1Claimed;
     }
 
@@ -80,12 +90,12 @@ public class LabRequestCompleteUI : MonoBehaviour
 
     private void HandleChapter1Claimed()
     {
-        Enqueue(tabsUnlockedSprite, "NEW TABS!!", "Laboratory and Upgrades tabs have been unlocked!");   
+        Enqueue(null, newTabsText, newTabsTipText, null, tabsUnlockedSprite);   
     }
     
-    private void Enqueue(Sprite sprite, string title, string tip)
+    private void Enqueue(Sprite sprite, LocalizedString title, LocalizedString tip, CropData crop = null, LocalizedSprite localizedSprite = null)
     {
-        requests.Enqueue(new PopupRequest { sprite = sprite, title = title, tip = tip});
+        requests.Enqueue(new PopupRequest { sprite = sprite, title = title, tip = tip, crop = crop, localizedSprite = localizedSprite});
 
         // If a popup is already open, this request waits its turn
         if (!isShowing)
@@ -108,11 +118,39 @@ public class LabRequestCompleteUI : MonoBehaviour
     {
         canClose = false;
 
-        cropImage.gameObject.SetActive(request.sprite != null);
-        cropImage.sprite = request.sprite;
+        Sprite spriteToShow = request.sprite;
+        if (request.localizedSprite != null && !request.localizedSprite.IsEmpty)
+        {
+            bool loaded = false;
+            request.localizedSprite.LoadAssetAsync().Completed += handle => { spriteToShow = handle.Result; loaded = true; };
+            yield return new WaitUntil(() => loaded);
+        }
         
-        cropTitleText.text = request.title;
-        tipText.text = request.tip;
+        cropImage.gameObject.SetActive(spriteToShow != null);
+        Debug.Log(spriteToShow);
+        cropImage.sprite = spriteToShow;
+
+        if (request.crop != null)
+        {
+            string cropName = null;
+            
+            request.crop.LocalizedName.GetLocalizedStringAsync().Completed += handle => cropName = handle.Result;
+            yield return new WaitUntil(() => cropName != null);
+            
+            request.title.Arguments = new object[] { cropName };
+            request.tip.Arguments = new object[] { cropName };
+        }
+
+        string resolvedTitle = null;
+        string resolvedTip = null;
+
+        request.title.GetLocalizedStringAsync().Completed += handle => resolvedTitle = handle.Result;
+        request.tip.GetLocalizedStringAsync().Completed += handle => resolvedTip = handle.Result;
+        yield return new WaitUntil(() => resolvedTitle != null && resolvedTip != null);
+
+        cropTitleText.text = resolvedTitle;
+        tipText.text = resolvedTip;
+        
         closePanelText.gameObject.SetActive(false);
 
         // Start invisible, then activate and fade in.
