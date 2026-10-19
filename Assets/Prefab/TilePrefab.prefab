@@ -5468,6 +5468,7 @@ GameObject:
   - component: {fileID: 675418446068555853}
   - component: {fileID: 1821719856168342082}
   - component: {fileID: 6778262903200895605}
+  - component: {fileID: 7714910520177445320}
   m_Layer: 0
   m_Name: TileUnlockCostText
   m_TagString: Untagged
@@ -5639,6 +5640,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1821719856168342082}
   m_maskType: 0
+--- !u!114 &7714910520177445320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8456798696149079842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0218ceb5d76e5d549a76a2124111bcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedFont
+  localizedFont:
+    m_TableReference:
+      m_TableCollectionName: GUID:190b4f38decacd342ab1b6e2a5ba373e
+    m_TableEntryReference:
+      m_KeyId: 6129909760
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
 --- !u!1 &8690070933542232649
 GameObject:
   m_ObjectHideFlags: 0

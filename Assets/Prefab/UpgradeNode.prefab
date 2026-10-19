@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 4017646643525475323}
   - component: {fileID: 7933107838031013670}
   - component: {fileID: 2426352788057164620}
+  - component: {fileID: 1260402173546499295}
   m_Layer: 5
   m_Name: upgradeCostText
   m_TagString: Untagged
@@ -378,6 +379,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1260402173546499295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3883494698684566916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0218ceb5d76e5d549a76a2124111bcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedFont
+  localizedFont:
+    m_TableReference:
+      m_TableCollectionName: GUID:190b4f38decacd342ab1b6e2a5ba373e
+    m_TableEntryReference:
+      m_KeyId: 6129909760
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
 --- !u!1 &4714737055450939415
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,6 +485,7 @@ GameObject:
   - component: {fileID: 7319065025695211376}
   - component: {fileID: 1599147109698990102}
   - component: {fileID: 2920238588424845369}
+  - component: {fileID: 5522667931302792761}
   m_Layer: 5
   m_Name: upgradePurchasedText
   m_TagString: Untagged
@@ -590,6 +612,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5522667931302792761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5869571252159144178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0218ceb5d76e5d549a76a2124111bcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedFont
+  localizedFont:
+    m_TableReference:
+      m_TableCollectionName: GUID:190b4f38decacd342ab1b6e2a5ba373e
+    m_TableEntryReference:
+      m_KeyId: 6129909760
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
 --- !u!1 &6631423876841435026
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,6 +1074,7 @@ GameObject:
   - component: {fileID: 8144685928068659475}
   - component: {fileID: 16522223547217702}
   - component: {fileID: 4413711897475411471}
+  - component: {fileID: 6842144339308345715}
   m_Layer: 5
   m_Name: upgradeEffectText
   m_TagString: Untagged
@@ -1158,6 +1201,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6842144339308345715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9061264496288436382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0218ceb5d76e5d549a76a2124111bcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedFont
+  localizedFont:
+    m_TableReference:
+      m_TableCollectionName: GUID:190b4f38decacd342ab1b6e2a5ba373e
+    m_TableEntryReference:
+      m_KeyId: 6129909760
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
 --- !u!1 &9211849580474069690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,6 +1232,7 @@ GameObject:
   - component: {fileID: 8325588345602487898}
   - component: {fileID: 781343242179914059}
   - component: {fileID: 6705940151195812503}
+  - component: {fileID: 6298831071234428177}
   m_Layer: 5
   m_Name: UpgradeNameText
   m_TagString: Untagged
@@ -1295,3 +1359,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6298831071234428177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211849580474069690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0218ceb5d76e5d549a76a2124111bcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedFont
+  localizedFont:
+    m_TableReference:
+      m_TableCollectionName: GUID:190b4f38decacd342ab1b6e2a5ba373e
+    m_TableEntryReference:
+      m_KeyId: 6129909760
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0

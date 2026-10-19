@@ -1,7 +1,9 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
+using UnityEngine.Localization.Components;
 
 public class QuestRowUI : MonoBehaviour
 {
@@ -11,13 +13,14 @@ public class QuestRowUI : MonoBehaviour
     // --- State ---
     private ObjData objectiveData;
     private JournalManager journalManager;
+    
 
     // --- UI References ---
-    [SerializeField] private TMP_Text questObjNameText;
     [SerializeField] private TMP_Text questObjGoalText;
     [SerializeField] private GameObject objectiveCompletePanel;
     [SerializeField] private GameObject objectiveClaimedPanel;
     [SerializeField] private Button objectiveCompleteButton;
+    [SerializeField] private LocalizeStringEvent nameLocalizer;
 
 
     // ==============================
@@ -46,6 +49,16 @@ public class QuestRowUI : MonoBehaviour
         journalManager.OnObjectiveProgressed += HandleObjectiveProgressed;
         journalManager.OnObjectiveCompleted += HandleObjectiveProgressed;
 
+        string cropName = objectiveData.RelatedCrop != null ? objectiveData.RelatedCrop.CropName : string.Empty;
+
+        LocalizedString description = objectiveData.localizedDescription;
+        description.Arguments = new object[]
+        {
+            StatsFormatter.FormatNumber(objectiveData.Target),
+            cropName
+        };
+        nameLocalizer.StringReference = description;
+
         RefreshDisplay();
     }
 
@@ -56,19 +69,11 @@ public class QuestRowUI : MonoBehaviour
 
     public void RefreshDisplay()
     {
-        if (questObjNameText == null)
-        {
-            Debug.Log("NameText is missing");
-            return;
-        }
-
         if (questObjGoalText == null)
         {
             Debug.Log("GoalText is missing");
             return;
         }
-
-        questObjNameText.text = objectiveData.Description;
 
         int progress = journalManager.GetProgress(objectiveData);
         int target = objectiveData.Target;
@@ -149,11 +154,4 @@ public class QuestRowUI : MonoBehaviour
             OnQuestClaimed?.Invoke();
         }
     }
-
-
-    // ==============================
-    // Formatting
-    // ==============================
-
-    
 }

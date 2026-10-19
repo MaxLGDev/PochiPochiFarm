@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class JournalUI : MonoBehaviour
 {
@@ -13,7 +15,9 @@ public class JournalUI : MonoBehaviour
 
     [SerializeField] private TMP_Text clearedObjectivesCounterText;
     [SerializeField] private Button claimRewardsButton;
-    [SerializeField] private TMP_Text claimButtonText;
+    [SerializeField] private LocalizeStringEvent claimButtonLocalizer;
+    [SerializeField] private LocalizedString claimText;
+    [SerializeField] private LocalizedString claimedText;
 
     [SerializeField] private GameObject rowPrefab;
     [SerializeField] private Transform rowParent;
@@ -105,6 +109,14 @@ public class JournalUI : MonoBehaviour
         contentsChapters.SetActive(true);
     }
 
+    private void SetClaimButtonLabel(bool claimed)
+    {
+        LocalizedString target = claimed ? claimedText : claimText;
+
+        if (claimButtonLocalizer.StringReference != target)
+            claimButtonLocalizer.StringReference = target;
+    }
+
     public void ShowChapter(Chapter chapter)
     {
         foreach (var row in currentRows)
@@ -116,7 +128,7 @@ public class JournalUI : MonoBehaviour
         var (completed, total) = journalManager.GetChapterProgress(chapter.objectives[0]);
 
         claimRewardsButton.interactable = !claimed && completed >= total;
-            claimButtonText.text = claimed ? "CLAIMED" : "CLAIM";
+        SetClaimButtonLabel(claimed);
 
         foreach (var obj in chapter.objectives)
         {
@@ -195,20 +207,18 @@ public class JournalUI : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private void HandleObjectiveCompleted(ObjData obj)
     {
-        if (!clearedObjectivesCounterText)
-            return;
-
         var chapter = journalManager.GetChapterForObjective(obj);
         if (currentChapter != null && chapter != currentChapter)
             return;
         
         var (completed, total) = journalManager.GetChapterProgress(obj);
-
-        clearedObjectivesCounterText.text = completed >= total ? $"<color=green>{completed}/{total}</color>" : $"<color=red>{completed}/{total}</color>";
+        string color = completed >= total ? "green" : "red";
+        
+        clearedObjectivesCounterText.text = $"<color={color}>{completed}/{total}</color>";
         
         if (journalManager.IsChapterClaimed(chapter))
         {
-            claimButtonText.text = "CLAIMED";
+            SetClaimButtonLabel(true);
             claimRewardsButton.interactable = false;
             return;
         }
@@ -222,7 +232,7 @@ public class JournalUI : MonoBehaviour
             SoundManager.Instance.PlaySFX("PageFlipSFX");
         var forward = newChapterIndex >= oldChapterIndex;
         var clipName = forward ? "PageFlip" : "PageFlipReverse";
-
+        
         pageFlipObject.SetActive(true);
         pageFlipAnimator.Play(clipName, 0, 0f);
 
