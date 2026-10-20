@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 public enum RequiredCropState
 {
@@ -25,15 +26,17 @@ public enum EffectType
 [CreateAssetMenu(fileName = "New Upgrade", menuName = "Upgrades/Upgrade Data")]
 public class UpgradeData : ScriptableObject
 {
-    public string UpgradeName;
+    public LocalizedString LocalizedName;
+    public LocalizedString LocalizedEffect;
+    public string NameSuffix;
+    
     public Sprite Sprite;
     public int UnlockCost;
     
     public UpgradeData PreviousUpgrade;
     public RequiredCropState CropState;
     public CropData TargetCrop;
-
-    public string UpgradeEffect;
+    
     public EffectType EffectType;
     public int EffectAmount;
 }

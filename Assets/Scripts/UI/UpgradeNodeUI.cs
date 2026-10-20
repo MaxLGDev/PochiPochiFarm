@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Localization;
 
 public class UpgradeNodeUI : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class UpgradeNodeUI : MonoBehaviour
     [SerializeField] private Image goldIcon;
     [SerializeField] private TMP_Text requirementText;
 
+    [SerializeField] private LocalizedString unlockedStateLoc;
+    [SerializeField] private LocalizedString researchedStateLoc;
+    [SerializeField] private LocalizedString automatedStateLoc;
+    
     [SerializeField] private Color lockedColor;
     [SerializeField] private Color availableColor;
     [SerializeField] private Color boughtColor;
@@ -28,6 +33,11 @@ public class UpgradeNodeUI : MonoBehaviour
 
     [SerializeField] private Color affordableColor;
     [SerializeField] private Color unaffordableColor;
+
+    private string effectLabel;
+    private string cropNameText;
+    private string stateText;
+    private bool hasRequirement => upgradeDataSo.TargetCrop != null && upgradeDataSo.CropState != RequiredCropState.None;
     
     public RectTransform RectTransform => (RectTransform)transform;
 
@@ -38,9 +48,65 @@ public class UpgradeNodeUI : MonoBehaviour
     private void Start()
     {
         nodeIcon.sprite = upgradeDataSo.Sprite;
-        upgradeNameText.text =  upgradeDataSo.UpgradeName;
+    }
+
+    private void OnEnable()
+    {
+        upgradeDataSo.LocalizedName.StringChanged += OnLineChanged;
+        upgradeDataSo.LocalizedEffect.StringChanged += OnEffectLabelChanged;
+        
+        if (hasRequirement)
+        {
+            upgradeDataSo.TargetCrop.LocalizedName.StringChanged += OnCropNameChanged;
+            StateLoc.StringChanged += OnStateChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        upgradeDataSo.LocalizedName.StringChanged -= OnLineChanged;
+        upgradeDataSo.LocalizedEffect.StringChanged -= OnEffectLabelChanged;
+
+        if (hasRequirement)
+        {
+            upgradeDataSo.TargetCrop.LocalizedName.StringChanged -= OnCropNameChanged;
+            StateLoc.StringChanged -= OnStateChanged;
+        }
+    }
+
+    private void OnLineChanged(string text)
+    {
+        string suffix = upgradeDataSo.NameSuffix;
+        upgradeNameText.text = string.IsNullOrEmpty(suffix) ? text : $"{text} {suffix}";
+    }
+
+    private void OnEffectLabelChanged(string text)
+    {
+        effectLabel = text;
         RefreshEffectText();
     }
+
+    private void OnCropNameChanged(string text)
+    {
+        cropNameText = text;
+        UpdateRequirementText();
+    }
+
+    private void OnStateChanged(string text)
+    {
+        stateText = text;
+        UpdateRequirementText();
+    }
+
+    private void UpdateRequirementText() => requirementText.text = $"{cropNameText}\n{stateText}";
+
+    private LocalizedString StateLoc => upgradeDataSo.CropState switch
+    {
+        RequiredCropState.Unlocked => unlockedStateLoc,
+        RequiredCropState.Researched => researchedStateLoc,
+        RequiredCropState.Automated => automatedStateLoc,
+        _ => null
+    };
 
     public void TryUnlockNode() => OnNodeClicked?.Invoke(upgradeDataSo);
 
@@ -118,15 +184,12 @@ public class UpgradeNodeUI : MonoBehaviour
 
     private void RefreshRequirementDisplay(UpgradeState state, bool met)
     {
-        bool hasRequirement = upgradeDataSo.TargetCrop != null && upgradeDataSo.CropState != RequiredCropState.None;
-
         bool show = hasRequirement && state != UpgradeState.Bought;
         requirementText.gameObject.SetActive(show);
 
         if (!show)
             return;
         
-        requirementText.text = $"{upgradeDataSo.TargetCrop.CropName} {upgradeDataSo.CropState}";
         requirementText.color = met ? requirementMetColor : requirementNotMetColor;
     }
 
@@ -135,14 +198,14 @@ public class UpgradeNodeUI : MonoBehaviour
         upgradeEffectText.text = upgradeDataSo.EffectType switch
         {
             EffectType.MaxCoins or EffectType.MaxWater or EffectType.WaterRegenPower or EffectType.ClickMultiplier
-                or EffectType.YieldMultiplier => $"{upgradeDataSo.UpgradeEffect} +{upgradeDataSo.EffectAmount}",
+                or EffectType.YieldMultiplier => $"{effectLabel} +{upgradeDataSo.EffectAmount}",
             
             EffectType.AutomationSpeed or EffectType.ResearchSpeed =>
-                $"{upgradeDataSo.UpgradeEffect} +{100 * upgradeDataSo.EffectAmount}%",
+                $"{effectLabel} +{100 * upgradeDataSo.EffectAmount}%",
             
-            EffectType.SkipWaterChance => $"{upgradeDataSo.UpgradeEffect} +{upgradeDataSo.EffectAmount}%",
+            EffectType.SkipWaterChance => $"{effectLabel} +{upgradeDataSo.EffectAmount}%",
             
-            EffectType.WaterRegenSpeed => $"{upgradeDataSo.UpgradeEffect} -{upgradeDataSo.EffectAmount}s",
+            EffectType.WaterRegenSpeed => $"{effectLabel} -{upgradeDataSo.EffectAmount}s",
             
             EffectType.None => "No effect",
             
@@ -152,7 +215,7 @@ public class UpgradeNodeUI : MonoBehaviour
 
     private string ReportUnhandledEffect()
     {
-        Debug.LogWarning($"Unhandled effect for {upgradeDataSo.UpgradeName}");
+        Debug.LogWarning($"Unhandled effect for {upgradeDataSo.name}");
 
         return string.Empty;
     }

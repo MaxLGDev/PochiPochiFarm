@@ -1232,13 +1232,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_6
+      name: ClickPower8
       rect:
         serializedVersion: 2
-        x: 192
-        y: 288
-        width: 32
-        height: 32
+        x: 198
+        y: 291
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1254,13 +1254,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_7
+      name: ClickPower7
       rect:
         serializedVersion: 2
-        x: 224
-        y: 288
-        width: 32
-        height: 32
+        x: 230
+        y: 291
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1276,13 +1276,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_8
+      name: ClickPower6
       rect:
         serializedVersion: 2
-        x: 256
-        y: 288
-        width: 32
-        height: 32
+        x: 262
+        y: 291
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1298,13 +1298,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_9
+      name: ClickPower5
       rect:
         serializedVersion: 2
-        x: 288
-        y: 288
-        width: 32
-        height: 32
+        x: 294
+        y: 291
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1320,13 +1320,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_10
+      name: ClickPower4
       rect:
         serializedVersion: 2
-        x: 320
-        y: 288
-        width: 32
-        height: 32
+        x: 326
+        y: 291
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1342,13 +1342,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_11
+      name: ClickPower3
       rect:
         serializedVersion: 2
-        x: 352
-        y: 288
-        width: 32
-        height: 32
+        x: 358
+        y: 291
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1364,13 +1364,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_12
+      name: ClickPower2
       rect:
         serializedVersion: 2
-        x: 384
-        y: 288
-        width: 32
-        height: 32
+        x: 390
+        y: 291
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1386,13 +1386,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_13
+      name: ClickPower1
       rect:
         serializedVersion: 2
-        x: 416
-        y: 288
-        width: 32
-        height: 32
+        x: 422
+        y: 291
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1694,13 +1694,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_27
+      name: NewBling
       rect:
         serializedVersion: 2
-        x: 864
-        y: 288
-        width: 32
-        height: 32
+        x: 871
+        y: 294
+        width: 21
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3014,13 +3014,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_87
+      name: BigBucket
       rect:
         serializedVersion: 2
-        x: 736
-        y: 224
-        width: 32
-        height: 32
+        x: 743
+        y: 226
+        width: 20
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3630,28 +3630,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Water1
-      rect:
-        serializedVersion: 2
-        x: 621
-        y: 197
-        width: 8
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 01ae004884512f200800000000000000
-      internalID: 212255533636315664
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Sprites_116
       rect:
         serializedVersion: 2
@@ -4048,13 +4026,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_134
+      name: YieldPower8
       rect:
         serializedVersion: 2
-        x: 192
-        y: 160
-        width: 32
-        height: 32
+        x: 197
+        y: 165
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4070,13 +4048,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_135
+      name: YieldPower7
       rect:
         serializedVersion: 2
-        x: 224
-        y: 160
-        width: 32
-        height: 32
+        x: 229
+        y: 165
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4092,13 +4070,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_136
+      name: YieldPower6
       rect:
         serializedVersion: 2
-        x: 256
-        y: 160
-        width: 32
-        height: 32
+        x: 261
+        y: 165
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4114,13 +4092,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_137
+      name: YieldPower5
       rect:
         serializedVersion: 2
-        x: 288
-        y: 160
-        width: 32
-        height: 32
+        x: 293
+        y: 165
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4136,13 +4114,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_138
+      name: YieldPower4
       rect:
         serializedVersion: 2
-        x: 320
-        y: 160
-        width: 32
-        height: 32
+        x: 325
+        y: 165
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4158,13 +4136,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_139
+      name: YieldPower3
       rect:
         serializedVersion: 2
-        x: 352
-        y: 160
-        width: 32
-        height: 32
+        x: 357
+        y: 165
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4180,13 +4158,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_140
+      name: YieldPower2
       rect:
         serializedVersion: 2
-        x: 384
-        y: 160
-        width: 32
-        height: 32
+        x: 389
+        y: 165
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4202,13 +4180,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_141
+      name: YieldPower1
       rect:
         serializedVersion: 2
-        x: 416
-        y: 160
-        width: 32
-        height: 32
+        x: 421
+        y: 165
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5016,13 +4994,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_178
+      name: MaxWater4
       rect:
         serializedVersion: 2
-        x: 576
-        y: 128
-        width: 32
-        height: 32
+        x: 587
+        y: 135
+        width: 14
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5038,13 +5016,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_179
+      name: MaxWater3
       rect:
         serializedVersion: 2
-        x: 608
-        y: 128
-        width: 32
-        height: 32
+        x: 619
+        y: 135
+        width: 14
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5060,13 +5038,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_180
+      name: MaxWater2
       rect:
         serializedVersion: 2
-        x: 640
-        y: 128
-        width: 32
-        height: 32
+        x: 651
+        y: 135
+        width: 14
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5082,13 +5060,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_181
+      name: MaxWater1
       rect:
         serializedVersion: 2
-        x: 672
-        y: 128
-        width: 32
-        height: 32
+        x: 683
+        y: 135
+        width: 14
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5126,13 +5104,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_183
+      name: FastBucket
       rect:
         serializedVersion: 2
-        x: 736
-        y: 128
-        width: 32
-        height: 32
+        x: 744
+        y: 134
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5720,13 +5698,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_210
+      name: MaxWater8
       rect:
         serializedVersion: 2
-        x: 576
-        y: 96
-        width: 32
-        height: 32
+        x: 587
+        y: 104
+        width: 14
+        height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5742,13 +5720,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_211
+      name: MaxWater7
       rect:
         serializedVersion: 2
-        x: 608
-        y: 96
-        width: 32
-        height: 32
+        x: 619
+        y: 104
+        width: 14
+        height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5764,35 +5742,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Water2
+      name: MaxWater5
       rect:
         serializedVersion: 2
-        x: 651
-        y: 105
+        x: 683
+        y: 104
         width: 14
         height: 19
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f8b6324802373af00800000000000000
-      internalID: 1126870915265817487
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprites_213
-      rect:
-        serializedVersion: 2
-        x: 672
-        y: 96
-        width: 32
-        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -6441,28 +6397,6 @@ TextureImporter:
       bones: []
       spriteID: 383d4ceffe96f2410800000000000000
       internalID: 1454497684156371843
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprites_243
-      rect:
-        serializedVersion: 2
-        x: 617
-        y: 73
-        width: 16
-        height: 19
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 339017a4c41f09d00800000000000000
-      internalID: 977546429108128051
       vertices: []
       indices: 
       edges: []
@@ -7524,13 +7458,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_292
+      name: WaterSkip1
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
+        x: 134
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7546,13 +7480,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_293
+      name: WaterSkip2
       rect:
         serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
+        x: 166
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7568,13 +7502,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_294
+      name: WaterSkip3
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
-        width: 32
-        height: 32
+        x: 198
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7590,13 +7524,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprites_295
+      name: WaterSkip4
       rect:
         serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
+        x: 230
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7615,10 +7549,10 @@ TextureImporter:
       name: Sprites_296
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 32
-        height: 32
+        x: 262
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7637,10 +7571,10 @@ TextureImporter:
       name: Sprites_297
       rect:
         serializedVersion: 2
-        x: 288
-        y: 0
-        width: 32
-        height: 32
+        x: 294
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7659,10 +7593,10 @@ TextureImporter:
       name: Sprites_298
       rect:
         serializedVersion: 2
-        x: 320
-        y: 0
-        width: 32
-        height: 32
+        x: 326
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7681,10 +7615,10 @@ TextureImporter:
       name: Sprites_299
       rect:
         serializedVersion: 2
-        x: 352
-        y: 0
-        width: 32
-        height: 32
+        x: 358
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7703,10 +7637,10 @@ TextureImporter:
       name: Sprites_300
       rect:
         serializedVersion: 2
-        x: 384
-        y: 0
-        width: 32
-        height: 32
+        x: 390
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7725,10 +7659,10 @@ TextureImporter:
       name: Sprites_301
       rect:
         serializedVersion: 2
-        x: 416
-        y: 0
-        width: 32
-        height: 32
+        x: 422
+        y: 5
+        width: 21
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7827,28 +7761,6 @@ TextureImporter:
       bones: []
       spriteID: a931914a806ec0c40800000000000000
       internalID: 5480007771390284698
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Water3
-      rect:
-        serializedVersion: 2
-        x: 586
-        y: 9
-        width: 14
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 54978d9bf59781cf0800000000000000
-      internalID: -281341524663830203
       vertices: []
       indices: 
       edges: []
@@ -7959,28 +7871,6 @@ TextureImporter:
       bones: []
       spriteID: 7e3732f4161c68ba0800000000000000
       internalID: -6086965222660934681
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Water4
-      rect:
-        serializedVersion: 2
-        x: 779
-        y: 5
-        width: 13
-        height: 26
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 844f28f30a7d89aa0800000000000000
-      internalID: -6153931807541496760
       vertices: []
       indices: 
       edges: []
@@ -8139,6 +8029,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: MaxWater6
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 105
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d0f01f7df02f9240b022a5e3d817954
+      internalID: 1486597723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RefillWater
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 73
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e66f4fb984699946a703ab942619aa7
+      internalID: -963322855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -8155,20 +8089,39 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
+      BigBucket: 7414477779365253828
       Bling1: -495745374339953076
       Bling2: -1383483550299112465
       Bling3: -991786704126144435
       Bling4: 3973109733453801652
       Bling5: 60823772365939468
       Bling6: 1936531935067537392
+      ClickPower1: 394738354570393740
+      ClickPower2: 7791742886103884341
+      ClickPower3: 7792300033668422012
+      ClickPower4: 7010537895803775351
+      ClickPower5: 8279819551763339774
+      ClickPower6: -8705658455517951556
+      ClickPower7: -8796573629370075563
+      ClickPower8: 7411919347176863388
+      FastBucket: -4251820030784040643
       Ingot1: 8456631680037038857
       Ingot2: -6382769204775830393
       Ingot3: 4400744405091807009
       Ingot4: -5746181896277534280
       Ingot5: -2801299934667553735
+      MaxWater1: -7633841848338205483
+      MaxWater2: 1295553263045432181
+      MaxWater3: -5626702103768547294
+      MaxWater4: 6121777643510600390
+      MaxWater5: -2426887433316003189
+      MaxWater6: 1486597723
+      MaxWater7: -5950899433978443780
+      MaxWater8: 1500032535865691917
+      NewBling: 2881394300597005124
+      RefillWater: -963322855
       Sprites_0: 4773600122041589604
       Sprites_1: -4789670105439411607
-      Sprites_10: 7010537895803775351
       Sprites_100: -5324601662819923939
       Sprites_101: 3770028936302834666
       Sprites_102: 2754253042904287343
@@ -8179,7 +8132,6 @@ TextureImporter:
       Sprites_107: -4951396241529763786
       Sprites_108: -7410794325928340593
       Sprites_109: 7793545847349952551
-      Sprites_11: 7792300033668422012
       Sprites_110: -5484285858367479508
       Sprites_111: 2729933713309865600
       Sprites_112: 2173472577460292377
@@ -8188,7 +8140,6 @@ TextureImporter:
       Sprites_117: 3727473801666743661
       Sprites_118: 5285566890697322425
       Sprites_119: 2982886135499755698
-      Sprites_12: 7791742886103884341
       Sprites_120: -7971602616246322033
       Sprites_121: 3372304354482645348
       Sprites_122: -2651158465310954196
@@ -8199,20 +8150,11 @@ TextureImporter:
       Sprites_127: 8312901256231357074
       Sprites_128: 1534398371277315339
       Sprites_129: 8214229110300950879
-      Sprites_13: 394738354570393740
       Sprites_130: 1050929133631128378
       Sprites_131: 9069388717532449438
       Sprites_132: 762592509224662285
       Sprites_133: 7850931514469755343
-      Sprites_134: -6969758217704931780
-      Sprites_135: -6538644093269977919
-      Sprites_136: 6239981147139094068
-      Sprites_137: -2629229673085827844
-      Sprites_138: -1196873964164418808
-      Sprites_139: -6241187386004041157
       Sprites_14: -9046095728324299325
-      Sprites_140: -4008605833365463563
-      Sprites_141: 5158175461491512881
       Sprites_142: -5273897116894102833
       Sprites_143: 7236269436232840835
       Sprites_144: -2791236442371767580
@@ -8249,13 +8191,8 @@ TextureImporter:
       Sprites_173: -7869804056105895804
       Sprites_174: 4081449656612380775
       Sprites_175: -8703314734634023958
-      Sprites_178: 6121777643510600390
-      Sprites_179: -5626702103768547294
       Sprites_18: -263089634459758618
-      Sprites_180: 1295553263045432181
-      Sprites_181: -7633841848338205483
       Sprites_182: -1265693408169485289
-      Sprites_183: -4251820030784040643
       Sprites_184: -6918803078364357512
       Sprites_185: -2179125572300897972
       Sprites_186: -8804453077800333607
@@ -8284,9 +8221,6 @@ TextureImporter:
       Sprites_206: 8987983182032867407
       Sprites_207: 3575588799237549549
       Sprites_21: -1059341289296395630
-      Sprites_210: 1500032535865691917
-      Sprites_211: -5950899433978443780
-      Sprites_213: -2426887433316003189
       Sprites_214: 2181393236301819757
       Sprites_215: -3801191410794713741
       Sprites_216: -129532099591320036
@@ -8346,7 +8280,6 @@ TextureImporter:
       Sprites_267: 8500363530770786586
       Sprites_268: -7733649686828737822
       Sprites_269: 807107965194322386
-      Sprites_27: 2881394300597005124
       Sprites_270: 1675028656779493114
       Sprites_274: 4371230757220335503
       Sprites_275: 1369708141678630189
@@ -8368,10 +8301,6 @@ TextureImporter:
       Sprites_29: 888032219008879629
       Sprites_290: -3023380100884201184
       Sprites_291: -3032715624294657373
-      Sprites_292: 1849464172375171407
-      Sprites_293: 6624556698296313333
-      Sprites_294: 5949372693884234690
-      Sprites_295: -3186828081949468072
       Sprites_296: 6016119316584413129
       Sprites_297: 34907730510495197
       Sprites_298: 8038611270085420769
@@ -8425,7 +8354,6 @@ TextureImporter:
       Sprites_57: 8972056133404136798
       Sprites_58: 1408226847623852857
       Sprites_59: -8372087688738955256
-      Sprites_6: 7411919347176863388
       Sprites_60: -6473330857520264552
       Sprites_61: -3521390567209173791
       Sprites_62: -7220104002862819407
@@ -8436,7 +8364,6 @@ TextureImporter:
       Sprites_67: -7989478272681254030
       Sprites_68: -1238083006025572948
       Sprites_69: 6841685021690995876
-      Sprites_7: -8796573629370075563
       Sprites_70: 3126159161941534328
       Sprites_71: 3357211796325774088
       Sprites_72: 101638914394045216
@@ -8447,7 +8374,6 @@ TextureImporter:
       Sprites_77: 9151806924843895631
       Sprites_78: -1809803027063173784
       Sprites_79: -1594810646448411930
-      Sprites_8: -8705658455517951556
       Sprites_80: -4754989852529570229
       Sprites_81: -5764648886331791844
       Sprites_82: -1447656106069244407
@@ -8455,10 +8381,8 @@ TextureImporter:
       Sprites_84: -4059440920082776338
       Sprites_85: -6459868595381777773
       Sprites_86: 583989037140185989
-      Sprites_87: 7414477779365253828
       Sprites_88: -6814746784844053252
       Sprites_89: 3420767355568788323
-      Sprites_9: 8279819551763339774
       Sprites_90: 9193603147421567555
       Sprites_91: -13204294254560827
       Sprites_92: -2064149271191180511
@@ -8469,10 +8393,21 @@ TextureImporter:
       Sprites_97: 2650261428310491641
       Sprites_98: 3977026575575614054
       Sprites_99: -7078671903867404345
-      Water1: 212255533636315664
       Water2: 1126870915265817487
       Water3: -281341524663830203
       Water4: -6153931807541496760
+      WaterSkip1: 1849464172375171407
+      WaterSkip2: 6624556698296313333
+      WaterSkip3: 5949372693884234690
+      WaterSkip4: -3186828081949468072
+      YieldPower1: 5158175461491512881
+      YieldPower2: -4008605833365463563
+      YieldPower3: -6241187386004041157
+      YieldPower4: -1196873964164418808
+      YieldPower5: -2629229673085827844
+      YieldPower6: 6239981147139094068
+      YieldPower7: -6538644093269977919
+      YieldPower8: -6969758217704931780
       Zoom: 5491366042218314101
       ZoomFruit: 1202883642130021556
   mipmapLimitGroupName: 

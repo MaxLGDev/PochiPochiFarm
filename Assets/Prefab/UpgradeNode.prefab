@@ -486,6 +486,7 @@ GameObject:
   - component: {fileID: 1599147109698990102}
   - component: {fileID: 2920238588424845369}
   - component: {fileID: 5522667931302792761}
+  - component: {fileID: 1353603259761454480}
   m_Layer: 5
   m_Name: upgradePurchasedText
   m_TagString: Untagged
@@ -632,6 +633,46 @@ MonoBehaviour:
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
+--- !u!114 &1353603259761454480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5869571252159144178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:c17f7a61a6f7e1c428c1c7dd46b63848
+    m_TableEntryReference:
+      m_KeyId: 7345198080000
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2920238588424845369}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &6631423876841435026
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,6 +746,33 @@ MonoBehaviour:
   upgradePurchasedText: {fileID: 2920238588424845369}
   goldIcon: {fileID: 4939431584486505419}
   requirementText: {fileID: 8655626722646610236}
+  unlockedStateLoc:
+    m_TableReference:
+      m_TableCollectionName: GUID:c17f7a61a6f7e1c428c1c7dd46b63848
+    m_TableEntryReference:
+      m_KeyId: 9276410830848
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  researchedStateLoc:
+    m_TableReference:
+      m_TableCollectionName: GUID:c17f7a61a6f7e1c428c1c7dd46b63848
+    m_TableEntryReference:
+      m_KeyId: 9277845282816
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  automatedStateLoc:
+    m_TableReference:
+      m_TableCollectionName: GUID:c17f7a61a6f7e1c428c1c7dd46b63848
+    m_TableEntryReference:
+      m_KeyId: 9278721892352
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   lockedColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   availableColor: {r: 1, g: 1, b: 1, a: 1}
   boughtColor: {r: 0.5483007, g: 1, b: 0.4292453, a: 1}
@@ -712,6 +780,9 @@ MonoBehaviour:
   requirementNotMetColor: {r: 1, g: 0.25, b: 0.25, a: 1}
   affordableColor: {r: 0.21232879, g: 1, b: 0, a: 1}
   unaffordableColor: {r: 1, g: 0, b: 0, a: 1}
+  references:
+    version: 2
+    RefIds: []
 --- !u!222 &7312237692938808242
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -862,6 +933,7 @@ GameObject:
   - component: {fileID: 4056303469090104305}
   - component: {fileID: 3559785808626929705}
   - component: {fileID: 8655626722646610236}
+  - component: {fileID: 1881139625904772799}
   m_Layer: 5
   m_Name: upgradeRequirementCrop
   m_TagString: Untagged
@@ -988,6 +1060,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1881139625904772799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8154352278675334927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0218ceb5d76e5d549a76a2124111bcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedFont
+  localizedFont:
+    m_TableReference:
+      m_TableCollectionName: GUID:190b4f38decacd342ab1b6e2a5ba373e
+    m_TableEntryReference:
+      m_KeyId: 6129909760
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
 --- !u!1 &8401664080434652477
 GameObject:
   m_ObjectHideFlags: 0
