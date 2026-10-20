@@ -4,6 +4,7 @@ using UnityEngine.Localization.Settings;
 using TMPro;
 using System;
 using UnityEngine.Localization;
+using UnityEngine.Rendering;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private TMP_Text jpLocaleTitleText;
 
     private Vector2Int windowedSize = new Vector2Int(1280, 720);
+    private bool lastFullScreen;
 
     private Action<Locale> onLocaleChanged;
 
@@ -41,6 +43,8 @@ public class SettingsManager : MonoBehaviour
     {
         SoundManager.Instance.PlayMusic("MainSong");
         fullScreenToggle.SetIsOnWithoutNotify(Screen.fullScreen);
+
+        lastFullScreen = Screen.fullScreen;
         
         // Only remember the current size if we're actually windowed
         if (!Screen.fullScreen)
@@ -48,7 +52,16 @@ public class SettingsManager : MonoBehaviour
 
         LocalizationSettings.SelectedLocaleAsync.Completed += handle => UpdateLocaleColors(handle.Result);
     }
-    
+
+    private void Update()
+    {
+        if (Screen.fullScreen == lastFullScreen)
+            return;
+        
+        lastFullScreen = Screen.fullScreen;
+        fullScreenToggle.SetIsOnWithoutNotify(lastFullScreen);
+    }
+
     public void SetLanguage(int index)
     {
         var locales = LocalizationSettings.AvailableLocales.Locales;
