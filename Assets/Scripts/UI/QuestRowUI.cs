@@ -49,13 +49,16 @@ public class QuestRowUI : MonoBehaviour
         journalManager.OnObjectiveProgressed += HandleObjectiveProgressed;
         journalManager.OnObjectiveCompleted += HandleObjectiveProgressed;
 
-        string cropName = objectiveData.RelatedCrop != null ? objectiveData.RelatedCrop.CropName : string.Empty;
+        string cropName = objectiveData.RelatedCrop != null ? objectiveData.RelatedCrop.LocalizedName.GetLocalizedString() : string.Empty;
 
-        LocalizedString description = objectiveData.localizedDescription;
-        description.Arguments = new object[]
+        var source = objectiveData.localizedDescription;
+        var description = new LocalizedString(source.TableReference, source.TableEntryReference)
         {
+            Arguments = new object[]
+            {
             StatsFormatter.FormatNumber(objectiveData.Target),
             cropName
+            }
         };
         nameLocalizer.StringReference = description;
 

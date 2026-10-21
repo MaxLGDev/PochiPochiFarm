@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 3890597458932836437}
   - component: {fileID: 5398311763546958425}
   - component: {fileID: 5319866213217670989}
-  - component: {fileID: -6399637701226737824}
-  - component: {fileID: -762716441415685631}
   - component: {fileID: -7871198291402619449}
+  - component: {fileID: 9039715300343554650}
   m_Layer: 5
   m_Name: FloatingTextPrefabWorld
   m_TagString: Untagged
@@ -65,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8746955447195962384, guid: b57b3343cafbe784097b1c6e4ce676bf, type: 2}
+  - {fileID: 4721213420981888436, guid: 34fb0fcb9f983924584c92067c928a18, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,7 +111,7 @@ MonoBehaviour:
   m_text: TEXT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34fb0fcb9f983924584c92067c928a18, type: 2}
-  m_sharedMaterial: {fileID: -8746955447195962384, guid: b57b3343cafbe784097b1c6e4ce676bf, type: 2}
+  m_sharedMaterial: {fileID: 4721213420981888436, guid: 34fb0fcb9f983924584c92067c928a18, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -184,35 +183,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 1
   m_renderer: {fileID: 5398311763546958425}
   m_maskType: 0
---- !u!114 &-6399637701226737824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2236973840357535256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cac4fb63e0372d4b88c922b3010fbba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PunchAnim
-  maxScale: 1.2
-  punchUpDuration: 0.1
-  punchDownDuration: 0.1
---- !u!114 &-762716441415685631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2236973840357535256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 011729a5dbb6f3b478e3cb3e7e1ffc28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WiggleAnim
-  wiggleAngle: 20
-  wiggleDuration: 0.05
 --- !u!114 &-7871198291402619449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,3 +198,23 @@ MonoBehaviour:
   floatingText: {fileID: 5319866213217670989}
   floatSpeed: 5
   floatDuration: 1
+--- !u!114 &9039715300343554650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2236973840357535256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0218ceb5d76e5d549a76a2124111bcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedFont
+  localizedFont:
+    m_TableReference:
+      m_TableCollectionName: GUID:190b4f38decacd342ab1b6e2a5ba373e
+    m_TableEntryReference:
+      m_KeyId: 6129909760
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
